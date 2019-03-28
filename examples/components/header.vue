@@ -97,11 +97,11 @@
       list-style: none;
       position: relative;
       cursor: pointer;
-    
+
       &.nav-algolia-search {
         cursor: default;
       }
-    
+
       &.lang-item,
       &:last-child {
         cursor: default;
@@ -118,18 +118,18 @@
           color: #888;
 
           &:hover {
-            color: #409EFF;
+            color: #ffa800;
           }
           &.active {
              font-weight: bold;
-             color: #409EFF;
+             color: #ffa800;
            }
         }
       }
 
       a {
         text-decoration: none;
-        color: #1989FA;
+        color: #ffa800;
         opacity: 0.5;
         display: block;
         padding: 0 22px;
@@ -147,7 +147,7 @@
           left: calc(50% - 15px);
           width: 30px;
           height: 2px;
-          background: #409EFF;
+          background: #ffa800;
         }
       }
     }
@@ -182,7 +182,7 @@
 
     .is-active {
       span, i {
-        color: #409EFF;
+        color: #ffa800;
       }
       i {
         transform: rotateZ(180deg) translateY(3px);
@@ -191,11 +191,11 @@
 
     &:hover {
       span, i {
-        color: #409EFF;
+        color: #ffa800;
       }
     }
   }
-  
+
   .nav-dropdown-list {
     width: auto;
   }
@@ -215,7 +215,7 @@
         &:last-child {
           margin-left: 10px;
         }
-         
+
         a {
           padding: 0 5px;
         }
@@ -239,11 +239,11 @@
 
         &.lang-item {
           height: 100%;
-         
+
           .nav-lang {
             display: flex;
             align-items: center;
-            
+
             span {
               padding-bottom: 0;
             }
@@ -361,12 +361,12 @@
               </el-dropdown-menu>
             </el-dropdown>
           </li>
-          
+
           <!--theme picker-->
-          <li class="nav-item nav-theme-switch" v-show="isComponentPage">
+          <!-- <li class="nav-item nav-theme-switch" v-show="isComponentPage">
             <theme-configurator :key="lang" v-if="showThemeConfigurator"></theme-configurator>
             <theme-picker v-else></theme-picker>
-          </li>
+          </li> -->
         </ul>
       </div>
     </header>
@@ -469,10 +469,10 @@
       };
       xhr.open('GET', '/versions.json');
       xhr.send();
-      let primaryLast = '#409EFF';
+      let primaryLast = '#ffa800';
       bus.$on('user-theme-config-update', (val) => {
         let primaryColor = val.global['$--color-primary'];
-        if (!primaryColor) primaryColor = '#409EFF';
+        if (!primaryColor) primaryColor = '#ffa800';
         const base64svg = 'data:image/svg+xml;base64,';
         const imgSet = document.querySelectorAll('h1 img');
         imgSet.forEach((img) => {

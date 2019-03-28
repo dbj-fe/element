@@ -11,7 +11,7 @@
   .page-component {
     box-sizing: border-box;
     height: 100%;
-  
+
     &.page-container {
       padding: 0;
     }
@@ -117,7 +117,7 @@
       z-index: 5;
 
       i {
-        color: #409EFF;
+        color: #ffa800;
         display: block;
         line-height: 40px;
         text-align: center;
@@ -139,7 +139,7 @@
     .page-component__content {
       transition:padding-right 0.3s ease;
       &.theme-config {
-        padding-right: 26%;  
+        padding-right: 26%;
       }
     }
     .page-container.page-component {

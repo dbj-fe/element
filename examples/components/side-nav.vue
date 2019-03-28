@@ -17,7 +17,7 @@
       margin: 0;
       overflow: hidden;
     }
-    
+
     > ul > .nav-item > a {
       margin-top: 15px;
     }
@@ -41,7 +41,7 @@
         font-weight: bold;
 
         &.active {
-          color: #409EFF;
+          color: #ffa800;
         }
       }
 
@@ -59,25 +59,25 @@
 
           &:hover,
           &.active {
-            color: #409EFF;
+            color: #ffa800;
           }
         }
       }
-  
+
       &.sponsors {
         & > .sub-nav {
           margin-top: -10px;
         }
-        
+
         & > a {
           color: #777;
           font-weight: 300;
           font-size: 14px;
         }
-        
+
         .nav-item {
           display: inline-block;
-        
+
           a {
             height: auto;
             display: inline-block;
