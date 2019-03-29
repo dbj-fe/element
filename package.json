@@ -1,6 +1,6 @@
 {
-  "name": "element-ui",
-  "version": "2.7.0",
+  "name": "dbj-element",
+  "version": "0.0.1",
   "description": "A Component Library for Vue.js.",
   "main": "lib/element-ui.common.js",
   "files": [
@@ -43,9 +43,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:ElemeFE/element.git"
+    "url": "git@github.com:dbj-fe/element.git"
   },
-  "homepage": "http://element.eleme.io",
+  "homepage": "http://element.meiwu365.com",
   "keywords": [
     "eleme",
     "vue",
