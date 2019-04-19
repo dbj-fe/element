@@ -71,6 +71,8 @@ import Main from '../packages/main/index.js';
 import Footer from '../packages/footer/index.js';
 import Timeline from '../packages/timeline/index.js';
 import TimelineItem from '../packages/timeline-item/index.js';
+import Divider from '../packages/divider/index.js';
+import Image from '../packages/image/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -142,6 +144,8 @@ const components = [
   Footer,
   Timeline,
   TimelineItem,
+  Divider,
+  Image,
   CollapseTransition
 ];
 
@@ -176,7 +180,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '2.7.0',
+  version: '2.7.2',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -251,5 +255,7 @@ export default {
   Main,
   Footer,
   Timeline,
-  TimelineItem
+  TimelineItem,
+  Divider,
+  Image
 };
