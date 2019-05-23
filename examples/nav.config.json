@@ -70,6 +70,10 @@
             {
               "path": "/button",
               "title": "Button 按钮"
+            },
+            {
+              "path": "/link",
+              "title": "Link 文字链接"
             }
           ]
         },
@@ -257,8 +261,12 @@
               "title": "Divider 分割线"
             },
             {
+              "path": "/calendar",
+              "title": "Calendar 日历"
+            },
+            {
               "path": "/image",
-              "title": "Image"
+              "title": "Image 图片"
             }
           ]
         }
@@ -336,6 +344,10 @@
             {
               "path": "/button",
               "title": "Button"
+            },
+            {
+              "path": "/link",
+              "title": "Link"
             }
           ]
         },
@@ -521,6 +533,10 @@
             {
               "path": "/divider",
               "title": "Divider"
+            },
+            {
+              "path": "/calendar",
+              "title": "Calendar"
             },
             {
               "path": "/image",
@@ -602,6 +618,10 @@
             {
               "path": "/button",
               "title": "Button"
+            },
+            {
+              "path": "/link",
+              "title": "Link"
             }
           ]
         },
@@ -789,6 +809,10 @@
               "title": "Divider"
             },
             {
+              "path": "/calendar",
+              "title": "Calendar"
+            },
+            {
               "path": "/image",
               "title": "Image"
             }
@@ -868,6 +892,10 @@
             {
               "path": "/button",
               "title": "Button"
+            },
+            {
+              "path": "/link",
+              "title": "Link"
             }
           ]
         },
@@ -1055,8 +1083,12 @@
               "title": "Divider"
             },
             {
+              "path": "/calendar",
+              "title": "Calendar"
+            },
+            {
               "path": "/image",
-              "title": "Image 图片"
+              "title": "Image"
             }
           ]
         }

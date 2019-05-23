@@ -210,7 +210,8 @@ export default {
 
   mounted() {
     const { prop, order } = this.defaultSort;
-    this.store.commit('sort', { prop, order });
+    const init = true;
+    this.store.commit('sort', { prop, order, init });
   },
 
   beforeDestroy() {
@@ -501,8 +502,6 @@ export default {
 
       if (!order) {
         sortOrder = column.order = null;
-        states.sortingColumn = null;
-        sortProp = null;
       } else {
         sortOrder = column.order = order;
       }

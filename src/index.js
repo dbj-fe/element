@@ -71,8 +71,10 @@ import Main from '../packages/main/index.js';
 import Footer from '../packages/footer/index.js';
 import Timeline from '../packages/timeline/index.js';
 import TimelineItem from '../packages/timeline-item/index.js';
+import Link from '../packages/link/index.js';
 import Divider from '../packages/divider/index.js';
 import Image from '../packages/image/index.js';
+import Calendar from '../packages/calendar/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -144,8 +146,10 @@ const components = [
   Footer,
   Timeline,
   TimelineItem,
+  Link,
   Divider,
   Image,
+  Calendar,
   CollapseTransition
 ];
 
@@ -180,7 +184,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '2.7.2',
+  version: '2.8.2',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -256,6 +260,8 @@ export default {
   Footer,
   Timeline,
   TimelineItem,
+  Link,
   Divider,
-  Image
+  Image,
+  Calendar
 };
