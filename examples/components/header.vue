@@ -377,30 +377,30 @@
   </div>
 </template>
 <script>
-import ThemePicker from "./theme-picker.vue";
-import AlgoliaSearch from "./search.vue";
-import compoLang from "../i18n/component.json";
-import Element from "main/index.js";
-import themeLoader from "./theme/loader";
-import { getVars } from "./theme/loader/api.js";
-import bus from "../bus";
-import { ACTION_USER_CONFIG_UPDATE } from "./theme/constant.js";
+import ThemePicker from './theme-picker.vue';
+import AlgoliaSearch from './search.vue';
+import compoLang from '../i18n/component.json';
+import Element from 'main/index.js';
+import themeLoader from './theme/loader';
+import { getVars } from './theme/loader/api.js';
+import bus from '../bus';
+import { ACTION_USER_CONFIG_UPDATE } from './theme/constant.js';
 
 const { version } = Element;
 
 export default {
   data() {
     return {
-      active: "",
+      active: '',
       versions: [],
       version,
       verDropdownVisible: true,
       langDropdownVisible: true,
       langs: {
-        "zh-CN": "中文",
-        "en-US": "English",
-        es: "Español",
-        "fr-FR": "Français"
+        'zh-CN': '中文',
+        'en-US': 'English',
+        es: 'Español',
+        'fr-FR': 'Français'
       }
     };
   },
@@ -414,13 +414,13 @@ export default {
 
   computed: {
     lang() {
-      return this.$route.path.split("/")[1] || "zh-CN";
+      return this.$route.path.split('/')[1] || 'zh-CN';
     },
     displayedLang() {
-      return this.langs[this.lang] || "中文";
+      return this.langs[this.lang] || '中文';
     },
     langConfig() {
-      return compoLang.filter(config => config.lang === this.lang)[0]["header"];
+      return compoLang.filter(config => config.lang === this.lang)[0]['header'];
     },
     isComponentPage() {
       return /^component/.test(this.$route.name);
@@ -430,7 +430,7 @@ export default {
     getVars()
       .then(() => {
         this.$isEle = true;
-        ga("send", "event", "DocView", "Inner");
+        ga('send', 'event', 'DocView', 'Inner');
       })
       .catch(err => {
         console.error(err);
@@ -446,7 +446,7 @@ export default {
 
     switchLang(targetLang) {
       if (this.lang === targetLang) return;
-      localStorage.setItem("ELEMENT_LANGUAGE", targetLang);
+      localStorage.setItem('ELEMENT_LANGUAGE', targetLang);
       this.$router.push(this.$route.path.replace(this.lang, targetLang));
     },
 
@@ -470,18 +470,18 @@ export default {
         }, {});
       }
     };
-    xhr.open("GET", "/versions.json");
+    xhr.open('GET', '/versions.json');
     xhr.send();
-    let primaryLast = "#ffa800";
+    let primaryLast = '#ffa800';
     bus.$on(ACTION_USER_CONFIG_UPDATE, val => {
-      let primaryColor = val.global["$--color-primary"];
-      if (!primaryColor) primaryColor = "#ffa800";
-      const base64svg = "data:image/svg+xml;base64,";
-      const imgSet = document.querySelectorAll("h1 img");
+      let primaryColor = val.global['$--color-primary'];
+      if (!primaryColor) primaryColor = '#ffa800';
+      const base64svg = 'data:image/svg+xml;base64,';
+      const imgSet = document.querySelectorAll('h1 img');
       imgSet.forEach(img => {
         img.src = `${base64svg}${window.btoa(
           window
-            .atob(img.src.replace(base64svg, ""))
+            .atob(img.src.replace(base64svg, ''))
             .replace(primaryLast, primaryColor)
         )}`;
       });

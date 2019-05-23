@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.css": "scss"
+  },
+  "editor.formatOnType": false,
+  "editor.formatOnSave": false
+}
