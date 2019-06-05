@@ -1,0 +1,185 @@
+@import "common/var";
+@import "mixins/mixins";
+
+$namespace: 'dbj';
+
+@include b(dir-upload) {
+  width: 520px;
+
+  @include e(button) {
+    color: $--color-primary;
+    font-size: 12px;
+    line-height: 16px;
+    & i {
+      font-size: 16px;
+      vertical-align: -2px;
+    }
+  }
+
+  @include e(tip) {
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 4px;
+    color: #999;
+  }
+
+  @include e(panel) {
+    display: none;
+    @include e(content) {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      > i.el-icon-arrow-down {
+        font-size: 20px;
+        color: #999;
+        cursor: pointer;
+        transition: .3s ease all;
+      }
+      > img {
+        width: 32px;
+        height: 32px;
+        margin-left: 2px;
+      }
+
+      > .content-wrapper {
+        margin-left: 8px;
+        flex: 1;
+        > .top {
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+
+          @include e(label) {
+            flex: 1;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            line-height: 16px;
+            height: 16px;
+            .file-name {
+              font-size: 12px;
+              color: #333;
+            }
+            > i {
+              margin-left: 12px;
+              font-size: 16px;
+              color: $--color-primary;
+            }
+          }
+
+          .file-size {
+            font-size: 0;
+            .current {
+              font-size: 12px;
+              color: #666;
+            }
+            .total {
+              font-size: 12px;
+              color: #999;
+            }
+          }
+          > i {
+            margin-left: 12px;
+            color: #999;
+            font-size: 14px;
+            cursor: pointer;
+          }
+        }
+
+        > .bottom {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: 0;
+          line-height: 16px;
+          height: 16px;
+          .progress {
+            display: block;
+            width: 400px;
+            height: 2px;
+            border-radius: 2px;
+            background: #f5f5f5;
+            .bar {
+              display: block;
+              width: 0;
+              height: 2px;
+              border-radius: 2px;
+              background: $--color-primary;
+              transition: 0.3s ease all;
+            }
+          }
+          i {
+            font-size: 14px;
+            color: #999;
+            cursor: pointer;
+            margin-right: 26px;
+          }
+        }
+      }
+    }
+
+    @include e(children) {
+      margin-top: 12px;
+
+      .dbj-upload {
+        .el-upload-wrapper {
+          padding-top: 0;
+        }
+        .dbj-upload-list {
+          padding: 0;
+          .dbj-upload-list__item {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+  }
+
+  &.uploading {
+    > .el-upload-wrapper {
+      display: none;
+    }
+    > .dbj-dir-upload__tip {
+      display: none;
+    }
+    > .dbj-dir-upload__panel {
+      display: block;
+      .dbj-dir-upload__content {
+        > i.el-icon-arrow-down {
+          visibility: hidden;
+        }
+        .top i {
+          visibility: hidden;
+        }
+      }
+    }
+  }
+
+  &.uploaded {
+    > .dbj-dir-upload__panel {
+      .dbj-dir-upload__content {
+        > i.el-icon-arrow-down {
+          visibility: visible;
+        }
+        .top i {
+          visibility: visible;
+        }
+        .bottom {
+          display: none;
+        }
+        .file-size {
+          display: none;
+        }
+      }
+
+      &.expand {
+        .dbj-dir-upload__content > i.el-icon-arrow-down {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}
+
+$namespace: 'el';

@@ -1,0 +1,197 @@
+@import "common/var";
+@import "mixins/mixins";
+
+$namespace: 'dbj';
+
+@include b(upload) {
+  width: 456px;
+
+  .el-upload-wrapper {
+    height: 16px;
+    line-height: 16px;
+    padding-top: 12px;
+  }
+
+  @include m(single) {
+    .dbj-upload-list {
+      display: none;
+    }
+    &.has-files {
+      .el-upload-wrapper {
+        display: none;
+      }
+      .dbj-upload__tip {
+        display: none;
+      }
+      .dbj-upload-list {
+        display: block;
+      }
+    }
+  }
+
+  @include e(button) {
+    color: $--color-primary;
+    font-size: 12px;
+    line-height: 16px;
+    & i {
+      font-size: 16px;
+      vertical-align: -2px;
+    }
+  }
+
+  @include e(tip) {
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 4px;
+    color: #999;
+  }
+}
+
+@include b(upload-list) {
+  list-style: none;
+  padding: 8px 0 0 0;
+  margin: 0;
+
+  @include e(item) {
+    line-height: 16px;
+    margin-top: 4px;
+
+    #{&}-content {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      margin: 0;
+      height: 16px;
+      line-height: 16px;
+      color: #333;
+
+      .file-info {
+        display: flex;
+        width: 400px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .content-wrapper {
+        display: inline-block;
+        height: 16px;
+        line-height: 16px;
+
+        > i {
+          display: none;
+          color: $--color-primary;
+          margin-left: 12px;
+          font-size: 14px;
+          vertical-align: middle;
+        }
+      }
+
+      .content {
+        display: inline-block;
+        font-size: 0;
+        vertical-align: middle;
+        padding: 0;
+
+        .file-name {
+          display: inline-block;
+          max-width: 224px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: middle;
+          font-size: 12px;
+          white-space: nowrap;
+        }
+
+        .file-suffix {
+          display: inline-block;
+          font-size: 12px;
+          vertical-align: middle;
+        }
+      }
+
+      .file-size {
+        color: #666;
+        font-size: 0;
+        display: inline-block;
+        height: 16px;
+        line-height: 16px;
+
+        .current {
+          font-size: 12px;
+        }
+
+        .total {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+
+      > i {
+        font-size: 14px;
+        color: #999;
+        cursor: pointer;
+        display: none;
+      }
+      .upload-icon {
+        display: none;
+        i {
+          font-size: 14px;
+          color: #999;
+          cursor: pointer;
+        }
+      }
+    }
+
+    #{&}-progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 4px 0 0 0;
+      height: 16px;
+      line-height: 16px;
+      .progress {
+        display: block;
+        width: 400px;
+        height: 2px;
+        border-radius: 2px;
+        background: #f5f5f5;
+        .bar {
+          display: block;
+          width: 0;
+          height: 2px;
+          border-radius: 2px;
+          background: $--color-primary;
+          transition: 0.3s ease all;
+        }
+      }
+      i {
+        font-size: 14px;
+        color: #999;
+        cursor: pointer;
+        margin-right: 28px;
+      }
+    }
+
+    &.complete {
+      .dbj-upload-list__item-progress {
+        visibility: hidden;
+      }
+
+      .dbj-upload-list__item-content > i {
+        display: inline-block;
+      }
+
+      .dbj-upload-list__item-content .upload-icon {
+        display: inline-block;
+      }
+
+      .dbj-upload-list__item-content .content-wrapper > i {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+$namespace: 'el';

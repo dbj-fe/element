@@ -40,8 +40,9 @@ export default {
         return {};
       }
     },
-    data: Object,
+    data: [Object, Function],
     multiple: Boolean,
+    directory: Boolean,
     name: {
       type: String,
       default: 'file'
@@ -61,6 +62,10 @@ export default {
     beforeUpload: Function,
     beforeRemove: Function,
     onRemove: {
+      type: Function,
+      default: noop
+    },
+    filesFilter: {
       type: Function,
       default: noop
     },
@@ -286,6 +291,7 @@ export default {
         drag: this.drag,
         action: this.action,
         multiple: this.multiple,
+        directory: this.directory,
         'before-upload': this.beforeUpload,
         'with-credentials': this.withCredentials,
         headers: this.headers,
@@ -297,6 +303,7 @@ export default {
         listType: this.listType,
         disabled: this.uploadDisabled,
         limit: this.limit,
+        'files-filter': this.filesFilter,
         'on-exceed': this.onExceed,
         'on-start': this.handleStart,
         'on-progress': this.handleProgress,

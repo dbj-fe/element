@@ -17,11 +17,13 @@ export default {
       type: String,
       default: 'file'
     },
-    data: Object,
+    data: [Object, Function],
     headers: Object,
     withCredentials: Boolean,
     multiple: Boolean,
+    directory: Boolean,
     accept: String,
+    filesFilter: Function,
     onStart: Function,
     onProgress: Function,
     onSuccess: Function,
@@ -63,7 +65,14 @@ export default {
       const files = ev.target.files;
 
       if (!files) return;
-      this.uploadFiles(files);
+      const filter = this.filesFilter(files);
+      if (filter && filter.then) {
+        filter.then(fs => {
+          this.uploadFiles(fs);
+        });
+      } else {
+        this.uploadFiles(files);
+      }
     },
     uploadFiles(files) {
       if (this.limit && this.fileList.length + files.length > this.limit) {
@@ -138,7 +147,7 @@ export default {
         headers: this.headers,
         withCredentials: this.withCredentials,
         file: rawFile,
-        data: this.data,
+        data: typeof this.data === 'function' ? this.data(uid) : this.data,
         filename: this.name,
         action: this.action,
         onProgress: e => {
@@ -180,6 +189,7 @@ export default {
       name,
       handleChange,
       multiple,
+      directory,
       accept,
       listType,
       uploadFiles,
@@ -203,7 +213,7 @@ export default {
             ? <upload-dragger disabled={disabled} on-file={uploadFiles}>{this.$slots.default}</upload-dragger>
             : this.$slots.default
         }
-        <input class="el-upload__input" type="file" ref="input" name={name} on-change={handleChange} multiple={multiple} accept={accept}></input>
+        <input class="el-upload__input" type="file" ref="input" name={name} on-change={handleChange} multiple={multiple} accept={accept} webkitdirectory={directory}></input>
       </div>
     );
   }

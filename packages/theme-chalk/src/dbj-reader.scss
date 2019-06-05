@@ -1,0 +1,85 @@
+@import "common/var";
+@import "mixins/mixins";
+
+$namespace: 'dbj';
+@include b(reader) {
+  width: 456px;
+
+  @include e(button-wrapper) {
+    display: block;
+    line-height: 16px;
+    height: 16px;
+  }
+
+  @include e(input) {
+    display: none;
+  }
+
+  @include e(button) {
+    color: $--color-primary;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+    & i {
+      font-size: 16px;
+      vertical-align: -2px;
+    }
+  }
+
+  @include e(tip) {
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 4px;
+    color: #999;
+  }
+
+  @include e(display) {
+    display: none;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    height: 16px;
+    line-height: 16px;
+    padding-bottom: 20px;
+
+    @include e(info) {
+      display: flex;
+      width: 400px;
+      flex-flow: row nowrap;
+      align-items: center;
+
+      > i {
+        color: $--color-primary;
+        margin-left: 12px;
+        font-size: 14px;
+        vertical-align: middle;
+      }
+    }
+
+    > i {
+      font-size: 14px;
+      color: #999;
+      cursor: pointer;
+    }
+  }
+
+  @include m(uploaded) {
+    @include e(button-wrapper) {
+      display: none;
+    }
+    @include e(tip) {
+      display: none;
+    }
+    @include e(display) {
+      display: flex;
+    }
+  }
+
+  @include m(not-support) {
+    color: #999;
+    font-size: 12px;
+  }
+}
+
+$namespace: 'el';

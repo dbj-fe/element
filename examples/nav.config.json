@@ -41,6 +41,15 @@
       "name": "组件",
       "groups": [
         {
+          "groupName": "打扮家",
+          "list": [
+            {
+              "path": "/dbj-upload",
+              "title": "DbjUpload"
+            }
+          ]
+        },
+        {
           "groupName": "Basic",
           "list": [
             {

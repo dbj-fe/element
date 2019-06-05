@@ -77,6 +77,9 @@ import Image from '../packages/image/index.js';
 import Calendar from '../packages/calendar/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
+import DbjUpload from '../packages/dbj-upload/index.js';
+import DbjDirUpload from '../packages/dbj-dir-upload/index.js';
+import DbjReader from '../packages/dbj-reader/index.js';
 
 const components = [
   Pagination,
@@ -150,7 +153,10 @@ const components = [
   Divider,
   Image,
   Calendar,
-  CollapseTransition
+  CollapseTransition,
+  DbjUpload,
+  DbjDirUpload,
+  DbjReader
 ];
 
 const install = function(Vue, opts = {}) {
@@ -189,6 +195,9 @@ export default {
   i18n: locale.i18n,
   install,
   CollapseTransition,
+  DbjUpload,
+  DbjDirUpload,
+  DbjReader,
   Loading,
   Pagination,
   Dialog,
