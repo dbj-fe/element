@@ -11,8 +11,8 @@ $namespace: 'dbj';
     font-size: 12px;
     line-height: 16px;
     & i {
-      font-size: 16px;
-      vertical-align: -2px;
+      font-size: 14px;
+      margin-right: 2px;
     }
   }
 
@@ -62,7 +62,7 @@ $namespace: 'dbj';
             }
             > i {
               margin-left: 12px;
-              font-size: 16px;
+              font-size: 14px;
               color: $--color-primary;
             }
           }

@@ -21,7 +21,7 @@
     >
       <slot>
         <div class="dbj-dir-upload__button">
-          <i class="el-icon-upload2" />
+          <i class="dbj-icon-upload" />
           <span>上传文件夹</span>
         </div>
       </slot>
@@ -45,14 +45,14 @@
           <div class="top">
             <div class="dbj-dir-upload__label">
               <span class="file-name">{{dirName || '无目录'}}</span>
-              <i class="el-icon-success" />
+              <i class="dbj-icon-success" />
             </div>
             <span class="file-size">
               <span class="current">{{formatFileSize(sizeStat.loaded)}}</span>
               <span class="total">/{{formatFileSize(sizeStat.total)}}</span>
             </span>
-            <i @click="handleClear" class="el-icon-circle-close"/>
-            <i @click="handleReplace" class="el-icon-upload2"/>
+            <i @click="handleClear" class="dbj-icon-circle-close"/>
+            <i @click="handleReplace" class="dbj-icon-replace"/>
           </div>
           <div class="bottom">
             <span class="progress">
@@ -61,7 +61,7 @@
                 :style="{width: (sizeStat.total ? sizeStat.loaded*100/sizeStat.total : 0) + '%'}"
               />
             </span>
-            <i class="el-icon-circle-close"/>
+            <i class="dbj-icon-circle-close"/>
           </div>
         </div>
       </div>

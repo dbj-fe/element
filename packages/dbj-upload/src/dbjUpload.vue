@@ -21,7 +21,7 @@
     >
       <slot>
         <div class="dbj-upload__button">
-          <i class="el-icon-upload2" />
+          <i class="dbj-icon-upload" />
           <span>上传文件</span>
         </div>
       </slot>
@@ -46,14 +46,14 @@
                 <span class="file-name">{{ file.prefix }}</span>
                 <span v-if="file.suffix" class="file-suffix">{{ file.suffix }}</span>
               </span>
-              <i class="el-icon-success" />
+              <i class="dbj-icon-success" />
             </label>
             <span v-if="file.size > 0" class="file-size">
               <span class="current">{{ formatFileSize(file.sizeLoaded) }}</span>
               <span class="total">/{{ formatFileSize(file.size) }}</span>
             </span>
           </span>
-          <i @click="handleRemove(file)" class="el-icon-circle-close"/>
+          <i @click="handleRemove(file)" class="dbj-icon-circle-close"/>
           <el-upload
             ref="replaceUploader"
             class="upload-icon"
@@ -65,7 +65,7 @@
             :show-file-list="false"
             :accept="accept"
           >
-            <i class="el-icon-upload2"/>
+            <i class="dbj-icon-replace"/>
           </el-upload>
         </p>
         <p class="dbj-upload-list__item-progress">
@@ -75,7 +75,7 @@
               :style="{width: file.sizeLoaded*100/file.size + '%'}"
             />
           </span>
-          <i class="el-icon-circle-close" @click="handleAbort(file)"/>
+          <i class="dbj-icon-circle-close" @click="handleAbort(file)"/>
         </p>
       </li>
     </ul>

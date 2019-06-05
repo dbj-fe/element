@@ -21,7 +21,7 @@
         <span
           class="dbj-reader__button"
         >
-          <i class="el-icon-upload2" />
+          <i class="dbj-icon-upload" />
           <span>上传文件</span>
         </span>
       </slot>
@@ -35,10 +35,10 @@
     <div class="dbj-reader__display">
       <div class="dbj-reader__info">
         <span>文件已上传</span>
-        <i class="el-icon-success" />
+        <i class="dbj-icon-success" />
       </div>
-      <i @click="handleClear" class="el-icon-circle-close"/>
-      <i @click="handleReplace" class="el-icon-upload2"/>
+      <i @click="handleClear" class="dbj-icon-circle-close"/>
+      <i @click="handleReplace" class="dbj-icon-replace"/>
     </div>
   </div>
   <div
