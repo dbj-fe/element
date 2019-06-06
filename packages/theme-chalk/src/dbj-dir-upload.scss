@@ -6,6 +6,15 @@ $namespace: 'dbj';
 @include b(dir-upload) {
   width: 520px;
 
+  > .el-upload-wrapper {
+    line-height: 16px;
+    padding-top: 12px;
+    .el-upload {
+      display: block;
+      text-align: left;
+    }
+  }
+
   @include e(button) {
     color: $--color-primary;
     font-size: 12px;

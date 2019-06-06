@@ -40,7 +40,7 @@
           class="el-icon-arrow-down"
           @click="expand = !expand"
         />
-        <img src="./asset/folder.png">
+        <img src="https://ali-image.dabanjia.com/static/image/element-ui/folder.png">
         <div class="content-wrapper">
           <div class="top">
             <div class="dbj-dir-upload__label">

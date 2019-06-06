@@ -75,11 +75,11 @@ import Link from '../packages/link/index.js';
 import Divider from '../packages/divider/index.js';
 import Image from '../packages/image/index.js';
 import Calendar from '../packages/calendar/index.js';
+import DbjUpload from '../packages/dbj-upload/index.js';
+import DbjReader from '../packages/dbj-reader/index.js';
+import DbjDirUpload from '../packages/dbj-dir-upload/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
-import DbjUpload from '../packages/dbj-upload/index.js';
-import DbjDirUpload from '../packages/dbj-dir-upload/index.js';
-import DbjReader from '../packages/dbj-reader/index.js';
 
 const components = [
   Pagination,
@@ -153,10 +153,10 @@ const components = [
   Divider,
   Image,
   Calendar,
-  CollapseTransition,
   DbjUpload,
+  DbjReader,
   DbjDirUpload,
-  DbjReader
+  CollapseTransition
 ];
 
 const install = function(Vue, opts = {}) {
@@ -190,14 +190,11 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '2.8.2',
+  version: '2.8.2-8',
   locale: locale.use,
   i18n: locale.i18n,
   install,
   CollapseTransition,
-  DbjUpload,
-  DbjDirUpload,
-  DbjReader,
   Loading,
   Pagination,
   Dialog,
@@ -272,5 +269,8 @@ export default {
   Link,
   Divider,
   Image,
-  Calendar
+  Calendar,
+  DbjUpload,
+  DbjReader,
+  DbjDirUpload
 };

@@ -7,9 +7,12 @@ $namespace: 'dbj';
   width: 456px;
 
   .el-upload-wrapper {
-    height: 16px;
     line-height: 16px;
     padding-top: 12px;
+    .el-upload {
+      display: block;
+      text-align: left;
+    }
   }
 
   @include m(single) {
