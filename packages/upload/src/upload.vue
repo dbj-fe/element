@@ -114,6 +114,9 @@ export default {
               }
             }
             this.post(processedFile);
+          } else if (fileType === '[object String]') {
+            // FIXME:处理action没有更新的问题，从promise中传递过来
+            this.post(rawFile, processedFile);
           } else {
             this.post(rawFile);
           }
@@ -141,7 +144,7 @@ export default {
         });
       }
     },
-    post(rawFile) {
+    post(rawFile, action) {
       const { uid } = rawFile;
       const options = {
         headers: this.headers,
@@ -149,7 +152,7 @@ export default {
         file: rawFile,
         data: typeof this.data === 'function' ? this.data(uid) : this.data,
         filename: this.name,
-        action: this.action,
+        action: action || this.action,
         onProgress: e => {
           this.onProgress(e, rawFile);
         },

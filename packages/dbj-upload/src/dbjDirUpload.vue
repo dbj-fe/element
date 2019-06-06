@@ -146,7 +146,7 @@ export default {
       expand: false,
       dirName: '',
       isReplace: false,
-      uploadServerUrl: 'http://dbj-test.oss-cn-beijing.aliyuncs.com',
+      uploadServerUrl: '',
       accessServerUrl: ''
     };
   },
@@ -239,7 +239,7 @@ export default {
                   reader.onload = function(progress) {
                     currentFile.sizeLoaded = currentFile.size;
                     currentFile.value = this.result;
-                    instance.$emit('input', this.getValue());
+                    instance.$emit('input', instance.getValue());
                   };
                 } else {
                   rawFile.index = ef.index;
@@ -274,7 +274,7 @@ export default {
             });
             this.uploadServerUrl = data.host;
             this.accessServerUrl = data.ossUrl;
-            resolve();
+            resolve(this.uploadServerUrl);
           })
           .catch(e => {
             reject();

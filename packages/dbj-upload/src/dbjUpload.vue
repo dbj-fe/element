@@ -42,7 +42,7 @@
         <p class="dbj-upload-list__item-content">
           <span class="file-info">
             <label class="content-wrapper">
-              <span class="content">
+              <span :title="file.name" class="content">
                 <span class="file-name">{{ file.prefix }}</span>
                 <span v-if="file.suffix" class="file-suffix">{{ file.suffix }}</span>
               </span>
@@ -152,7 +152,7 @@ export default {
     return {
       fileList: [],
       replaceUid: 0,
-      uploadServerUrl: 'http://dbj-test.oss-cn-beijing.aliyuncs.com',
+      uploadServerUrl: '',
       accessServerUrl: ''
     };
   },
@@ -266,7 +266,7 @@ export default {
             currentFile.key = data.dir + '/' + currentFile.fileKey;
             this.uploadServerUrl = data.host;
             this.accessServerUrl = data.ossUrl;
-            resolve();
+            resolve(this.uploadServerUrl);
           })
           .catch(e => {
             this.replaceUid = 0;

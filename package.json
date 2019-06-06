@@ -1,6 +1,6 @@
 {
   "name": "@dbj-fe/element-ui",
-  "version": "2.8.2-8",
+  "version": "2.8.2-10",
   "description": "A Component Library for Vue.js.",
   "main": "lib/element-ui.common.js",
   "files": [
