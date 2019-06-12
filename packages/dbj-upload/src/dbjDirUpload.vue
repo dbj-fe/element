@@ -202,6 +202,7 @@ export default {
      * 上传之前，过滤文件夹内的文件
      */
     handleFilesFilter(files) {
+      this.$emit('input-change', files);
       if (this.isReplace) {
         this.isReplace = false;
         this.expand = false;
@@ -240,6 +241,7 @@ export default {
                     currentFile.sizeLoaded = currentFile.size;
                     currentFile.value = this.result;
                     instance.$emit('input', instance.getValue());
+                    instance.handleComplete();
                   };
                 } else {
                   rawFile.index = ef.index;
