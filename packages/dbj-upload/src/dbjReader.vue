@@ -124,6 +124,9 @@ export default {
     handleReplace() {
       this.$refs.input.value = null;
       this.$refs.input.click();
+    },
+    triggerClick() {
+      this.$refs.input.click();
     }
   }
 };

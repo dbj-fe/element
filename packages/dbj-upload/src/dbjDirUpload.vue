@@ -352,11 +352,19 @@ export default {
           this.$set(currentFile, 'value', [{url: this.accessServerUrl + currentFile.fileKey, md5: md5}]);
           this.$emit('input', this.getValue());
           this.dispatch('ElFormItem', 'el.form.blur', [this.fileList]);
+          this.handleComplete();
         });
       } else {
         this.$set(currentFile, 'value', [{url: this.accessServerUrl + currentFile.fileKey}]);
         this.$emit('input', this.getValue());
         this.dispatch('ElFormItem', 'el.form.blur', [this.fileList]);
+        this.handleComplete();
+      }
+    },
+    handleComplete() {
+      let isComplete = this.fileList.every(file => file.sizeLoaded === file.size);
+      if (isComplete) {
+        this.$emit('complete', this.getValue());
       }
     },
     getUploadData(uid) {
@@ -416,6 +424,9 @@ export default {
     },
     handleError(msg, file) {
       this.$emit('error', msg, file);
+    },
+    triggerClick() {
+      this.$refs.uploader.$refs['upload-inner'].handleClick();
     }
   }
 };
