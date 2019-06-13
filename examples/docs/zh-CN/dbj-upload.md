@@ -10,6 +10,7 @@
   type="resource"
   file-type="jpg,png"
   tip="仅支持.jpg和.png格式文件，小于1MB"
+  v-model="fileList"
   :max-size="1*1024*1024"
   :request-token="getUploadToken"
   @error="handleError"
@@ -19,6 +20,10 @@
   export default {
     data() {
       return {
+        fileList: [{
+          url: '',
+          md5: ''
+        }]
       };
     },
     methods: {
@@ -43,6 +48,7 @@
   type="resource"
   file-type="jpg,png"
   tip="仅支持.jpg和.png格式文件，小于1MB"
+  v-model="fileList"
   :max-size="1*1024*1024"
   multiple
   :request-token="getUploadToken"
@@ -53,6 +59,10 @@
   export default {
     data() {
       return {
+        fileList: [{
+          url: '',
+          md5: ''
+        }]
       };
     },
     methods: {

@@ -2,8 +2,10 @@
   <div
     class="dbj-dir-upload"
     :class="{
-      uploading: fileList.length,
-      uploaded: fileList.length && fileList.every(file => file.sizeLoaded === file.size)
+      ready: isReady,
+      uploading: isUploading,
+      uploaded: isComplete,
+      'no-file': !hasFile
     }"
   >
     <el-upload
@@ -46,6 +48,7 @@
             <div class="dbj-dir-upload__label">
               <span class="file-name">{{dirName || '无目录'}}</span>
               <i class="dbj-icon-success" />
+              <i class="dbj-icon-warn" title="没有文件" />
             </div>
             <span class="file-size">
               <span class="current">{{formatFileSize(sizeStat.loaded)}}</span>
@@ -147,10 +150,15 @@ export default {
       dirName: '',
       isReplace: false,
       uploadServerUrl: '',
-      accessServerUrl: ''
+      accessServerUrl: '',
+      isUploading: false,
+      isComplete: false
     };
   },
   computed: {
+    isReady() {
+      return !!this.fileList.length;
+    },
     fileUidIdxMap() {
       let map = {};
       this.fileList.forEach((item, idx) => {
@@ -173,6 +181,19 @@ export default {
         total,
         loaded
       };
+    },
+    hasFile() {
+      return this.fileList.some(file => {
+        if (file.read) {
+          if (file.value) {
+            return true;
+          }
+        } else {
+          if (file.value[0] && file.value[0].url) {
+            return true;
+          }
+        }
+      });
     }
   },
   watch: {
@@ -182,16 +203,23 @@ export default {
         let initFiles = false;
         for (let i = 0; i < val.length; i++) {
           let item = val[i];
-          let dirName = getDirName(item.url);
-          if (item.url) {
-            initFiles = true;
-          }
-          if (dirName) {
-            this.dirName = dirName;
-            break;
+          if (item.read) {
+            if (item.content) {
+              initFiles = true;
+            }
+          } else {
+            let dirName = getDirName(item.url);
+            if (item.url) {
+              initFiles = true;
+            }
+            if (dirName) {
+              this.dirName = dirName;
+              break;
+            }
           }
         }
         if (initFiles && !this.fileList.length) {
+          this.isComplete = true;
           this.resetDirFiles(val);
         }
       }
@@ -202,22 +230,23 @@ export default {
      * 上传之前，过滤文件夹内的文件
      */
     handleFilesFilter(files) {
-      this.$emit('input-change', files);
+      this.isUploading = true;
+      this.isComplete = false;
+      this.$emit('pre-upload', files);
       if (this.isReplace) {
         this.isReplace = false;
         this.expand = false;
-        this.resetDirFiles(this.value.map(item => {
-          if (item.read) {
-            return {...item, content: ''};
-          }
-          return {...item, url: '', md5Value: ''};
-        }));
-      } else if (!this.fileList.length) {
-        this.resetDirFiles(this.value);
       }
+      this.resetDirFiles(this.value.map(item => {
+        if (item.read) {
+          return {...item, content: ''};
+        }
+        return {...item, url: '', md5Value: ''};
+      }));
       let rawFiles = Array.prototype.slice.call(files);
       return new Promise((resolve, reject) => {
         let postFiles = [];
+        let hasMatchFile = false;
         for (let i = 0; i < rawFiles.length; i++) {
           let rawFile = rawFiles[i];
           let path = rawFile.webkitRelativePath;
@@ -227,8 +256,8 @@ export default {
             break;
           }
           if (path.split('/').length === 2) {
-            this.dirName = path.split('/')[0].replace(/\$/g, '');
-            emptyFiles.some(ef => {
+            this.dirName = path.split('/')[0].replace(/\$/g, '').slice(0, 40);
+            hasMatchFile = emptyFiles.some(ef => {
               let reg = new RegExp('\\.' + ef.fileType + '$', 'i');
               if (reg.test(name)) {
                 let currentFile = this.fileList[ef.index];
@@ -252,10 +281,18 @@ export default {
                 }
                 return true;
               }
-            });
+            }) || hasMatchFile;
           }
         }
-        resolve(postFiles);
+        if (hasMatchFile) {
+          resolve(postFiles);
+        } else {
+          this.isUploading = false;
+          this.isComplete = true;
+          this.$emit('input', this.getValue());
+          this.$emit('no-file');
+          reject();
+        }
       });
     },
     beforeUpload(file) {
@@ -323,13 +360,13 @@ export default {
     getValue() {
       return this.value.map((item, index) => {
         if (item.read) {
-          let { value = '' } = this.fileList[index];
+          let { value = '' } = this.fileList[index] || {};
           return {
             ...item,
             content: value
           };
         } else {
-          let { value = [] } = this.fileList[index];
+          let { value = [] } = this.fileList[index] || {};
           let {
             url = '',
             md5 = ''
@@ -366,6 +403,8 @@ export default {
     handleComplete() {
       let isComplete = this.fileList.every(file => file.sizeLoaded === file.size);
       if (isComplete) {
+        this.isUploading = false;
+        this.isComplete = true;
         this.$emit('complete', this.getValue());
       }
     },
@@ -402,12 +441,17 @@ export default {
       currentFile.key = key;
       currentFile.fileKey = fileKey;
       currentFile.uid = uid;
-      this.$set(currentFile, 'value', [{url: url, md5: md5}]);
+      currentFile.md5Value = md5;
+      currentFile.url = url;
+      currentFile.value = [{url: url, md5: md5}];
+      this.$set(this.fileList, file.index, currentFile);
       this.$emit('input', this.getValue());
     },
     handleFileRead(file, value) {
       let currentFile = this.fileList[file.index];
-      this.$set(currentFile, 'value', value);
+      currentFile.value = value;
+      currentFile.content = value;
+      this.$set(this.fileList, file.index, currentFile);
       this.$emit('input', this.getValue());
     },
     handleClear() {

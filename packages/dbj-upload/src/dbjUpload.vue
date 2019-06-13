@@ -187,20 +187,20 @@ export default {
     value: {
       immediate: true,
       handler(val) {
-        let missingName = (val || []).some(file => {
-          if (file.url && !file.name) {
-            return true;
-          }
-        });
-        if (missingName) {
-          this.fileList = (val || []).map(file => {
-            let name = getFileName(file.url);
-            return {
-              ...file,
-              name
-            };
-          });
+        if (val === this.fileList) {
+          return;
         }
+        let list = (val || []).filter(item => item.url || item.name);
+        this.fileList = list.map(file => {
+          let name = file.name;
+          if (file.url && !file.name) {
+            name = getFileName(file.url);
+          }
+          return {
+            ...file,
+            name
+          };
+        });
       }
     }
   },
