@@ -318,7 +318,7 @@ export default {
         OSSAccessKeyId,
         policy,
         signature,
-        key,
+        key: decodeURIComponent(key), // 阿里云默认会进行一次encode，所以上传时不要encode
         success_action_status: '200' // 让服务端返回200,不然，默认会返回204
       };
     },

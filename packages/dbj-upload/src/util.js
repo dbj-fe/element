@@ -13,9 +13,9 @@ export function getFileKey(fileName, dirName) {
   var rdStr = ('0000' + random).substr(-4);
   var key = time + '_' + rdStr;
   if (dirName) {
-    return dirName + '$' + key + '$' + fileName;
+    return encodeURIComponent(dirName + '$' + key + '$' + fileName);
   }
-  return key + '$' + fileName;
+  return encodeURIComponent(key + '$' + fileName);
 }
 
 /**
@@ -27,6 +27,7 @@ export function getFileName(fileUrl) {
   if (!fileUrl) {
     return '';
   }
+  fileUrl = decodeURIComponent(fileUrl);
   var idx = fileUrl.indexOf('$');
   if (~idx) {
     var fileName = fileUrl.slice(idx + 1);
@@ -49,6 +50,7 @@ export function getDirName(fileUrl) {
   if (!fileUrl) {
     return '';
   }
+  fileUrl = decodeURIComponent(fileUrl);
   var fileName = fileUrl.split('/').pop();
   var reg = /\$\d{13}_\d{4}\$/;
   var arr = fileName.split(reg);

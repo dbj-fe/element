@@ -250,13 +250,13 @@ export default {
         for (let i = 0; i < rawFiles.length; i++) {
           let rawFile = rawFiles[i];
           let path = rawFile.webkitRelativePath;
-          let name = rawFile.name;
+          let name = (rawFile.name || "").slice(0, 20);
           let emptyFiles = this.fileList.filter(f => !f.size);
           if (!emptyFiles.length) {
             break;
           }
           if (path.split('/').length === 2) {
-            this.dirName = path.split('/')[0].replace(/\$/g, '').slice(0, 40);
+            this.dirName = path.split('/')[0].replace(/\$/g, '').slice(0, 20);
             hasMatchFile = emptyFiles.some(ef => {
               let reg = new RegExp('\\.' + ef.fileType + '$', 'i');
               if (reg.test(name)) {
@@ -419,7 +419,7 @@ export default {
         OSSAccessKeyId,
         policy,
         signature,
-        key,
+        key: decodeURIComponent(key), // 阿里云默认会进行一次encode，所以上传时不要encode
         success_action_status: '200' // 让服务端返回200,不然，默认会返回204
       };
     },
