@@ -250,13 +250,13 @@ export default {
         for (let i = 0; i < rawFiles.length; i++) {
           let rawFile = rawFiles[i];
           let path = rawFile.webkitRelativePath;
-          let name = (rawFile.name || "").slice(0, 20);
+          let name = rawFile.name || '';
           let emptyFiles = this.fileList.filter(f => !f.size);
           if (!emptyFiles.length) {
             break;
           }
           if (path.split('/').length === 2) {
-            this.dirName = path.split('/')[0].replace(/\$/g, '').slice(0, 20);
+            this.dirName = path.split('/')[0].replace(/\$/g, '').slice(0, 40);
             hasMatchFile = emptyFiles.some(ef => {
               let reg = new RegExp('\\.' + ef.fileType + '$', 'i');
               if (reg.test(name)) {
