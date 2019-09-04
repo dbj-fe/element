@@ -22,38 +22,38 @@
     padding: 40px 0;
     color: #333;
     font-size: 14px;
-    
+
     &::after {
       content: '';
       display: block;
       clear: both;
     }
-     
+
     & i {
       transition: .3s;
       color: #999;
       vertical-align: baseline;
     }
   }
-  
+
   .footer-nav-link {
     cursor: pointer;
     transition: .3s;
-    
+
     &:hover {
       color: #409EFF;
-     
+
       & i {
         color: #409EFF;
       }
     }
   }
-  
+
   .footer-nav-left {
     float: left;
     margin-left: -4px;
   }
-  
+
   .footer-nav-right {
     float: right;
     margin-right: -4px;
@@ -90,8 +90,8 @@
     methods: {
       setNav() {
         let nav = navConfig[this.lang];
-        this.nav = [nav[0]].concat(nav[3].children);
-        nav[4].groups.map(group => group.list).forEach(list => {
+        this.nav = [].concat(nav[0].children);
+        nav[1].groups.map(group => group.list).forEach(list => {
           this.nav = this.nav.concat(list);
         });
       },

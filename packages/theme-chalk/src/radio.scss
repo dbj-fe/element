@@ -161,8 +161,8 @@
     }
 
     &::after {
-      width: 4px;
-      height: 4px;
+      width: 8px;
+      height: 8px;
       border-radius: $--radio-input-border-radius;
       background-color: $--color-white;
       content: "";
@@ -194,6 +194,6 @@
 
   @include e(label) {
     font-size: $--radio-font-size;
-    padding-left: 10px;
+    padding-left: 8px;
   }
 }

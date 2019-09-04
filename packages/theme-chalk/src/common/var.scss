@@ -31,13 +31,13 @@ $--color-primary-light-7: mix($--color-white, $--color-primary, 70%) !default; /
 $--color-primary-light-8: mix($--color-white, $--color-primary, 80%) !default; /* d9ecff */
 $--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default; /* ecf5ff */
 /// color|1|Functional Color|1
-$--color-success: #67C23A !default;
+$--color-success: #47C677 !default;
 /// color|1|Functional Color|1
-$--color-warning: #E6A23C !default;
+$--color-warning: #FF7E43 !default;
 /// color|1|Functional Color|1
-$--color-danger: #F56C6C !default;
+$--color-danger: #FF5A47 !default;
 /// color|1|Functional Color|1
-$--color-info: #909399 !default;
+$--color-info: #999999 !default;
 
 $--color-success-light: mix($--color-white, $--color-success, 80%) !default;
 $--color-warning-light: mix($--color-white, $--color-warning, 80%) !default;
@@ -49,25 +49,25 @@ $--color-warning-lighter: mix($--color-white, $--color-warning, 90%) !default;
 $--color-danger-lighter: mix($--color-white, $--color-danger, 90%) !default;
 $--color-info-lighter: mix($--color-white, $--color-info, 90%) !default;
 /// color|1|Font Color|2
-$--color-text-primary: #303133 !default;
+$--color-text-primary: #333333 !default;
 /// color|1|Font Color|2
-$--color-text-regular: #606266 !default;
+$--color-text-regular: #333333 !default;
 /// color|1|Font Color|2
-$--color-text-secondary: #909399 !default;
+$--color-text-secondary: #999999 !default;
 /// color|1|Font Color|2
-$--color-text-placeholder: #C0C4CC !default;
+$--color-text-placeholder: #CCCCCC !default;
 /// color|1|Border Color|3
-$--border-color-base: #DCDFE6 !default;
+$--border-color-base: #CCCCCC !default;
 /// color|1|Border Color|3
-$--border-color-light: #E4E7ED !default;
+$--border-color-light: #E6E6E6 !default;
 /// color|1|Border Color|3
-$--border-color-lighter: #EBEEF5 !default;
+$--border-color-lighter: #F2F2F2 !default;
 /// color|1|Border Color|3
-$--border-color-extra-light: #F2F6FC !default;
+$--border-color-extra-light: #F5F5F5 default;
 
 // Background
 /// color|1|Background Color|4
-$--background-color-base: #F5F7FA !default;
+$--background-color-base: #F5F5F5 !default;
 
 /* Link
 -------------------------- */
@@ -79,7 +79,7 @@ $--link-hover-color: $--color-primary !default;
 $--border-width-base: 1px !default;
 $--border-style-base: solid !default;
 $--border-color-hover: $--color-text-placeholder !default;
-$--border-base: $--border-width-base $--border-style-base $--border-color-base !default;
+$--border-base: $--border-width-base $--border-style-base $--border-color-light !default;
 /// borderRadius|1|Radius|0
 $--border-radius-base: 4px !default;
 /// borderRadius|1|Radius|0
@@ -117,7 +117,7 @@ $--font-size-small: 13px !default;
 /// fontSize|1|Font Size|0
 $--font-size-extra-small: 12px !default;
 /// fontWeight|1|Font Weight|1
-$--font-weight-primary: 500 !default;
+$--font-weight-primary: 400 !default;
 /// fontWeight|1|Font Weight|1
 $--font-weight-secondary: 100 !default;
 /// fontLineHeight|1|Line Height|2
@@ -167,12 +167,12 @@ $--checkbox-disabled-border-color: $--border-color-base !default;
 $--checkbox-disabled-input-fill: #edf2fc !default;
 $--checkbox-disabled-icon-color: $--color-text-placeholder !default;
 
-$--checkbox-disabled-checked-input-fill: $--border-color-extra-light !default;
-$--checkbox-disabled-checked-input-border-color: $--border-color-base !default;
-$--checkbox-disabled-checked-icon-color: $--color-text-placeholder !default;
+$--checkbox-disabled-checked-input-fill: $--color-primary-light-4 !default;
+$--checkbox-disabled-checked-input-border-color: $--color-primary-light-4 !default;
+$--checkbox-disabled-checked-icon-color: $--color-white !default;
 
 /// color||Color|0
-$--checkbox-checked-font-color: $--color-primary !default;
+$--checkbox-checked-font-color: $--color-text-regular !default;
 $--checkbox-checked-input-border-color: $--color-primary !default;
 /// color||Color|0
 $--checkbox-checked-background-color: $--color-primary !default;
@@ -219,8 +219,8 @@ $--radio-font-size: $--font-size-base !default;
 $--radio-font-weight: $--font-weight-primary !default;
 /// color||Color|0
 $--radio-font-color: $--color-text-regular !default;
-$--radio-input-height: 14px !default;
-$--radio-input-width: 14px !default;
+$--radio-input-height: 16px !default;
+$--radio-input-width: 16px !default;
 /// borderRadius||Border|2
 $--radio-input-border-radius: $--border-radius-circle !default;
 /// color||Color|0
@@ -231,16 +231,16 @@ $--radio-input-border-color: $--border-color-base !default;
 /// color||Color|0
 $--radio-icon-color: $--color-white !default;
 
-$--radio-disabled-input-border-color: $--disabled-border-base !default;
+$--radio-disabled-input-border-color: $--border-color-base !default;
 $--radio-disabled-input-fill: $--disabled-fill-base !default;
 $--radio-disabled-icon-color: $--disabled-fill-base !default;
 
-$--radio-disabled-checked-input-border-color: $--disabled-border-base !default;
-$--radio-disabled-checked-input-fill: $--disabled-fill-base !default;
-$--radio-disabled-checked-icon-color: $--color-text-placeholder !default;
+$--radio-disabled-checked-input-border-color: $--color-primary-light-4 !default;
+$--radio-disabled-checked-input-fill: $--color-primary-light-4 !default;
+$--radio-disabled-checked-icon-color: $--color-white !default;
 
 /// color||Color|0
-$--radio-checked-font-color: $--color-primary !default;
+$--radio-checked-font-color: $--color-text-regular !default;
 /// color||Color|0
 $--radio-checked-input-border-color: $--color-primary !default;
 /// color||Color|0
@@ -429,9 +429,9 @@ $--input-width: 140px !default;
 /// height||Other|4
 $--input-height: 40px !default;
 $--input-border: $--border-base !default;
-$--input-border-color: $--border-color-base !default;
+$--input-border-color: $--border-color-light !default;
 /// borderRadius||Border|2
-$--input-border-radius: $--border-radius-base !default;
+$--input-border-radius: $--border-radius-zero !default;
 $--input-border-color-hover: $--border-color-hover !default;
 /// color||Color|0
 $--input-background-color: $--color-white !default;
@@ -517,7 +517,7 @@ $--button-font-size: $--font-size-base !default;
 /// fontWeight||Font|1
 $--button-font-weight: $--font-weight-primary !default;
 /// borderRadius||Border|2
-$--button-border-radius: $--border-radius-base !default;
+$--button-border-radius: $--border-radius-small !default;
 /// padding||Spacing|3
 $--button-padding-vertical: 12px !default;
 /// padding||Spacing|3
@@ -526,7 +526,7 @@ $--button-padding-horizontal: 20px !default;
 /// fontSize||Font|1
 $--button-medium-font-size: $--font-size-base !default;
 /// borderRadius||Border|2
-$--button-medium-border-radius: $--border-radius-base !default;
+$--button-medium-border-radius: $--border-radius-small !default;
 /// padding||Spacing|3
 $--button-medium-padding-vertical: 10px !default;
 /// padding||Spacing|3
@@ -534,14 +534,14 @@ $--button-medium-padding-horizontal: 20px !default;
 
 /// fontSize||Font|1
 $--button-small-font-size: 12px !default;
-$--button-small-border-radius: #{$--border-radius-base - 1} !default;
+$--button-small-border-radius: $--border-radius-small !default;
 /// padding||Spacing|3
 $--button-small-padding-vertical: 9px !default;
 /// padding||Spacing|3
 $--button-small-padding-horizontal: 15px !default;
 /// fontSize||Font|1
 $--button-mini-font-size: 12px !default;
-$--button-mini-border-radius: #{$--border-radius-base - 1} !default;
+$--button-mini-border-radius: 0 !default;
 /// padding||Spacing|3
 $--button-mini-padding-vertical: 7px !default;
 /// padding||Spacing|3
@@ -552,7 +552,7 @@ $--button-default-font-color: $--color-text-regular !default;
 /// color||Color|0
 $--button-default-background-color: $--color-white !default;
 /// color||Color|0
-$--button-default-border-color: $--border-color-base !default;
+$--button-default-border-color: $--border-color-light !default;
 
 /// color||Color|0
 $--button-disabled-font-color: $--color-text-placeholder !default;
@@ -605,7 +605,7 @@ $--cascader-height: 200px !default;
 /// color||Color|0
 $--switch-on-color: $--color-primary !default;
 /// color||Color|0
-$--switch-off-color: $--border-color-base !default;
+$--switch-off-color: $--border-color-light !default;
 /// fontSize||Font|1
 $--switch-font-size: $--font-size-base !default;
 $--switch-core-border-radius: 10px !default;
@@ -637,7 +637,7 @@ $--table-border: 1px solid $--table-border-color !default;
 /// color||Color|0
 $--table-font-color: $--color-text-regular !default;
 /// color||Color|0
-$--table-header-font-color: $--color-text-secondary !default;
+$--table-header-font-color: $--color-text-regular !default;
 /// color||Color|0
 $--table-row-hover-background-color: $--background-color-base !default;
 $--table-current-row-background-color: $--color-primary-light-9 !default;
@@ -743,8 +743,8 @@ $--tree-expand-icon-color: $--color-text-placeholder !default;
 /* Dropdown
 -------------------------- */
 $--dropdown-menu-box-shadow: $--box-shadow-light !default;
-$--dropdown-menuItem-hover-fill: $--color-primary-light-9 !default;
-$--dropdown-menuItem-hover-color: $--link-color !default;
+$--dropdown-menuItem-hover-fill: $--background-color-base !default;
+$--dropdown-menuItem-hover-color: $--color-text-regular !default;
 
 /* Badge
 -------------------------- */

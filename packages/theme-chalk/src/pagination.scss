@@ -84,7 +84,7 @@
   }
 
   .btn-next {
-    padding-left: 12px;    
+    padding-left: 12px;
   }
 
   .el-pager li.disabled {
@@ -130,7 +130,7 @@
   }
 
   @include e(sizes) {
-    margin: 0 10px 0 0;
+    margin: 0 24px 0 0;
     font-weight: normal;
     color: $--color-text-regular;
 
@@ -145,9 +145,9 @@
   }
 
   @include e(total) {
-    margin-right: 10px;
+    margin-right: 24px;
     font-weight: normal;
-    color: $--color-text-regular;
+    color: $--color-text-secondary;
   }
 
   @include e(jump) {
@@ -168,7 +168,7 @@
     line-height: 18px;
     padding: 0 2px;
     height: $--pagination-button-height;
-      
+
     text-align: center;
     margin: 0 2px;
     box-sizing: border-box;
@@ -193,10 +193,12 @@
     .btn-prev,
     .btn-next,
     .el-pager li {
-      margin: 0 5px;
-      background-color: $--color-info-lighter;
+      margin: 0 4px;
+      border: $--border-base;
       color: $--color-text-regular;
-      min-width: 30px;
+      height: 32px;
+      min-width: 32px;
+      line-height: 32px;
       border-radius: 2px;
 
       &.disabled {
@@ -207,6 +209,10 @@
     .btn-prev, .btn-next {
       padding: 0;
 
+      &:not(:disabled):hover {
+        border-color: $--color-primary;
+      }
+
       &:disabled {
         color: $--color-text-placeholder;
       }
@@ -214,13 +220,21 @@
 
     .el-pager li:not(.disabled) {
       &:hover {
-        color: $--pagination-hover-color;
+        border-color: $--color-primary;
       }
 
       &.active {
-        background-color: $--color-primary;
-        color: $--color-white;
+        border-color: transparent;
+        background-color: transparent;
+        color: $--color-primary;
       }
+    }
+
+    .el-pagination__total,
+    .el-pagination__jump,
+    .el-pagination__sizes {
+      height: 32px;
+      line-height: 32px;
     }
 
     &.el-pagination--small {

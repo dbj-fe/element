@@ -343,7 +343,7 @@
           </li>
 
           <!-- 语言选择器 -->
-          <li class="nav-item lang-item">
+          <!-- <li class="nav-item lang-item">
             <el-dropdown
               trigger="click"
               class="nav-dropdown nav-lang"
@@ -365,7 +365,7 @@
                 >{{ value }}</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-          </li>
+          </li> -->
 
           <!--theme picker-->
           <!-- <li class="nav-item nav-theme-switch" v-show="isComponentPage">

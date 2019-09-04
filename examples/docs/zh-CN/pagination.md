@@ -2,6 +2,39 @@
 
 当数据量过多时，使用分页分解数据。
 
+### 通常用法
+
+:::demo 后台页面中使用的分页样式。
+```html
+<template>
+  <el-pagination
+    background
+    layout="total, prev, pager, next, jumper"
+    :current-page="pageNum"
+    :total="pageTotal"
+    :page-size="pageSize"
+    @current-change="getPage">
+  </el-pagination>
+</template>
+<script>
+  export default {
+    methods: {
+      getPage(val) {
+        console.log(`当前页: ${val}`);
+      }
+    },
+    data() {
+      return {
+        pageTotal: 500,
+        pageSize: 15,
+        pageNum: 1
+      };
+    }
+  }
+</script>
+```
+:::
+
 ### 基础用法
 
 :::demo 设置`layout`，表示需要显示的内容，用逗号分隔，布局元素会依次显示。`prev`表示上一页，`next`为下一页，`pager`表示页码列表，除此以外还提供了`jumper`和`total`，`size`和特殊的布局符号`->`，`->`后的元素会靠右显示，`jumper`表示跳页元素，`total`表示总条目数，`size`用于设置每页显示的页码数量。
