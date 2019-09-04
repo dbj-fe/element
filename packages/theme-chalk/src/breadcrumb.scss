@@ -3,7 +3,7 @@
 @import "common/var";
 
 @include b(breadcrumb) {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1;
   @include utils-clearfix;
 
@@ -13,7 +13,7 @@
     color: $--color-text-placeholder;
 
     &[class*=icon] {
-      margin: 0 6px;
+      margin: 0 8px;
       font-weight: normal;
     }
   }
@@ -25,7 +25,6 @@
       color: $--color-text-regular;
 
       &.is-link, & a {
-        font-weight: bold;
         text-decoration: none;
         transition: $--color-transition-base;
         color: $--color-text-primary;
@@ -41,7 +40,7 @@
       .el-breadcrumb__inner,
       .el-breadcrumb__inner a {
         &, &:hover {
-          font-weight: normal;
+          font-weight: bold;
           color: $--color-text-regular;
           cursor: text;
         }
