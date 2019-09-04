@@ -33,14 +33,14 @@
             } else {
               tabSize = $el[`client${firstUpperCase(sizeName)}`];
               if (sizeName === 'width' && this.tabs.length > 1) {
-                tabSize -= (index === 0 || index === this.tabs.length - 1) ? 20 : 40;
+                tabSize -= (index === 0 || index === this.tabs.length - 1) ? 16 : 32;
               }
               return false;
             }
           });
 
           if (sizeName === 'width' && offset !== 0) {
-            offset += 20;
+            offset += 16;
           }
           const transform = `translate${firstUpperCase(sizeDir)}(${offset}px)`;
           style[sizeName] = tabSize + 'px';

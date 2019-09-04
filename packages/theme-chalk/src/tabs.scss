@@ -5,7 +5,6 @@
   @include e(header) {
     padding: 0;
     position: relative;
-    margin: 0 0 15px;
   }
   @include e(active-bar) {
     position: absolute;
@@ -93,14 +92,14 @@
     }
   }
   @include e(item) {
-    padding: 0 20px;
-    height: 40px;
+    padding: 0 16px;
+    height: 48px;
     box-sizing: border-box;
-    line-height: 40px;
+    line-height: 48px;
     display: inline-block;
     list-style: none;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
     color: $--color-text-primary;
     position: relative;
 
@@ -151,6 +150,12 @@
     > .el-tabs__header {
       border-bottom: 1px solid $--border-color-light;
     }
+    > .el-tabs__header .el-tabs__nav-wrap {
+      padding: 0;
+    }
+    > .el-tabs__header .el-tabs__nav-wrap.is-scrollable {
+      padding: 0 20px;
+    }
     > .el-tabs__header .el-tabs__nav-wrap::after {
       content: none;
     }
@@ -196,8 +201,8 @@
         border-bottom-color: $--color-white;
 
         &.is-closable {
-          padding-left: 20px;
-          padding-right: 20px;
+          padding-left: 16px;
+          padding-right: 16px;
 
           .el-icon-close {
             width: 14px;
@@ -218,6 +223,12 @@
       background-color: $--background-color-base;
       border-bottom: 1px solid $--border-color-light;
       margin: 0;
+    }
+    > .el-tabs__header .el-tabs__nav-wrap {
+      padding: 0;
+    }
+    > .el-tabs__header .el-tabs__nav-wrap.is-scrollable {
+      padding: 0 20px;
     }
     > .el-tabs__header .el-tabs__nav-wrap::after {
       content: none;
@@ -254,7 +265,32 @@
       margin-left: 0;
     }
   }
+  @include m(secondary) {
+    .el-tabs__item {
+      font-size: 14px;
+      height: 52px;
+      line-height: 52px;
+      & + .el-tabs__item::before {
+        content: " ";
+        display: inline-block;
+        vertical-align: top;
+        height: 20px;
+        width: 1px;
+        background: #e6e6e6;
+        position: relative;
+        top: 16px;
+        left: -16px;
+      }
+    }
+  }
   @include m((top, bottom)) {
+    .el-tabs__nav-wrap {
+      padding: 0 16px;
+      &::after {
+        content: none;
+      }
+    }
+
     .el-tabs__item.is-top:nth-child(2),
     .el-tabs__item.is-bottom:nth-child(2) {
       padding-left: 0;
@@ -268,10 +304,20 @@
     .el-tabs--left, .el-tabs--right {
       > .el-tabs__header {
         .el-tabs__item:nth-child(2) {
-          padding-left: 20px;
+          padding-left: 16px;
         }
         .el-tabs__item:last-child {
-          padding-right: 20px;
+          padding-right: 16px;
+        }
+      }
+    }
+    &.el-tabs--secondary {
+      > .el-tabs__header {
+        .el-tabs__item:nth-child(1) {
+          padding-left: 0;
+        }
+        .el-tabs__item:nth-child(2) {
+          padding-left: 16px;
         }
       }
     }
@@ -328,7 +374,7 @@
         width: 100%;
         text-align: center;
         cursor: pointer;
-  
+
         i {
           transform: rotateZ(90deg);
         }

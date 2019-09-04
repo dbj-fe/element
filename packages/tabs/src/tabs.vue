@@ -163,15 +163,14 @@
       return (
         <div class={{
           'el-tabs': true,
-          'el-tabs--card': type === 'card',
           [`el-tabs--${tabPosition}`]: true,
-          'el-tabs--border-card': type === 'border-card'
+          [`el-tabs--${type}`]: type
         }}>
           { tabPosition !== 'bottom' ? [header, panels] : [panels, header] }
         </div>
       );
     },
-  
+
     created() {
       if (!this.currentName) {
         this.setCurrentName('0');
