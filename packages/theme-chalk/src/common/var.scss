@@ -225,7 +225,7 @@ $--radio-input-width: 16px !default;
 $--radio-input-border-radius: $--border-radius-circle !default;
 /// color||Color|0
 $--radio-input-background-color: $--color-white !default;
-$--radio-input-border: $--border-base !default;
+$--radio-input-border: $--border-width-base $--border-style-base $--border-color-base !default;
 /// color||Color|0
 $--radio-input-border-color: $--border-color-base !default;
 /// color||Color|0

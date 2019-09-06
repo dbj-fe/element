@@ -4,7 +4,7 @@
 
 @include b(breadcrumb) {
   font-size: 12px;
-  line-height: 1;
+  line-height: 18px;
   @include utils-clearfix;
 
   @include e(separator) {
@@ -14,7 +14,9 @@
 
     &[class*=icon] {
       margin: 0 8px;
+      font-size: 16px;
       font-weight: normal;
+      vertical-align: middle;
     }
   }
 
@@ -23,6 +25,7 @@
 
     @include e(inner) {
       color: $--color-text-regular;
+      vertical-align: middle;
 
       &.is-link, & a {
         text-decoration: none;
@@ -32,6 +35,9 @@
         &:hover {
           color: $--color-primary;
           cursor: pointer;
+        }
+        &:active {
+          color: #FA9200;
         }
       }
     }

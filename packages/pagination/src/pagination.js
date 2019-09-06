@@ -231,6 +231,9 @@ export default {
           // Drop this method when we no longer supports IE
           if (keyCode === 13) {
             this.handleChange(target.value);
+            this.$nextTick(() => {
+              this.$refs.jumperInput.blur();
+            });
           }
         },
         handleInput(value) {
@@ -248,6 +251,7 @@ export default {
           <span class="el-pagination__jump">
             { this.t('el.pagination.goto') }
             <el-input
+              ref="jumperInput"
               class="el-pagination__editor is-in-pagination"
               min={ 1 }
               max={ this.$parent.internalPageCount }

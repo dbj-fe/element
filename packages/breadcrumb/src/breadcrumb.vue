@@ -14,7 +14,7 @@
       },
       separatorClass: {
         type: String,
-        default: ''
+        default: 'dbj-icon-arrow-right'
       }
     },
 
