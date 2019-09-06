@@ -12,7 +12,7 @@
   display: inline-block;
   white-space: nowrap;
   user-select: none;
-  margin-right: 30px;
+  margin-right: 32px;
 
   @include when(bordered) {
     padding: $--checkbox-bordered-padding;
@@ -66,6 +66,9 @@
         width: $--checkbox-bordered-small-input-width;
 
         &::after {
+          border-width: 1px;
+          left: 4px;
+          top: 1px;
           height: 6px;
           width: 2px;
         }
@@ -86,6 +89,9 @@
         height: $--checkbox-bordered-mini-input-height;
         width: $--checkbox-bordered-mini-input-width;
         &::after {
+          border-width: 1px;
+          left: 4px;
+          top: 1px;
           height: 6px;
           width: 2px;
         }
@@ -176,7 +182,7 @@
           position: absolute;
           display: block;
           background-color: $--checkbox-checked-icon-color;
-          height: 2px;
+          height: 4px;
           transform: scale(0.5);
           left: 0;
           right: 0;
@@ -209,11 +215,11 @@
     &::after {
       box-sizing: content-box;
       content: "";
-      border: 1px solid $--checkbox-checked-icon-color;
+      border: 2px solid $--checkbox-checked-icon-color;
       border-left: 0;
       border-top: 0;
       height: 7px;
-      left: 4px;
+      left: 5px;
       position: absolute;
       top: 1px;
       transform: rotate(45deg) scaleY(0);
@@ -251,7 +257,8 @@
 
   @include e(inner) {
     display: inline-block;
-    line-height: 1;
+    height: 40px;
+    line-height: 40px;
     font-weight: $--checkbox-font-weight;
     white-space: nowrap;
     vertical-align: middle;
@@ -339,16 +346,22 @@
   }
   @include m(medium) {
     .el-checkbox-button__inner {
+      height: 36px;
+      line-height: 36px;
       @include button-size($--button-medium-padding-vertical, $--button-medium-padding-horizontal, $--button-medium-font-size, 0);
     }
   }
   @include m(small) {
     .el-checkbox-button__inner {
+      height: 32px;
+      line-height: 32px;
       @include button-size($--button-small-padding-vertical, $--button-small-padding-horizontal, $--button-small-font-size, 0);
     }
   }
   @include m(mini) {
     .el-checkbox-button__inner {
+      height: 28px;
+      line-height: 28px;
       @include button-size($--button-mini-padding-vertical, $--button-mini-padding-horizontal, $--button-mini-font-size, 0);
     }
   }

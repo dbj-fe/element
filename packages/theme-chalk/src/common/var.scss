@@ -16,7 +16,10 @@ $--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
 /* Color
 -------------------------- */
 /// color|1|Brand Color|0
-$--color-primary: #ffa800 !default;
+$--color-primary: #FFA800 !default;
+$--color-primary-disabled: #FFCB66 !default;
+$--color-primary-hover: #FFBB33 !default;
+$--color-primary-active: #FA9200 !default;
 /// color|1|Background Color|4
 $--color-white: #FFFFFF !default;
 /// color|1|Background Color|4
@@ -68,6 +71,7 @@ $--border-color-extra-light: #F5F5F5 default;
 // Background
 /// color|1|Background Color|4
 $--background-color-base: #F5F5F5 !default;
+$--background-color-hover: #FAFAFA !default;
 
 /* Link
 -------------------------- */
@@ -154,8 +158,8 @@ $--checkbox-font-size: 14px !default;
 $--checkbox-font-weight: $--font-weight-primary !default;
 /// color||Color|0
 $--checkbox-font-color: $--color-text-regular !default;
-$--checkbox-input-height: 14px !default;
-$--checkbox-input-width: 14px !default;
+$--checkbox-input-height: 16px !default;
+$--checkbox-input-width: 16px !default;
 /// borderRadius||Border|2
 $--checkbox-border-radius: $--border-radius-small !default;
 /// color||Color|0
@@ -164,11 +168,11 @@ $--checkbox-input-border: $--border-base !default;
 
 /// color||Color|0
 $--checkbox-disabled-border-color: $--border-color-base !default;
-$--checkbox-disabled-input-fill: #edf2fc !default;
+$--checkbox-disabled-input-fill: $--disabled-fill-base !default;
 $--checkbox-disabled-icon-color: $--color-text-placeholder !default;
 
-$--checkbox-disabled-checked-input-fill: $--color-primary-light-4 !default;
-$--checkbox-disabled-checked-input-border-color: $--color-primary-light-4 !default;
+$--checkbox-disabled-checked-input-fill: $--color-primary-disabled !default;
+$--checkbox-disabled-checked-input-border-color: $--color-primary-disabled !default;
 $--checkbox-disabled-checked-icon-color: $--color-white !default;
 
 /// color||Color|0
@@ -189,8 +193,8 @@ $--checkbox-bordered-medium-padding: 7px 20px 7px 10px !default;
 $--checkbox-bordered-small-padding: 5px 15px 5px 10px !default;
 /// padding||Spacing|3
 $--checkbox-bordered-mini-padding: 3px 15px 3px 10px !default;
-$--checkbox-bordered-medium-input-height: 14px !default;
-$--checkbox-bordered-medium-input-width: 14px !default;
+$--checkbox-bordered-medium-input-height: 16px !default;
+$--checkbox-bordered-medium-input-width: 16px !default;
 /// height||Other|4
 $--checkbox-bordered-medium-height: 36px !default;
 $--checkbox-bordered-small-input-height: 12px !default;
@@ -235,8 +239,8 @@ $--radio-disabled-input-border-color: $--border-color-base !default;
 $--radio-disabled-input-fill: $--disabled-fill-base !default;
 $--radio-disabled-icon-color: $--disabled-fill-base !default;
 
-$--radio-disabled-checked-input-border-color: $--color-primary-light-4 !default;
-$--radio-disabled-checked-input-fill: $--color-primary-light-4 !default;
+$--radio-disabled-checked-input-border-color: $--color-primary-disabled !default;
+$--radio-disabled-checked-input-fill: $--color-primary-disabled !default;
 $--radio-disabled-checked-icon-color: $--color-white !default;
 
 /// color||Color|0
@@ -519,33 +523,33 @@ $--button-font-weight: $--font-weight-primary !default;
 /// borderRadius||Border|2
 $--button-border-radius: $--border-radius-small !default;
 /// padding||Spacing|3
-$--button-padding-vertical: 12px !default;
+$--button-padding-vertical: 0 !default;
 /// padding||Spacing|3
-$--button-padding-horizontal: 20px !default;
+$--button-padding-horizontal: 16px !default;
 
 /// fontSize||Font|1
 $--button-medium-font-size: $--font-size-base !default;
 /// borderRadius||Border|2
 $--button-medium-border-radius: $--border-radius-small !default;
 /// padding||Spacing|3
-$--button-medium-padding-vertical: 10px !default;
+$--button-medium-padding-vertical: 0 !default;
 /// padding||Spacing|3
-$--button-medium-padding-horizontal: 20px !default;
+$--button-medium-padding-horizontal: 16px !default;
 
 /// fontSize||Font|1
 $--button-small-font-size: 12px !default;
 $--button-small-border-radius: $--border-radius-small !default;
 /// padding||Spacing|3
-$--button-small-padding-vertical: 9px !default;
+$--button-small-padding-vertical: 0 !default;
 /// padding||Spacing|3
-$--button-small-padding-horizontal: 15px !default;
+$--button-small-padding-horizontal: 12px !default;
 /// fontSize||Font|1
 $--button-mini-font-size: 12px !default;
 $--button-mini-border-radius: 0 !default;
 /// padding||Spacing|3
-$--button-mini-padding-vertical: 7px !default;
+$--button-mini-padding-vertical: 0 !default;
 /// padding||Spacing|3
-$--button-mini-padding-horizontal: 15px !default;
+$--button-mini-padding-horizontal: 12px !default;
 
 /// color||Color|0
 $--button-default-font-color: $--color-text-regular !default;

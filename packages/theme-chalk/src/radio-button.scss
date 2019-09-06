@@ -9,7 +9,8 @@
 
   @include e(inner) {
     display: inline-block;
-    line-height: 1;
+    height: 40px;
+    line-height: 40px;
     white-space: nowrap;
     vertical-align: middle;
     background: $--button-default-background-color;
@@ -93,16 +94,22 @@
 
   @include m(medium) {
     & .el-radio-button__inner {
+      height: 36px;
+      line-height: 36px;
       @include button-size($--button-medium-padding-vertical, $--button-medium-padding-horizontal, $--button-medium-font-size, 0);
     }
   }
   @include m(small) {
     & .el-radio-button__inner {
+      height: 32px;
+      line-height: 32px;
       @include button-size($--button-small-padding-vertical, $--button-small-padding-horizontal, $--button-small-font-size, 0);
     }
   }
   @include m(mini) {
     & .el-radio-button__inner {
+      height: 28px;
+      line-height: 28px;
       @include button-size($--button-mini-padding-vertical, $--button-mini-padding-horizontal, $--button-mini-font-size, 0);
     }
   }

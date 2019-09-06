@@ -6,7 +6,9 @@
 
 @include b(button) {
   display: inline-block;
+  height: 40px;
   line-height: 1;
+  min-width: 88px;
   white-space: nowrap;
   cursor: pointer;
   background: $--button-default-background-color;
@@ -22,21 +24,18 @@
   font-weight: $--button-font-weight;
   @include utils-user-select(none);
   & + & {
-    margin-left: 10px;
+    margin-left: 16px;
   }
 
   @include button-size($--button-padding-vertical, $--button-padding-horizontal, $--button-font-size, $--button-border-radius);
 
   &:hover,
   &:focus {
-    color: $--color-primary;
-    border-color: $--color-primary-light-7;
-    background-color: $--color-primary-light-9;
+    background-color: $--background-color-hover;
   }
 
   &:active {
-    color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
-    border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+    background-color: $--background-color-base;
     outline: none;
   }
 
@@ -44,9 +43,11 @@
     border: 0;
   }
 
-  & [class*="el-icon-"] {
+  & [class*="icon-"] {
+    font-size: 16px;
+    vertical-align: -1px;
     & + span {
-      margin-left: 5px;
+      margin-left: 8px;
     }
   }
 
@@ -115,14 +116,52 @@
   }
   @include when(round) {
     border-radius: 20px;
-    padding: 12px 23px;
+    padding: 0 16px;
   }
   @include when(circle) {
     border-radius: 50%;
-    padding: $--button-padding-vertical;
+    min-width: 0;
+    width: 40px;
+    height: 40px;
+    padding: 0;
   }
   @include m(primary) {
-    @include button-variant($--button-primary-font-color, $--button-primary-background-color, $--button-primary-border-color);
+    color: $--button-primary-font-color;
+    background-color: $--button-primary-background-color;
+    border-color: $--button-primary-border-color;
+
+    &:hover,
+    &:focus {
+      background: $--color-primary-hover;
+      border-color: $--color-primary-hover;
+    }
+
+    &:active {
+      background: $--color-primary-active;
+      border-color: $--color-primary-active;
+      outline: none;
+    }
+
+    &.is-active {
+      background: $--color-primary-active;
+      border-color: $--color-primary-active;
+    }
+
+    &.is-disabled {
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        color: $--color-white;
+        background-color: $--color-primary-disabled;
+        border-color: $--color-primary-disabled;
+      }
+    }
+
+    &.is-plain {
+      @include button-plain($--button-primary-background-color);
+    }
+    //@include button-variant($--button-primary-font-color, $--button-primary-background-color, $--button-primary-border-color);
   }
   @include m(success) {
     @include button-variant($--button-success-font-color, $--button-success-background-color, $--button-success-border-color);
@@ -137,18 +176,21 @@
     @include button-variant($--button-info-font-color, $--button-info-background-color, $--button-info-border-color);
   }
   @include m(medium) {
+    height: 36px;
     @include button-size($--button-medium-padding-vertical, $--button-medium-padding-horizontal, $--button-medium-font-size, $--button-medium-border-radius);
     @include when(circle) {
       padding: $--button-medium-padding-vertical;
     }
   }
   @include m(small) {
+    height: 32px;
     @include button-size($--button-small-padding-vertical, $--button-small-padding-horizontal, $--button-small-font-size, $--button-small-border-radius);
     @include when(circle) {
       padding: $--button-small-padding-vertical;
     }
   }
   @include m(mini) {
+    height: 28px;
     @include button-size($--button-mini-padding-vertical, $--button-mini-padding-horizontal, $--button-mini-font-size, $--button-mini-border-radius);
     @include when(circle) {
       padding: $--button-mini-padding-vertical;
@@ -160,15 +202,17 @@
     background: transparent;
     padding-left: 0;
     padding-right: 0;
+    min-width: 0;
+    height: 20px;
 
     &:hover,
     &:focus {
-      color: mix($--color-white, $--color-primary, $--button-hover-tint-percent);
+      color: $--color-primary-hover;
       border-color: transparent;
       background-color: transparent;
     }
     &:active {
-      color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+      color: $--color-primary-active;
       border-color: transparent;
       background-color: transparent;
     }
@@ -234,7 +278,7 @@
       z-index: 1;
     }
   }
-  
+
   & > .el-dropdown {
     & > .el-button {
       border-top-left-radius: 0;
