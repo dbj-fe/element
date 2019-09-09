@@ -7,11 +7,9 @@
 @include b(message-box) {
   display: inline-block;
   width: $--msgbox-width;
-  padding-bottom: 10px;
   vertical-align: middle;
   background-color: $--color-white;
   border-radius: $--msgbox-border-radius;
-  border: 1px solid $--border-color-lighter;
   font-size: $--messagebox-font-size;
   box-shadow: $--box-shadow-light;
   text-align: left;
@@ -74,7 +72,7 @@
 
   @include e(content) {
     position: relative;
-    padding: 10px $--msgbox-padding-primary;
+    padding: $--msgbox-padding-primary;
     color: $--messagebox-content-color;
     font-size: $--messagebox-content-font-size;
   }
@@ -102,7 +100,7 @@
     }
 
     + .el-message-box__message {
-      padding-left: 36px;
+      padding-left: 32px;
       padding-right: 12px;
     }
 
@@ -128,7 +126,7 @@
 
     & p {
       margin: 0;
-      line-height: 24px;
+      line-height: 22px;
     }
   }
 
@@ -140,11 +138,11 @@
   }
 
   @include e(btns) {
-    padding: 5px 15px 0;
+    padding: 0 24px 24px;
     text-align: right;
 
     & button:nth-child(2) {
-      margin-left: 10px;
+      margin-left: 16px;
     }
   }
 
@@ -188,6 +186,19 @@
 
       padding-left: $padding-horizontal;
       padding-right: $padding-horizontal;
+    }
+  }
+
+  @include m(confirm) {
+    .el-message-box__status {
+      top: 24px;
+      transform: none;
+    }
+    .el-message-box__confirm-tip {
+      font-size: $--font-size-small;
+      color: $--color-text-secondary;
+      line-height: 20px;
+      margin-top: 4px;
     }
   }
 }

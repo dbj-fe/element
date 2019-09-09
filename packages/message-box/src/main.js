@@ -174,17 +174,25 @@ MessageBox.alert = (message, title, options) => {
   }, options));
 };
 
-MessageBox.confirm = (message, title, options) => {
-  if (typeof title === 'object') {
-    options = title;
-    title = '';
-  } else if (title === undefined) {
-    title = '';
+MessageBox.confirm = (message, tip, options) => {
+  let dangerouslyUseHTMLString = false;
+  if (typeof tip === 'object') {
+    options = tip;
+  } else if (tip) {
+    dangerouslyUseHTMLString = true;
+    message = [
+      `<p class="el-message-box__confirm-msg">${message}</p>`,
+      `<p class="el-message-box__confirm-tip">${tip}</p>`
+    ].join('');
   }
   return MessageBox(merge({
-    title: title,
+    type: 'warning',
+    customClass: 'el-message-box--confirm',
+    dangerouslyUseHTMLString: dangerouslyUseHTMLString,
     message: message,
     $type: 'confirm',
+    showClose: false,
+    closeOnClickModal: false,
     showCancelButton: true
   }, options));
 };

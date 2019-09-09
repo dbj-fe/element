@@ -50,11 +50,8 @@
   export default {
     methods: {
       open() {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+        this.$confirm('此操作将永久删除该文件, 是否继续?',
+          '这里的文字需要限制字数，最多可以有2行，不可以超过2行，文案要精').then(() => {
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -63,7 +60,7 @@
           this.$message({
             type: 'info',
             message: '已取消删除'
-          });          
+          });
         });
       }
     }
@@ -101,7 +98,7 @@
           this.$message({
             type: 'info',
             message: '取消输入'
-          });       
+          });
         });
       }
     }

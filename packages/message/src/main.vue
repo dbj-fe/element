@@ -45,7 +45,7 @@
         closed: false,
         timer: null,
         dangerouslyUseHTMLString: false,
-        center: false
+        center: true
       };
     },
 

@@ -131,13 +131,13 @@
 :::
 
 ### 文字居中
-使用 `center` 属性让文字水平居中。
+使用 `center` 属性默认为`true`（修改了默认值），如果不想居中将`center`设为`false`。
 
 :::demo
 
 ```html
 <template>
-  <el-button :plain="true" @click="openCenter">文字居中</el-button>
+  <el-button :plain="true" @click="openCenter">文字不居中</el-button>
 </template>
 
 <script>
@@ -145,8 +145,8 @@
     methods: {
       openCenter() {
         this.$message({
-          message: '居中的文字',
-          center: true
+          message: '不居中的文字',
+          center: false
         });
       }
     }

@@ -34,11 +34,11 @@ $--color-primary-light-7: mix($--color-white, $--color-primary, 70%) !default; /
 $--color-primary-light-8: mix($--color-white, $--color-primary, 80%) !default; /* d9ecff */
 $--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default; /* ecf5ff */
 /// color|1|Functional Color|1
-$--color-success: #47C677 !default;
+$--color-success: #00BF53 !default;
 /// color|1|Functional Color|1
-$--color-warning: #FF7E43 !default;
+$--color-warning: #FF6A1E !default;
 /// color|1|Functional Color|1
-$--color-danger: #FF5A47 !default;
+$--color-danger: #FF333A !default;
 /// color|1|Functional Color|1
 $--color-info: #999999 !default;
 
@@ -117,7 +117,7 @@ $--font-size-medium: 16px !default;
 /// fontSize|1|Font Size|0
 $--font-size-base: 14px !default;
 /// fontSize|1|Font Size|0
-$--font-size-small: 13px !default;
+$--font-size-small: 12px !default;
 /// fontSize|1|Font Size|0
 $--font-size-extra-small: 12px !default;
 /// fontWeight|1|Font Weight|1
@@ -346,7 +346,7 @@ $--alert-icon-large-size: 28px !default;
 /// color||Color|0
 $--messagebox-title-color: $--color-text-primary !default;
 $--msgbox-width: 420px !default;
-$--msgbox-border-radius: 4px !default;
+$--msgbox-border-radius: 0 !default;
 /// fontSize||Font|1
 $--messagebox-font-size: $--font-size-large !default;
 /// fontSize||Font|1
@@ -355,7 +355,7 @@ $--messagebox-content-font-size: $--font-size-base !default;
 $--messagebox-content-color: $--color-text-regular !default;
 /// fontSize||Font|1
 $--messagebox-error-font-size: 12px !default;
-$--msgbox-padding-primary: 15px !default;
+$--msgbox-padding-primary: 24px !default;
 /// color||Color|0
 $--messagebox-success-color: $--color-success !default;
 /// color||Color|0
@@ -368,9 +368,9 @@ $--messagebox-danger-color: $--color-danger !default;
 /* Message
 -------------------------- */
 $--message-shadow: $--box-shadow-base !default;
-$--message-min-width: 380px !default;
-$--message-background-color: #edf2fc !default;
-$--message-padding: 15px 15px 15px 20px !default;
+$--message-min-width: 240px !default;
+$--message-background-color: $--color-white !default;
+$--message-padding: 16px 24px !default;
 /// color||Color|0
 $--message-close-icon-color: $--color-text-placeholder !default;
 /// height||Other|4
@@ -519,7 +519,7 @@ $--tab-vertical-header-count-fill: $--color-text-secondary !default;
 /// fontSize||Font|1
 $--button-font-size: $--font-size-base !default;
 /// fontWeight||Font|1
-$--button-font-weight: $--font-weight-primary !default;
+$--button-font-weight: 500 !default;
 /// borderRadius||Border|2
 $--button-border-radius: $--border-radius-small !default;
 /// padding||Spacing|3
@@ -625,13 +625,13 @@ $--switch-button-size: 16px !default;
 $--dialog-background-color: $--color-white !default;
 $--dialog-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !default;
 /// fontSize||Font|1
-$--dialog-title-font-size: $--font-size-large !default;
+$--dialog-title-font-size: $--font-size-base !default;
 /// fontSize||Font|1
 $--dialog-content-font-size: 14px !default;
 /// fontLineHeight||LineHeight|2
 $--dialog-font-line-height: $--font-line-height-primary !default;
 /// padding||Spacing|3
-$--dialog-padding-primary: 20px !default;
+$--dialog-padding-primary: 16px !default;
 
 /* Table
 -------------------------- */
