@@ -7,12 +7,13 @@
   }
   @include e(popper) {
     position: absolute;
-    border-radius: 4px;
+    border-radius: 0;
     padding: $--tooltip-padding;
     z-index: $--index-popper;
     font-size: $--tooltip-font-size;
-    line-height: 1.2;
+    line-height: 22px;
     min-width: 10px;
+    max-width: 388px;
     word-wrap: break-word;
 
     .popper__arrow,
@@ -104,34 +105,36 @@
     }
 
     @include when(dark) {
+      padding: 8px;
+      line-height: 16px;
       background: $--tooltip-fill;
       color: $--tooltip-color;
     }
 
     @include when(light) {
       background: $--tooltip-color;
-      border: 1px solid $--tooltip-fill;
+      box-shadow: $--box-shadow-base;
 
       &[x-placement^="top"] .popper__arrow {
-        border-top-color: $--tooltip-fill;
+        border-top-color: $--border-color-lighter;
         &::after {
           border-top-color: $--tooltip-color;
         }
       }
       &[x-placement^="bottom"] .popper__arrow {
-        border-bottom-color: $--tooltip-fill;
+        border-bottom-color: $--border-color-lighter;
         &::after {
           border-bottom-color: $--tooltip-color;
         }
       }
       &[x-placement^="left"] .popper__arrow {
-        border-left-color: $--tooltip-fill;
+        border-left-color: $--border-color-lighter;
         &::after {
           border-left-color: $--tooltip-color;
         }
       }
       &[x-placement^="right"] .popper__arrow {
-        border-right-color: $--tooltip-fill;
+        border-right-color: $--border-color-lighter;
         &::after {
           border-right-color: $--tooltip-color;
         }

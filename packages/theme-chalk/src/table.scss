@@ -106,6 +106,10 @@
     color: $--table-header-font-color;
     font-weight: 500;
 
+    th {
+      font-weight: 500;
+    }
+
     &.is-group {
       th {
         background: $--background-color-base;
@@ -146,7 +150,7 @@
 
   @include m(medium) {
     th, td {
-      padding: 10px 0;
+      padding: 12px 0;
     }
   }
 
@@ -240,8 +244,8 @@
     white-space: normal;
     word-break: break-all;
     line-height: 23px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
 
     &.el-tooltip {
       white-space: nowrap;

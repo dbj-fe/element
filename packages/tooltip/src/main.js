@@ -18,7 +18,7 @@ export default {
     manual: Boolean,
     effect: {
       type: String,
-      default: 'dark'
+      default: 'light'
     },
     arrowOffset: {
       type: Number,

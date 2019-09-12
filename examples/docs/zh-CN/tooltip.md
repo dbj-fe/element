@@ -11,47 +11,47 @@
 ```html
 <div class="box">
   <div class="top">
-    <el-tooltip class="item" effect="dark" content="Top Left 提示文字" placement="top-start">
+    <el-tooltip class="item" content="Top Left 提示文字" placement="top-start">
       <el-button>上左</el-button>
     </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="Top Center 提示文字" placement="top">
+    <el-tooltip class="item" content="Top Center 提示文字" placement="top">
       <el-button>上边</el-button>
     </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="Top Right 提示文字" placement="top-end">
+    <el-tooltip class="item" content="Top Right 提示文字" placement="top-end">
       <el-button>上右</el-button>
     </el-tooltip>
   </div>
   <div class="left">
-    <el-tooltip class="item" effect="dark" content="Left Top 提示文字" placement="left-start">
+    <el-tooltip class="item" content="Left Top 提示文字" placement="left-start">
       <el-button>左上</el-button>
     </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="Left Center 提示文字" placement="left">
+    <el-tooltip class="item" content="Left Center 提示文字" placement="left">
       <el-button>左边</el-button>
     </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="Left Bottom 提示文字" placement="left-end">
+    <el-tooltip class="item" content="Left Bottom 提示文字" placement="left-end">
       <el-button>左下</el-button>
     </el-tooltip>
   </div>
 
   <div class="right">
-    <el-tooltip class="item" effect="dark" content="Right Top 提示文字" placement="right-start">
+    <el-tooltip class="item" content="Right Top 提示文字" placement="right-start">
       <el-button>右上</el-button>
     </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="Right Center 提示文字" placement="right">
+    <el-tooltip class="item" content="Right Center 提示文字" placement="right">
       <el-button>右边</el-button>
     </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="Right Bottom 提示文字" placement="right-end">
+    <el-tooltip class="item" content="Right Bottom 提示文字" placement="right-end">
       <el-button>右下</el-button>
     </el-tooltip>
   </div>
   <div class="bottom">
-    <el-tooltip class="item" effect="dark" content="Bottom Left 提示文字" placement="bottom-start">
+    <el-tooltip class="item" content="Bottom Left 提示文字" placement="bottom-start">
       <el-button>下左</el-button>
     </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="Bottom Center 提示文字" placement="bottom">
+    <el-tooltip class="item" content="Bottom Center 提示文字" placement="bottom">
       <el-button>下边</el-button>
     </el-tooltip>
-    <el-tooltip class="item" effect="dark" content="Bottom Right 提示文字" placement="bottom-end">
+    <el-tooltip class="item" content="Bottom Right 提示文字" placement="bottom-end">
       <el-button>下右</el-button>
     </el-tooltip>
   </div>
@@ -98,9 +98,9 @@
 Tooltip 组件提供了两个不同的主题：`dark`和`light`。
 
 
-:::demo 通过设置`effect`属性来改变主题，默认为`dark`。
+:::demo 通过设置`effect`属性来改变主题，默认为`light`。
 ```html
-<el-tooltip content="Top center" placement="top">
+<el-tooltip content="Top center" placement="top" effect="dark">
   <el-button>Dark</el-button>
 </el-tooltip>
 <el-tooltip content="Bottom center" placement="bottom" effect="light">
@@ -160,7 +160,7 @@ tooltip 内不支持 disabled form 元素，参考[MDN](https://developer.mozill
 ### Attributes
 | 参数               | 说明                                                     | 类型              | 可选值      | 默认值 |
 |--------------------|----------------------------------------------------------|-------------------|-------------|--------|
-|  effect        |  默认提供的主题  | String            | dark/light | dark  |
+|  effect        |  默认提供的主题  | String            | dark/light | light  |
 |  content        |  显示的内容，也可以通过 `slot#content` 传入 DOM  | String            | — | — |
 |  placement        |  Tooltip 的出现位置  | String           |  top/top-start/top-end/bottom/bottom-start/bottom-end/left/left-start/left-end/right/right-start/right-end |  bottom |
 |  value / v-model |  状态是否可见  | Boolean           | — |  false |
