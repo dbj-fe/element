@@ -389,6 +389,9 @@
         this.$emit('input', '');
         this.$emit('change', '');
         this.$emit('clear');
+        this.$nextTick(() => {
+          this.$refs.input.focus();
+        });
       },
       handlePasswordVisible() {
         this.passwordVisible = !this.passwordVisible;

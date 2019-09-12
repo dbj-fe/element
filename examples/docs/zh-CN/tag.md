@@ -4,14 +4,67 @@
 
 ### 基础用法
 
-:::demo 由`type`属性来选择tag的类型，也可以通过`color`属性来自定义背景色。
+:::demo 由`type`属性来选择tag的类型，也可以通过`color`属性来自定义标签颜色，除了默认的主色外，还有`green`和`gray`两个内置的颜色。
 
 ```html
-<el-tag>标签一</el-tag>
-<el-tag type="success">标签二</el-tag>
-<el-tag type="info">标签三</el-tag>
-<el-tag type="warning">标签四</el-tag>
-<el-tag type="danger">标签五</el-tag>
+<p>
+  <el-tag>普通标签</el-tag>
+  <el-tag color="green">普通标签</el-tag>
+  <el-tag color="gray">普通标签</el-tag>
+</p>
+<p>
+  <el-tag type="primary">主要标签</el-tag>
+  <el-tag type="primary" color="green">主要标签</el-tag>
+  <el-tag type="primary" color="gray">主要标签</el-tag>
+</p>
+<p>
+  <el-tag type="secondary">次要标签</el-tag>
+  <el-tag type="secondary" color="green">次要标签</el-tag>
+  <el-tag type="secondary" color="gray">次要标签</el-tag>
+</p>
+```
+:::
+
+### 自定义颜色
+
+:::demo 通过`color`属性传入具体的色值来自定义标签颜色。
+
+```html
+<p>
+  <el-tag color="#FF6A1E">普通标签</el-tag>
+  <el-tag color="#FF333A">普通标签</el-tag>
+  <el-tag color="#00bf53">普通标签</el-tag>
+</p>
+<p>
+  <el-tag type="primary" color="#FF6A1E">主要标签</el-tag>
+  <el-tag type="primary" color="#FF333A">主要标签</el-tag>
+  <el-tag type="primary" color="#00bf53">主要标签<i class="el-icon-message-solid"></i></el-tag>
+</p>
+<p>
+  <el-tag type="secondary" color="#FF6A1E">次要标签</el-tag>
+  <el-tag type="secondary" color="#FF333A">次要标签</el-tag>
+  <el-tag type="secondary" color="#00bf53">次要标签</el-tag>
+</p>
+```
+:::
+
+### 角标
+
+:::demo 设置`corner`属性为`true`即可定义标签为角标。
+
+```html
+<p>
+  <el-tag corner>分享<i class="el-icon-share"></i></el-tag>
+  <el-tag color="green" corner>普标签</el-tag>
+  <el-tag color="gray" corner>普标签</el-tag>
+  <el-tag color="#FF333A" corner>普标签</el-tag>
+</p>
+<p>
+  <el-tag type="secondary" corner>次标签</el-tag>
+  <el-tag type="secondary" color="green" corner>次标签</el-tag>
+  <el-tag type="secondary" color="gray" corner>次标签</el-tag>
+  <el-tag type="secondary" color="#FF333A" corner>次标签</el-tag>
+</p>
 ```
 :::
 
@@ -33,11 +86,9 @@
     data() {
       return {
         tags: [
-          { name: '标签一', type: '' },
-          { name: '标签二', type: 'success' },
-          { name: '标签三', type: 'info' },
-          { name: '标签四', type: 'warning' },
-          { name: '标签五', type: 'danger' }
+          { name: '普通标签', type: '' },
+          { name: '主要标签', type: 'primary' },
+          { name: '次要标签', type: 'secondary' }
         ]
       };
     }
@@ -125,29 +176,14 @@
 ```
 :::
 
-### 不同尺寸
-
-Tag 组件提供除了默认值以外的三种尺寸，可以在不同场景下选择合适的按钮尺寸。
-
-:::demo 额外的尺寸：`medium`、`small`、`mini`，通过设置`size`属性来配置它们。
-
-```html
-<el-tag closable>默认标签</el-tag>
-<el-tag size="medium" closable>中等标签</el-tag>
-<el-tag size="small" closable>小型标签</el-tag>
-<el-tag size="mini" closable>超小标签</el-tag>
-```
-:::
-
 ### Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| type | 主题 | string | success/info/warning/danger | — |
+| type | 类型 | string | primary/secondary | — |
+| color | 主题色 | string | green/gray/具体色值 | — |
+| corner | 是否是角标 | boolean | — | false |
 | closable | 是否可关闭 | boolean | — | false |
 | disable-transitions | 是否禁用渐变动画 | boolean | — | false |
-| hit | 是否有边框描边 | boolean | — | false |
-| color | 背景色 | string | — | — |
-| size | 尺寸 | string | medium / small / mini | — |
 
 
 ### Events

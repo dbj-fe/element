@@ -91,7 +91,14 @@
   }
 
   @include when(disabled) {
-    opacity: 0.6;
+    .el-switch__core {
+      border-color: #F5F5F5;
+      background-color: #F5F5F5;
+    }
+    &.is-checked .el-switch__core {
+      border-color: #FFCB00;
+      background-color: #FFCB00;
+    }
   }
 
   @include m(wide) {

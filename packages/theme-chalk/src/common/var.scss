@@ -442,13 +442,13 @@ $--input-background-color: $--color-white !default;
 $--input-fill-disabled: $--disabled-fill-base !default;
 $--input-color-disabled: $--font-color-disabled-base !default;
 /// color||Color|0
-$--input-icon-color: $--color-text-placeholder !default;
+$--input-icon-color: #666666 !default;
 /// color||Color|0
 $--input-placeholder-color: $--color-text-placeholder !default;
 $--input-max-width: 314px !default;
 
 $--input-hover-border: $--border-color-hover !default;
-$--input-clear-hover-color: $--color-text-secondary !default;
+$--input-clear-hover-color: $--color-text-regular !default;
 
 $--input-focus-border: $--color-primary !default;
 $--input-focus-fill: $--color-white !default;
@@ -704,7 +704,7 @@ $--tooltip-padding: 10px !default;
 
 /* Tag
 -------------------------- */
-$--tag-padding: 0 10px !default;
+$--tag-padding: 0 4px !default;
 $--tag-fill: rgba($--color-primary, 0.10) !default;
 /// color||Color|0
 $--tag-font-color: $--color-primary !default;
@@ -713,7 +713,7 @@ $--tag-default-hover-background-color: $--color-primary !default;
 $--tag-border: rgba($--color-primary, 0.20) !default;
 /// fontSize||Font|1
 $--tag-font-size: 12px !default;
-$--tag-border-radius: 4px !default;
+$--tag-border-radius: 0 !default;
 
 $--tag-info-fill: rgba($--color-info, 0.10) !default;
 $--tag-info-border: rgba($--color-info, 0.20) !default;
