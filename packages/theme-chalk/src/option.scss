@@ -4,7 +4,7 @@
 @include b(select-dropdown) {
   @include e(item) {
     font-size: $--select-font-size;
-    padding: 0 20px;
+    padding: 0 16px;
     position: relative;
     white-space: nowrap;
     overflow: hidden;

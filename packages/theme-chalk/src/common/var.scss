@@ -298,7 +298,7 @@ $--select-option-color: $--color-text-regular !default;
 $--select-option-disabled-color: $--color-text-placeholder !default;
 $--select-option-disabled-background: $--color-white !default;
 /// height||Other|4
-$--select-option-height: 34px !default;
+$--select-option-height: 36px !default;
 $--select-option-hover-background: $--background-color-base !default;
 /// color||Color|0
 $--select-option-selected-font-color: $--color-primary !default;
@@ -313,7 +313,7 @@ $--select-dropdown-shadow: $--box-shadow-light !default;
 $--select-dropdown-empty-color: #999 !default;
 /// height||Other|4
 $--select-dropdown-max-height: 274px !default;
-$--select-dropdown-padding: 6px 0 !default;
+$--select-dropdown-padding: 8px 0 !default;
 $--select-dropdown-empty-padding: 10px 0 !default;
 $--select-dropdown-border: solid 1px $--border-color-light !default;
 

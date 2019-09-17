@@ -93,11 +93,14 @@
   white-space: nowrap;
   background: #fff;
   position: absolute;
-  margin: 5px 0;
+  margin: 0  !important;
   z-index: #{$--index-normal + 1};
   border: $--select-dropdown-border;
-  border-radius: $--border-radius-small;
   box-shadow: $--select-dropdown-shadow;
+
+  .popper__arrow {
+    display: none !important;
+  }
 }
 
 @include b(cascader-menu) {
@@ -109,7 +112,7 @@
   background-color: $--select-dropdown-background;
   box-sizing: border-box;
   margin: 0;
-  padding: 6px 0;
+  padding: 8px 0;
   min-width: 160px;
 
   &:last-child {
@@ -118,7 +121,7 @@
 
   @include e(item) {
     font-size: $--select-font-size;
-    padding: 8px 20px;
+    padding: 8px 16px;
     position: relative;
     white-space: nowrap;
     overflow: hidden;
@@ -129,10 +132,6 @@
     box-sizing: border-box;
     cursor: pointer;
     outline: none;
-
-    span {
-      padding-right: 10px;
-    }
 
     @include m(extensible) {
       &:after {
@@ -170,7 +169,7 @@
   }
 
   @include e(item__keyword) {
-    font-weight: bold;
+    color: $--color-primary;
   }
 
   @include m(flexible) {
