@@ -1165,6 +1165,7 @@
     placeholder="试试搜索：指南"
     :options="options"
     filterable
+    clearable
   ></el-cascader>
 </div>
 <div class="block">
@@ -1174,6 +1175,7 @@
     :options="options"
     filterable
     change-on-select
+    clearable
   ></el-cascader>
 </div>
 

@@ -167,11 +167,12 @@
         color: $--checkbox-checked-font-color;
       }
     }
-    @include when(focus) { /*focus时 视觉上区分*/
-      .el-checkbox__inner {
-        border-color: $--checkbox-input-border-color-hover;
-      }
-    }
+    //设计师说不需要
+    // @include when(focus) { /*focus时 视觉上区分*/
+    //   .el-checkbox__inner {
+    //     border-color: $--checkbox-input-border-color-hover;
+    //   }
+    // }
     @include when(indeterminate) {
       .el-checkbox__inner {
         background-color: $--checkbox-checked-background-color;
@@ -182,11 +183,10 @@
           position: absolute;
           display: block;
           background-color: $--checkbox-checked-icon-color;
-          height: 4px;
-          transform: scale(0.5);
-          left: 0;
-          right: 0;
-          top: 5px;
+          height: 2px;
+          width: 8px;
+          left: 3px;
+          top: 6px;
         }
 
         &::after {
@@ -333,11 +333,11 @@
     }
   }
 
-  &.is-focus {
-    & .el-checkbox-button__inner {
-      border-color: $--checkbox-button-checked-border-color;
-    }
-  }
+  // &.is-focus {
+  //   & .el-checkbox-button__inner {
+  //     border-color: $--checkbox-button-checked-border-color;
+  //   }
+  // }
 
   &:last-child {
     .el-checkbox-button__inner {

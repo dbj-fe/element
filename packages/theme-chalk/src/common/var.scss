@@ -95,7 +95,7 @@ $--border-radius-zero: 0 !default;
 
 // Box-shadow
 /// boxShadow|1|Shadow|1
-$--box-shadow-base: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04) !default;
+$--box-shadow-base: 0 2px 4px rgba(0, 0, 0, .06), 0 0 6px rgba(0, 0, 0, .04) !default;
 // boxShadow|1|Shadow|1
 $--box-shadow-dark: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12) !default;
 /// boxShadow|1|Shadow|1
@@ -164,7 +164,7 @@ $--checkbox-input-width: 16px !default;
 $--checkbox-border-radius: $--border-radius-small !default;
 /// color||Color|0
 $--checkbox-background-color: $--color-white !default;
-$--checkbox-input-border: $--border-base !default;
+$--checkbox-input-border: 1px solid #ccc !default;
 
 /// color||Color|0
 $--checkbox-disabled-border-color: $--border-color-base !default;
@@ -310,7 +310,7 @@ $--select-group-font-size: 12px !default;
 
 $--select-dropdown-background: $--color-white !default;
 $--select-dropdown-shadow: $--box-shadow-light !default;
-$--select-dropdown-empty-color: #999 !default;
+$--select-dropdown-empty-color: #CCCCCC !default;
 /// height||Other|4
 $--select-dropdown-max-height: 274px !default;
 $--select-dropdown-padding: 8px 0 !default;
@@ -370,7 +370,7 @@ $--messagebox-danger-color: $--color-danger !default;
 $--message-shadow: $--box-shadow-base !default;
 $--message-min-width: 240px !default;
 $--message-background-color: $--color-white !default;
-$--message-padding: 16px 24px !default;
+$--message-padding: 12px 24px !default;
 /// color||Color|0
 $--message-close-icon-color: $--color-text-placeholder !default;
 /// height||Other|4
@@ -563,7 +563,7 @@ $--button-disabled-font-color: $--color-text-placeholder !default;
 /// color||Color|0
 $--button-disabled-background-color: $--color-white !default;
 /// color||Color|0
-$--button-disabled-border-color: $--border-color-lighter !default;
+$--button-disabled-border-color: $--border-color-light !default;
 
 /// color||Color|0
 $--button-primary-border-color: $--color-primary !default;
@@ -643,8 +643,8 @@ $--table-font-color: $--color-text-regular !default;
 /// color||Color|0
 $--table-header-font-color: $--color-text-regular !default;
 /// color||Color|0
-$--table-row-hover-background-color: $--background-color-base !default;
-$--table-current-row-background-color: $--color-primary-light-9 !default;
+$--table-row-hover-background-color: $--background-color-hover !default;
+$--table-current-row-background-color: $--background-color-hover !default;
 /// color||Color|0
 $--table-header-background-color: $--color-white !default;
 $--table-fixed-box-shadow: 0 0 10px rgba(0, 0, 0, .12) !default;
@@ -695,7 +695,7 @@ $--tooltip-fill: $--color-text-primary !default;
 /// color|1|Color|0
 $--tooltip-color: $--color-white !default;
 /// fontSize||Font|1
-$--tooltip-font-size: 12px !default;
+$--tooltip-font-size: 14px !default;
 /// color||Color|0
 $--tooltip-border-color: $--color-text-primary !default;
 $--tooltip-arrow-size: 6px !default;
@@ -738,11 +738,11 @@ $--tag-danger-color: $--color-danger !default;
 /* Tree
 -------------------------- */
 /// color||Color|0
-$--tree-node-hover-background-color: $--background-color-base !default;
+$--tree-node-hover-background-color: #FAFAFA !default;
 /// color||Color|0
 $--tree-font-color: $--color-text-regular !default;
 /// color||Color|0
-$--tree-expand-icon-color: $--color-text-placeholder !default;
+$--tree-expand-icon-color: #666666 !default;
 
 /* Dropdown
 -------------------------- */

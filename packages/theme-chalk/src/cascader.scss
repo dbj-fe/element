@@ -14,6 +14,10 @@
     cursor: pointer;
   }
 
+  &:hover .el-input__inner {
+    border-color: #CCCCCC;
+  }
+
   .el-input.is-focus .el-input__inner {
     border-color: $--input-focus-border;
   }

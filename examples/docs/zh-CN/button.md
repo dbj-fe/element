@@ -115,6 +115,17 @@
   <el-button type="primary" icon="el-icon-share"></el-button>
   <el-button type="primary" icon="el-icon-delete"></el-button>
 </el-button-group>
+<p>
+  <el-button-group>
+    <el-button>左侧按钮</el-button>
+    <el-button>中间按钮</el-button>
+    <el-button>右侧按钮</el-button>
+  </el-button-group>
+  <el-button-group>
+    <el-button icon="el-icon-download">下载</el-button>
+    <el-button icon="el-icon-delete">删除</el-button>
+  </el-button-group>
+</p>
 ```
 :::
 

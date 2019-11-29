@@ -96,8 +96,8 @@
       background-color: #F5F5F5;
     }
     &.is-checked .el-switch__core {
-      border-color: #FFCB00;
-      background-color: #FFCB00;
+      border-color: $--color-primary-disabled;
+      background-color: $--color-primary-disabled;
     }
   }
 

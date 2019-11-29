@@ -256,11 +256,9 @@ export default {
               min={ 1 }
               max={ this.$parent.internalPageCount }
               value={ this.userInput !== null ? this.userInput : this.$parent.internalCurrentPage }
-              type="number"
               disabled={ this.$parent.disabled }
               nativeOnKeyup={ this.handleKeyup }
-              onInput={ this.handleInput }
-              onChange={ this.handleChange }/>
+              onInput={ this.handleInput }/>
             { this.t('el.pagination.pageClassifier') }
           </span>
         );
@@ -309,22 +307,26 @@ export default {
       value = parseInt(value, 10);
 
       const havePageCount = typeof this.internalPageCount === 'number';
+      let defaultValue = 1;
+      if (typeof this.internalCurrentPage === 'number' && this.internalCurrentPage >= 1 && this.internalCurrentPage <= this.internalPageCount) {
+        defaultValue = this.internalCurrentPage;
+      }
 
       let resetValue;
       if (!havePageCount) {
-        if (isNaN(value) || value < 1) resetValue = 1;
+        if (isNaN(value) || value < 1) resetValue = defaultValue;
       } else {
         if (value < 1) {
-          resetValue = 1;
+          resetValue = defaultValue;
         } else if (value > this.internalPageCount) {
           resetValue = this.internalPageCount;
         }
       }
 
       if (resetValue === undefined && isNaN(value)) {
-        resetValue = 1;
+        resetValue = defaultValue;
       } else if (resetValue === 0) {
-        resetValue = 1;
+        resetValue = defaultValue;
       }
 
       return resetValue === undefined ? value : resetValue;

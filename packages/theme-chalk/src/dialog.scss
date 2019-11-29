@@ -44,16 +44,15 @@
     border: none;
     outline: none;
     cursor: pointer;
-    font-size: $--message-close-size;
 
     .el-dialog__close {
-      color: $--color-info;
-      font-size: 16px;
+      color: #666666;
+      font-size: $--message-close-size;
     }
 
     &:focus, &:hover {
       .el-dialog__close {
-        color: $--color-primary;
+        color: #333333;
       }
     }
   }

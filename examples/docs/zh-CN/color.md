@@ -20,19 +20,19 @@
     'borderExtraLight': '$--border-color-extra-light'
   };
   const original = {
-    primary: '#409EFF',
-    success: '#67C23A',
-    warning: '#E6A23C',
-    danger: '#F56C6C',
-    info: '#909399',
+    primary: '#FFA800',
+    success: '#47C677',
+    warning: '#FF7E43',
+    danger: '#FF5A47',
+    info: '#999999',
     white: '#FFFFFF',
     black: '#000000',
-    textPrimary: '#303133',
-    textRegular: '#606266',
-    textSecondary: '#909399',
-    textPlaceholder: '#C0C4CC',
-    borderBase: '#DCDFE6',
-    borderLight: '#E4E7ED',
+    textPrimary: '#333333',
+    textRegular: '#666666',
+    textSecondary: '#999999',
+    textPlaceholder: '#CCCCCC',
+    borderBase: '#E6E6E6',
+    borderLight: '#F2F2F2',
     borderLighter: '#EBEEF5',
     borderExtraLight: '#F2F6FC'
   }
@@ -101,7 +101,7 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
 <el-row :gutter="12">
   <el-col :span="10" :xs="{span: 12}">
     <div class="demo-color-box" :style="{ background: primary }">Brand Color
-      <div class="value">#409EFF</div>
+      <div class="value">{{ primary }}</div>
       <div class="bg-color-sub" :style="{ background: tintColor(primary, 0.9) }">
         <div
           class="bg-blue-sub-item"
@@ -123,11 +123,11 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
     <div class="demo-color-box"
     :style="{ background: success }"
     >Success<div class="value">#67C23A</div>
-      <div 
+      <div
         class="bg-color-sub"
       >
-        <div 
-          class="bg-success-sub-item" 
+        <div
+          class="bg-success-sub-item"
           v-for="(item, key) in Array(2)"
           :key="key"
           :style="{ background: tintColor(success, (key + 8) / 10) }"
@@ -140,11 +140,11 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
     <div class="demo-color-box"
     :style="{ background: warning }"
     >Warning<div class="value">#E6A23C</div>
-      <div 
+      <div
           class="bg-color-sub"
         >
-        <div 
-          class="bg-success-sub-item" 
+        <div
+          class="bg-success-sub-item"
           v-for="(item, key) in Array(2)"
           :key="key"
           :style="{ background: tintColor(warning, (key + 8) / 10) }"
@@ -157,11 +157,11 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
     <div class="demo-color-box"
     :style="{ background: danger }"
     >Danger<div class="value">#F56C6C</div>
-      <div 
+      <div
           class="bg-color-sub"
         >
-        <div 
-          class="bg-success-sub-item" 
+        <div
+          class="bg-success-sub-item"
           v-for="(item, key) in Array(2)"
           :key="key"
           :style="{ background: tintColor(danger, (key + 8) / 10) }"
@@ -174,11 +174,11 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
     <div class="demo-color-box"
     :style="{ background: info }"
     >Info<div class="value">#909399</div>
-      <div 
+      <div
           class="bg-color-sub"
         >
-        <div 
-          class="bg-success-sub-item" 
+        <div
+          class="bg-success-sub-item"
           v-for="(item, key) in Array(2)"
           :key="key"
           :style="{ background: tintColor(info, (key + 8) / 10) }"
@@ -219,17 +219,17 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
       <div class="demo-color-box demo-color-box-other demo-color-box-lite"
       :style="{ background: borderLight }"
       >二级边框<div class="value">{{borderLight}}</div></div>
-      <div class="demo-color-box demo-color-box-other demo-color-box-lite"
+      <!-- <div class="demo-color-box demo-color-box-other demo-color-box-lite"
       :style="{ background: borderLighter }"
       >三级边框<div class="value">{{borderLighter}}</div></div>
       <div class="demo-color-box demo-color-box-other demo-color-box-lite"
       :style="{ background: borderExtraLight }"
-      >四级边框<div class="value">{{borderExtraLight}}</div></div>
+      >四级边框<div class="value">{{borderExtraLight}}</div></div> -->
     </div>
   </el-col>
   <el-col :span="6" :xs="{span: 12}">
     <div class="demo-color-box-group">
-      <div 
+      <div
       class="demo-color-box demo-color-box-other"
       :style="{ background: black }"
       >基础黑色<div class="value">{{black}}</div></div>

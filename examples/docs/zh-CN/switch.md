@@ -4,7 +4,28 @@
 
 ### 基本用法
 
-:::demo 绑定`v-model`到一个`Boolean`类型的变量。可以使用`active-color`属性与`inactive-color`属性来设置开关的背景色。
+:::demo 绑定`v-model`到一个`Boolean`类型的变量。
+
+```html
+<el-switch
+  v-model="value">
+</el-switch>
+
+<script>
+  export default {
+    data() {
+      return {
+        value: true
+      }
+    }
+  };
+</script>
+```
+:::
+
+### 自定义颜色
+
+:::demo 可以使用`active-color`属性与`inactive-color`属性来设置开关的背景色。
 
 ```html
 <el-switch

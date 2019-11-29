@@ -311,6 +311,11 @@
       border-bottom: 0;
     }
 
+    div.el-select .el-input__inner,
+    div.el-select:hover .el-input__inner {
+      color: $--color-text-primary;
+    }
+
     .el-button,
     .el-input {
       font-size: inherit;
