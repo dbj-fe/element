@@ -21,10 +21,22 @@
   };
   const original = {
     primary: '#FFA800',
-    success: '#47C677',
-    warning: '#FF7E43',
-    danger: '#FF5A47',
+    primaryDisabledText: "#FFEECC",
+    primaryDisabled: "#FFCB66",
+    primaryHover: "#FFBB33",
+    primaryClick: "#FA9200",
+    primary2: '#19C370',
+    primary2DisabledText: "#E3F7EA",
+    primary2Disabled: "#BFDBAC",
+    primary2Hover: "#59CEBA",
+    primary2Click: "#00BB56",
+    success: '#00BF53',
+    warning: '#FF6A1E',
+    danger: '#FF333A',
     info: '#999999',
+    background: '#F0F0F0',
+    background2: '#F5F5F5',
+    background3: '#FAFAFA',
     white: '#FFFFFF',
     black: '#000000',
     textPrimary: '#333333',
@@ -57,6 +69,15 @@
       return {
         global: {},
         primary: '',
+        primaryDisabledText: "",
+        primaryDisabled: "",
+        primaryHover: "",
+        primaryClick: "",
+        primary2: '',
+        primary2DisabledText: "",
+        primary2Disabled: "",
+        primary2Hover: "",
+        primary2Click: "",
         success: '',
         warning: '',
         danger: '',
@@ -99,18 +120,44 @@ Element 为了避免视觉传达差异，使用一套特定的调色板来规定
 Element 主要品牌颜色是鲜艳、友好的蓝色。
 
 <el-row :gutter="12">
-  <el-col :span="10" :xs="{span: 12}">
-    <div class="demo-color-box" :style="{ background: primary }">Brand Color
-      <div class="value">{{ primary }}</div>
-      <div class="bg-color-sub" :style="{ background: tintColor(primary, 0.9) }">
-        <div
-          class="bg-blue-sub-item"
-          v-for="(item, key) in Array(8)"
-          :key="key"
-          :style="{ background: tintColor(primary, (key + 1) / 10) }"
-        ></div>
-      </div>
+  <el-col :span="6" :xs="{span: 12}">
+    <div class="demo-color-box-group">
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primary }"
+      >Primary Color<div class="value">{{primary}}</div></div>
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primaryHover }"
+      >Primary Color Hover<div class="value">{{primaryHover}}</div></div>
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primaryClick }"
+      >Primary Color Click<div class="value">{{primaryClick}}</div></div>
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primaryDisabled }"
+      >Primary Color Disabled<div class="value">{{primaryDisabled}}</div></div>
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primaryDisabledText, color: '#333' }"
+      >Primary Color Disabled Text<div class="value">{{primaryDisabledText}}</div></div>
     </div>
+  </el-col>
+  <el-col :span="6" :xs="{span: 12}">
+    <div class="demo-color-box-group">
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primary2 }"
+      >Primary Color<div class="value">{{primary2}}</div></div>
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primary2Hover }"
+      >Primary Color Hover<div class="value">{{primary2Hover}}</div></div>
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primary2Click }"
+      >Primary Color Click<div class="value">{{primary2Click}}</div></div>
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primary2Disabled }"
+      >Primary Color Disabled<div class="value">{{primary2Disabled}}</div></div>
+      <div class="demo-color-box demo-color-box-other"
+      :style="{ background: primary2DisabledText, color: '#333' }"
+      >Primary Color Disabled Text<div class="value">{{primary2DisabledText}}</div></div>
+    </div>
+  </el-col>
   </el-col>
 </el-row>
 
@@ -122,8 +169,8 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
   <el-col :span="6" :xs="{span: 12}">
     <div class="demo-color-box"
     :style="{ background: success }"
-    >Success<div class="value">#67C23A</div>
-      <div
+    >Success<div class="value">{{success}}</div>
+      <!-- <div
         class="bg-color-sub"
       >
         <div
@@ -133,58 +180,25 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
           :style="{ background: tintColor(success, (key + 8) / 10) }"
             >
         </div>
-      </div>
+      </div> -->
     </div>
   </el-col>
   <el-col :span="6" :xs="{span: 12}">
     <div class="demo-color-box"
     :style="{ background: warning }"
-    >Warning<div class="value">#E6A23C</div>
-      <div
-          class="bg-color-sub"
-        >
-        <div
-          class="bg-success-sub-item"
-          v-for="(item, key) in Array(2)"
-          :key="key"
-          :style="{ background: tintColor(warning, (key + 8) / 10) }"
-            >
-        </div>
-      </div>
+    >Warning<div class="value">{{warning}}</div>
     </div>
   </el-col>
   <el-col :span="6" :xs="{span: 12}">
     <div class="demo-color-box"
     :style="{ background: danger }"
-    >Danger<div class="value">#F56C6C</div>
-      <div
-          class="bg-color-sub"
-        >
-        <div
-          class="bg-success-sub-item"
-          v-for="(item, key) in Array(2)"
-          :key="key"
-          :style="{ background: tintColor(danger, (key + 8) / 10) }"
-            >
-        </div>
-      </div>
+    >Danger<div class="value">{{danger}}</div>
     </div>
   </el-col>
   <el-col :span="6" :xs="{span: 12}">
     <div class="demo-color-box"
     :style="{ background: info }"
-    >Info<div class="value">#909399</div>
-      <div
-          class="bg-color-sub"
-        >
-        <div
-          class="bg-success-sub-item"
-          v-for="(item, key) in Array(2)"
-          :key="key"
-          :style="{ background: tintColor(info, (key + 8) / 10) }"
-            >
-        </div>
-      </div>
+    >Info<div class="value">{{info}}</div>
     </div>
   </el-col>
 </el-row>
@@ -202,29 +216,13 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
       <div class="demo-color-box demo-color-box-other"
       :style="{ background: textRegular }"
       >
-      常规文字<div class="value">{{textRegular}}</div></div>
+      次要文字<div class="value">{{textRegular}}</div></div>
       <div class="demo-color-box demo-color-box-other"
       :style="{ background: textSecondary }"
-      >次要文字<div class="value">{{textSecondary}}</div></div>
+      >辅助文字<div class="value">{{textSecondary}}</div></div>
       <div class="demo-color-box demo-color-box-other"
       :style="{ background: textPlaceholder }"
-      >占位文字<div class="value">{{textPlaceholder}}</div></div>
-    </div>
-  </el-col>
-  <el-col :span="6" :xs="{span: 12}">
-    <div class="demo-color-box-group">
-      <div class="demo-color-box demo-color-box-other demo-color-box-lite"
-      :style="{ background: borderBase }"
-      >一级边框<div class="value">{{borderBase}}</div></div>
-      <div class="demo-color-box demo-color-box-other demo-color-box-lite"
-      :style="{ background: borderLight }"
-      >二级边框<div class="value">{{borderLight}}</div></div>
-      <!-- <div class="demo-color-box demo-color-box-other demo-color-box-lite"
-      :style="{ background: borderLighter }"
-      >三级边框<div class="value">{{borderLighter}}</div></div>
-      <div class="demo-color-box demo-color-box-other demo-color-box-lite"
-      :style="{ background: borderExtraLight }"
-      >四级边框<div class="value">{{borderExtraLight}}</div></div> -->
+      >提示/禁用文字<div class="value">{{textPlaceholder}}</div></div>
     </div>
   </el-col>
   <el-col :span="6" :xs="{span: 12}">
@@ -235,10 +233,36 @@ Element 主要品牌颜色是鲜艳、友好的蓝色。
       >基础黑色<div class="value">{{black}}</div></div>
       <div
       class="demo-color-box demo-color-box-other"
-      :style="{ background: white, color: '#303133', border: '1px solid #eee' }"
+      :style="{ background: white, color: '#303133', border: '1px solid #e6e6e6' }"
       >基础白色<div class="value">{{white}}</div></div>
       <div class="demo-color-box demo-color-box-other bg-transparent">透明<div class="value">Transparent</div>
       </div>
+    </div>
+  </el-col>
+  <el-col :span="6" :xs="{span: 12}">
+    <div class="demo-color-box-group">
+      <div
+      class="demo-color-box demo-color-box-other demo-color-box-lite"
+      :style="{ background: background }"
+      >背景色1<div class="value">{{background}}</div></div>
+      <div
+      class="demo-color-box demo-color-box-other demo-color-box-lite"
+      :style="{ background: background2 }"
+      >背景色2<div class="value">{{background2}}</div></div>
+      <div
+      class="demo-color-box demo-color-box-other demo-color-box-lite"
+      :style="{ background: background3 }"
+      >背景色3<div class="value">{{background3}}</div></div>
+    </div>
+  </el-col>
+  <el-col :span="6" :xs="{span: 12}">
+    <div class="demo-color-box-group">
+      <div class="demo-color-box demo-color-box-other demo-color-box-lite"
+      :style="{ background: borderBase }"
+      >按钮、下拉框边框/深色分割线<div class="value">{{borderBase}}</div></div>
+      <div class="demo-color-box demo-color-box-other demo-color-box-lite"
+      :style="{ background: borderLight }"
+      >卡片边框/table分割线<div class="value">{{borderLight}}</div></div>
     </div>
   </el-col>
 </el-row>

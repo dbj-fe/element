@@ -22,7 +22,7 @@
             aria-label="Close"
             v-if="showClose"
             @click="handleClose">
-            <i class="el-dialog__close el-icon el-icon-close"></i>
+            <i class="el-dialog__close dbj-icon-close"></i>
           </button>
         </div>
         <div class="el-dialog__body" v-if="rendered"><slot></slot></div>

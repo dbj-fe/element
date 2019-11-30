@@ -104,19 +104,23 @@
       padding-right: 12px;
     }
 
-    &.el-icon-success {
+    &.el-icon-success,
+    &.dbj-icon-success {
       color: $--messagebox-success-color;
     }
 
-    &.el-icon-info {
+    &.el-icon-info,
+    &.dbj-icon-info {
       color: $--messagebox-info-color;
     }
 
-    &.el-icon-warning {
+    &.el-icon-warning,
+    &.dbj-icon-warning {
       color: $--messagebox-warning-color;
     }
 
-    &.el-icon-error {
+    &.el-icon-error,
+    &.dbj-icon-error {
       color: $--messagebox-danger-color;
     }
   }

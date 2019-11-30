@@ -353,7 +353,7 @@ export default {
     prefixIcon: String,
     clearIcon: {
       type: String,
-      default: 'el-icon-circle-close'
+      default: 'dbj-icon-circle-close'
     },
     name: {
       default: '',

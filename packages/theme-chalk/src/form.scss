@@ -36,7 +36,7 @@
   }
 }
 @include b(form-item) {
-  margin-bottom: 22px;
+  margin-bottom: 16px;
   @include utils-clearfix;
 
   & .el-form-item {
@@ -117,9 +117,7 @@
     font-size: 12px;
     line-height: 1;
     padding-top: 4px;
-    position: absolute;
-    top: 100%;
-    left: 0;
+    margin-bottom: -8px;
 
     @include m(inline) {
       position: relative;
@@ -159,12 +157,12 @@
     }
   }
   @include when(success) {
-    & .el-input__inner,
-    & .el-textarea__inner {
-      &, &:focus {
-        border-color: $--color-success;
-      }
-    }
+    // & .el-input__inner,
+    // & .el-textarea__inner {
+    //   &, &:focus {
+    //     border-color: $--color-success;
+    //   }
+    // }
     & .el-input-group__append,
     & .el-input-group__prepend {
       & .el-input__inner {

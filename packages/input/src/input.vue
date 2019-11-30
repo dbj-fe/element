@@ -59,11 +59,11 @@
             </i>
           </template>
           <i v-if="showClear"
-            class="el-input__icon el-icon-circle-close el-input__clear"
+            class="el-input__icon dbj-icon-circle-close el-input__clear"
             @click="clear"
           ></i>
           <i v-if="showPwdVisible"
-            class="el-input__icon el-icon-view el-input__clear"
+            class="el-input__icon dbj-icon-view el-input__clear"
             @click="handlePasswordVisible"
           ></i>
           <span v-if="isWordLimitVisible" class="el-input__count">

@@ -61,19 +61,23 @@
     }
   }
 
-  & .el-icon-success {
+  & .el-icon-success,
+  & .dbj-icon-success {
     color: $--message-success-font-color;
   }
 
-  & .el-icon-error {
+  & .el-icon-error,
+  & .dbj-icon-error {
     color: $--message-danger-font-color;
   }
 
-  & .el-icon-info {
+  & .el-icon-info,
+  & .dbj-icon-info {
     color: $--message-info-font-color;
   }
 
-  & .el-icon-warning {
+  & .el-icon-warning,
+  & .dbj-icon-warning {
     color: $--message-warning-font-color;
   }
 }

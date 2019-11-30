@@ -65,19 +65,23 @@
     }
   }
 
-  .el-icon-success {
+  .el-icon-success,
+  .dbj-icon-success {
     color: $--notification-success-icon-color;
   }
 
-  .el-icon-error {
+  .el-icon-error,
+  .dbj-icon-error {
     color: $--notification-danger-icon-color;
   }
 
-  .el-icon-info {
+  .el-icon-info,
+  .dbj-icon-info {
     color: $--notification-info-icon-color;
   }
 
-  .el-icon-warning {
+  .el-icon-warning,
+  .dbj-icon-warning {
     color: $--notification-warning-icon-color;
   }
 }

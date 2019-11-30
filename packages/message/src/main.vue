@@ -52,7 +52,7 @@
     computed: {
       typeClass() {
         return this.type && !this.iconClass
-          ? `el-message__icon el-icon-${ typeMap[this.type] }`
+          ? `el-message__icon dbj-icon-${ typeMap[this.type] }`
           : '';
       }
     },

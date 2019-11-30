@@ -35,7 +35,8 @@
     }
   }
 
-  .el-icon-circle-close {
+  .el-icon-circle-close,
+  .dbj-icon-circle-close {
     z-index: #{$--index-normal + 1};
     transition: $--color-transition-base;
 

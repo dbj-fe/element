@@ -37,7 +37,7 @@
           cursor: pointer;
         }
         &:active {
-          color: #FA9200;
+          color: $--color-primary-active;
         }
       }
     }

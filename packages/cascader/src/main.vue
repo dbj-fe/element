@@ -36,7 +36,7 @@
         <i
           key="1"
           v-if="clearable && inputHover && currentLabels.length"
-          class="el-input__icon el-icon-circle-close el-cascader__clearIcon"
+          class="el-input__icon dbj-icon-circle-close el-cascader__clearIcon"
           @click="clearValue"
         ></i>
         <i
