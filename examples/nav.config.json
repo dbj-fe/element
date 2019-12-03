@@ -34,6 +34,10 @@
             {
               "path": "/dbj-upload",
               "title": "DbjUpload"
+            },
+            {
+              "path": "/dbj-search-input",
+              "title": "DbjSearchInput"
             }
           ]
         },

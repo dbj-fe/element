@@ -25,6 +25,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.dbj-icon-search:before {
+  content: "\e63f";
+}
+
 .dbj-icon-info:before {
   content: "\e7a1";
 }

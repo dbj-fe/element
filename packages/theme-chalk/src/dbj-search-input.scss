@@ -1,0 +1,35 @@
+@import "common/var";
+@import "mixins/mixins";
+
+$namespace: 'dbj';
+
+@include b(search-input) {
+  width: 232px;
+
+  @include m(with-switch) {
+    width: 328px;
+  }
+
+  .el-input-group__append {
+    width: 36px;
+    padding: 0;
+    text-align: center;
+
+    .el-button {
+      padding: 0;
+      width: 100%;
+      i {
+        font-size: 20px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .el-select {
+    vertical-align: middle;
+    width: 110px;
+  }
+
+}
+
+$namespace: 'el';

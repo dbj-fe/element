@@ -76,5 +76,6 @@
   "calendar": "./packages/calendar/index.js",
   "dbj-upload": "./packages/dbj-upload/index.js",
   "dbj-reader": "./packages/dbj-reader/index.js",
-  "dbj-dir-upload": "./packages/dbj-dir-upload/index.js"
+  "dbj-dir-upload": "./packages/dbj-dir-upload/index.js",
+  "dbj-search-input": "./packages/dbj-search-input/index.js"
 }

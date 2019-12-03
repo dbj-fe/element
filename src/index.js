@@ -78,6 +78,7 @@ import Calendar from '../packages/calendar/index.js';
 import DbjUpload from '../packages/dbj-upload/index.js';
 import DbjReader from '../packages/dbj-reader/index.js';
 import DbjDirUpload from '../packages/dbj-dir-upload/index.js';
+import DbjSearchInput from '../packages/dbj-search-input/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -156,6 +157,7 @@ const components = [
   DbjUpload,
   DbjReader,
   DbjDirUpload,
+  DbjSearchInput,
   CollapseTransition
 ];
 
@@ -272,5 +274,6 @@ export default {
   Calendar,
   DbjUpload,
   DbjReader,
-  DbjDirUpload
+  DbjDirUpload,
+  DbjSearchInput
 };
