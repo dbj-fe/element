@@ -10,6 +10,7 @@
   position: relative;
   display: inline-block;
   overflow: hidden;
+  background: $--background-color-hover;
 
   @include e(inner) {
     @extend %size;
@@ -26,7 +27,17 @@
 
   @include e(placeholder) {
     @extend %size;
-    background: $--background-color-base;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    background: $--background-color-hover;
+    color: $--color-text-placeholder;
+    vertical-align: middle;
+    .dot {
+      animation: loading-dot 2s infinite steps(3, start);
+      overflow: hidden;
+    }
   }
 
   @include e(error) {
@@ -34,9 +45,37 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
-    background: $--background-color-base;
+    font-size: 40px;
+    background: $--background-color-hover;
     color: $--color-text-placeholder;
     vertical-align: middle;
+  }
+
+  @include e(default) {
+    @extend %size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    background: $--background-color-hover;
+    color: $--color-text-placeholder;
+    vertical-align: middle;
+  }
+
+  @include m(large) {
+    width: 480px;
+    height: 480px;
+  }
+  @include m(medium) {
+    width: 224px;
+    height: 224px;
+  }
+  @include m(small) {
+    width: 160px;
+    height: 160px;
+  }
+  @include m(mini) {
+    width: 48px;
+    height: 48px;
   }
 }

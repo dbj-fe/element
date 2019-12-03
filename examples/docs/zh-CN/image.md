@@ -20,13 +20,48 @@
     data() {
       return {
         fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+        url: 'http://mvfurniture.dabanjia.com/Admin_4_1495528721494_0.jpg'
       }
     }
   }
 </script>
 ```
 :::
+
+### 图片尺寸
+
+:::demo 图片组件提供了四种标准尺寸，通过size属性设置，取值有large、medium、small、mini。
+```html
+<div class="demo-image">
+  <div>
+    <el-image
+      src="http://mvfurniture.dabanjia.com/Admin_4_1495528721494_0.jpg"
+      size="large"></el-image>
+    <span class="demonstration">large 480px*480px</span>
+  </div>
+  <div>
+    <el-image
+      src="http://mvfurniture.dabanjia.com/Admin_4_1495528721494_0.jpg"
+      size="medium"></el-image>
+    <span class="demonstration">medium 224px*224px</span>
+  </div>
+  <div>
+    <el-image
+      src="http://mvfurniture.dabanjia.com/Admin_4_1495528721494_0.jpg"
+      size="small"></el-image>
+    <span class="demonstration">small 160px*160px</span>
+  </div>
+  <div>
+    <el-image
+      src="http://mvfurniture.dabanjia.com/Admin_4_1495528721494_0.jpg"
+      size="mini"></el-image>
+    <span class="demonstration">mini 48px*48px</span>
+  </div>
+</div>
+
+```
+:::
+
 
 ### 占位内容
 
@@ -59,6 +94,18 @@
 ```
 :::
 
+### 默认状态
+
+:::demo 当图片的src为空时，显示默认状态
+```html
+<div class="demo-image__error">
+  <div class="block">
+    <el-image src=""></el-image>
+  </div>
+</div>
+```
+:::
+
 ### 加载失败
 
 :::demo 可通过`slot = error`可自定义加载失败内容
@@ -66,11 +113,11 @@
 <div class="demo-image__error">
   <div class="block">
     <span class="demonstration">默认</span>
-    <el-image></el-image>
+    <el-image src="aaaa"></el-image>
   </div>
   <div class="block">
     <span class="demonstration">自定义</span>
-    <el-image>
+    <el-image src="aaaa">
       <div slot="error" class="image-slot">
         <i class="el-icon-picture-outline"></i>
       </div>
@@ -112,10 +159,12 @@
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | src | 图片源，同原生 | string | — | - |
-| fit | 确定图片如何适应容器框，同原生 [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) | string | fill / contain / cover / none / scale-down | - |
+| size | 图片标准尺寸 | string | large / medium / small / mini | - |
+| fit | 确定图片如何适应容器框，同原生 [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) | string | fill / contain / cover / none / scale-down | scale-down |
 | alt | 原生 alt | string | - | - |
 | referrer-policy | 原生 referrerPolicy | string | - | - |
 | lazy | 是否开启懒加载 | boolean | — | false |
+| ossCompress | 是否开启oss的图片压缩，需要设置size才生效 | boolean | — | true |
 | scroll-container | 开启懒加载后，监听 scroll 事件的容器 | string / HTMLElement | — | 最近一个 overflow 值为 auto 或 scroll 的父元素 |
 
 ### Events
@@ -128,6 +177,7 @@
 | 名称    | 说明         |
 |---------|-------------|
 | placeholder | 图片未加载的占位内容 |
+| default | 图片src为空时的默认内容 |
 | error | 加载失败的内容 |
 
 

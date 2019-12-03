@@ -94,3 +94,8 @@
     stroke-dashoffset: -120px;
   }
 }
+
+@keyframes loading-dot {
+  0% { width: 0; margin-right: 1em; }
+  100% { width: 1em; margin-right: 0; }
+}

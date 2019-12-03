@@ -132,7 +132,7 @@
     computed: {
       icon() {
         const { type, iconClass } = this;
-        return iconClass || (type && typeMap[type] ? `el-icon-${ typeMap[type] }` : '');
+        return iconClass || (type && typeMap[type] ? `dbj-icon-${ typeMap[type] }` : '');
       },
 
       confirmButtonClasses() {

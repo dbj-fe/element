@@ -1,15 +1,27 @@
 <template>
-  <div class="el-image">
+  <div
+    class="el-image"
+    :class="{
+      ['el-image--' + size] : size
+    }"
+  >
     <slot v-if="loading" name="placeholder">
-      <div class="el-image__placeholder"></div>
+      <div class="el-image__placeholder">加载中<span class="dot">…</span></div>
     </slot>
     <slot v-else-if="error" name="error">
-      <div class="el-image__error">{{ t('el.image.error') }}</div>
+      <div class="el-image__error">
+        <i class="dbj-icon-picture-error"/>
+      </div>
+    </slot>
+    <slot v-else-if="!src" name="default">
+      <div class="el-image__default">
+        <i class="dbj-icon-picture"/>
+      </div>
     </slot>
     <img
       v-else
       class="el-image__inner"
-      :src="src"
+      :src="realSrc"
       :alt="alt"
       :referrerpolicy="referrerPolicy"
       :style="imageStyle"
@@ -33,6 +45,25 @@
     SCALE_DOWN: 'scale-down'
   };
 
+  const sizeMap = {
+    large: {
+      width: 480,
+      height: 480
+    },
+    medium: {
+      width: 224,
+      height: 224
+    },
+    small: {
+      width: 160,
+      height: 160
+    },
+    mini: {
+      width: 48,
+      height: 48
+    }
+  };
+
   export default {
     name: 'ElImage',
 
@@ -40,7 +71,15 @@
 
     props: {
       src: String,
-      fit: String,
+      size: String,
+      fit: {
+        type: String,
+        default: 'scale-down'
+      },
+      ossCompress: {
+        type: Boolean,
+        default: true
+      },
       lazy: Boolean,
       scrollContainer: {},
       alt: String,
@@ -69,6 +108,17 @@
       },
       alignCenter() {
         return !this.$isServer && !isSupportObjectFit() && this.fit !== ObjectFit.FILL;
+      },
+      realSrc() {
+        if (this.ossCompress) {
+          let size = sizeMap[this.size];
+          if (size) {
+            if (this.fit === 'scale-down') {
+              return this.src + '?x-oss-process=image/resize,m_lfit,h_' + (size.height * 2) + ',w_' + (size.width * 2);
+            }
+          }
+        }
+        return this.src;
       }
     },
 
@@ -96,6 +146,12 @@
     methods: {
       loadImage() {
         if (this.$isServer) return;
+
+        if (!this.src) {
+          this.loading = false;
+          this.error = false;
+          return;
+        }
 
         // reset status
         this.loading = true;

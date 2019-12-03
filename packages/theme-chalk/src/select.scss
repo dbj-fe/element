@@ -40,6 +40,13 @@
       transform: rotateZ(180deg);
       cursor: pointer;
 
+      &.dbj-icon-circle-close {
+        color: $--color-text-light;
+        &:hover {
+          color: $--color-text-regular;
+        }
+      }
+
       @include when(reverse) {
         transform: rotateZ(0deg);
       }
