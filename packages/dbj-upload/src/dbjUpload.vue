@@ -347,6 +347,14 @@ export default {
       this.$refs.uploader.abort(file);
       this.handleRemove(file);
     },
+    handleAbortAll() {
+      this.$refs.uploader.abort();
+      this.fileList.forEach((file, idx) => {
+        this.$refs.replaceUploader[idx].abort();
+      });
+      this.fileList = [];
+      this.$emit('input', this.fileList);
+    },
     triggerClick() {
       this.$refs.uploader.$refs['upload-inner'].handleClick();
     }

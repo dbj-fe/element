@@ -193,6 +193,10 @@ $namespace: 'dbj';
       .dbj-upload-list__item-content .content-wrapper > i {
         display: inline-block;
       }
+
+      .dbj-upload-list__item-content .file-info .file-size {
+        display: none;
+      }
     }
   }
 }

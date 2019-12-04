@@ -74,8 +74,8 @@ $--border-color-extra-light: #F5F5F5 default;
 // Background
 /// color|1|Background Color|4
 $--background-color-base: #F5F5F5 !default;
-$--background-color-hover: #FAFAFA !default;
-$--background-color-secondary: #F0F0F0 !default;
+$--background-color-dark: #F0F0F0 !default;
+$--background-color-light: #FAFAFA !default;
 
 /* Link
 -------------------------- */
@@ -647,8 +647,8 @@ $--table-font-color: $--color-text-regular !default;
 /// color||Color|0
 $--table-header-font-color: $--color-text-regular !default;
 /// color||Color|0
-$--table-row-hover-background-color: $--background-color-hover !default;
-$--table-current-row-background-color: $--background-color-hover !default;
+$--table-row-hover-background-color: $--background-color-light !default;
+$--table-current-row-background-color: $--background-color-light !default;
 /// color||Color|0
 $--table-header-background-color: $--color-white !default;
 $--table-fixed-box-shadow: 0 0 10px rgba(0, 0, 0, .12) !default;

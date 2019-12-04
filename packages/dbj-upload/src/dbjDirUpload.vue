@@ -64,7 +64,7 @@
                 :style="{width: (sizeStat.total ? sizeStat.loaded*100/sizeStat.total : 0) + '%'}"
               />
             </span>
-            <i class="dbj-icon-circle-close"/>
+            <i @click="handleAbort" class="dbj-icon-circle-close"/>
           </div>
         </div>
       </div>
@@ -467,6 +467,10 @@ export default {
     handleReplace() {
       this.isReplace = true;
       this.$refs.uploader.$refs['upload-inner'].handleClick();
+    },
+    handleAbort() {
+      this.$refs.uploader.abort();
+      this.handleClear();
     },
     handleError(msg, file) {
       this.$emit('error', msg, file);

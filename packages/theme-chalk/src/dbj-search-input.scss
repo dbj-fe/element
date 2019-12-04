@@ -14,6 +14,11 @@ $namespace: 'dbj';
     width: 36px;
     padding: 0;
     text-align: center;
+    background: $--background-color-light;
+
+    &:hover {
+      background: $--background-color-base;
+    }
 
     .el-button {
       padding: 0;

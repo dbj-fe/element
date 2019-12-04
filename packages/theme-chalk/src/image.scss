@@ -10,7 +10,7 @@
   position: relative;
   display: inline-block;
   overflow: hidden;
-  background: $--background-color-hover;
+  background: $--background-color-light;
 
   @include e(inner) {
     @extend %size;
@@ -31,7 +31,7 @@
     justify-content: center;
     align-items: center;
     font-size: 12px;
-    background: $--background-color-hover;
+    background: $--background-color-light;
     color: $--color-text-placeholder;
     vertical-align: middle;
     .dot {
@@ -46,7 +46,7 @@
     justify-content: center;
     align-items: center;
     font-size: 40px;
-    background: $--background-color-hover;
+    background: $--background-color-light;
     color: $--color-text-placeholder;
     vertical-align: middle;
   }
@@ -57,7 +57,7 @@
     justify-content: center;
     align-items: center;
     font-size: 40px;
-    background: $--background-color-hover;
+    background: $--background-color-light;
     color: $--color-text-placeholder;
     vertical-align: middle;
   }
