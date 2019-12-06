@@ -16,11 +16,11 @@
         ></el-input>
       </div>
       <div class="content-20">
-        <color-picker 
+        <color-picker
           size="medium"
           ref="colorPicker"
           class="colorPicker"
-          v-model="pickerColor" 
+          v-model="pickerColor"
           @change=onPickerChange
           :colorList="golbalColorList"
         ></color-picker>
@@ -30,9 +30,6 @@
 </template>
 
 <style>
-input {
-  cursor: pointer;
-}
 .colorPicker {
   margin-left: 10px;
   vertical-align: bottom;
