@@ -65,7 +65,7 @@
             :show-file-list="false"
             :accept="accept"
           >
-            <i class="dbj-icon-replace"/>
+            <i class="dbj-icon-replace-outline"/>
           </el-upload>
         </p>
         <p class="dbj-upload-list__item-progress">

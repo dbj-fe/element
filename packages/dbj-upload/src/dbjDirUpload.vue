@@ -55,7 +55,7 @@
               <span class="total">/{{formatFileSize(sizeStat.total)}}</span>
             </span>
             <i @click="handleClear" class="dbj-icon-circle-close"/>
-            <i @click="handleReplace" class="dbj-icon-replace"/>
+            <i @click="handleReplace" class="dbj-icon-replace-outline"/>
           </div>
           <div class="bottom">
             <span class="progress">

@@ -76,6 +76,7 @@ import Divider from '../packages/divider/index.js';
 import Image from '../packages/image/index.js';
 import Calendar from '../packages/calendar/index.js';
 import DbjUpload from '../packages/dbj-upload/index.js';
+import DbjUploadImage from '../packages/dbj-upload-image/index.js';
 import DbjReader from '../packages/dbj-reader/index.js';
 import DbjDirUpload from '../packages/dbj-dir-upload/index.js';
 import DbjSearchInput from '../packages/dbj-search-input/index.js';
@@ -155,6 +156,7 @@ const components = [
   Image,
   Calendar,
   DbjUpload,
+  DbjUploadImage,
   DbjReader,
   DbjDirUpload,
   DbjSearchInput,
@@ -273,6 +275,7 @@ export default {
   Image,
   Calendar,
   DbjUpload,
+  DbjUploadImage,
   DbjReader,
   DbjDirUpload,
   DbjSearchInput

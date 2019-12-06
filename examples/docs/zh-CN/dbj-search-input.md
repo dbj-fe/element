@@ -1,6 +1,6 @@
-## DbjUpload 上传
+## DbjSearchInput 搜索框
 
-自定义搜索组件
+自定义搜索框组件
 
 ### 基本使用
 

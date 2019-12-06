@@ -38,7 +38,7 @@
         <i class="dbj-icon-success" />
       </div>
       <i @click="handleClear" class="dbj-icon-circle-close"/>
-      <i @click="handleReplace" class="dbj-icon-replace"/>
+      <i @click="handleReplace" class="dbj-icon-replace-outline"/>
     </div>
   </div>
   <div

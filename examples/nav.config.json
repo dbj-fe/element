@@ -36,6 +36,18 @@
               "title": "DbjUpload"
             },
             {
+              "path": "/dbj-reader",
+              "title": "DbjReader"
+            },
+            {
+              "path": "/dbj-dir-upload",
+              "title": "DbjDirUpload"
+            },
+            {
+              "path": "/dbj-upload-image",
+              "title": "DbjUploadImage"
+            },
+            {
               "path": "/dbj-search-input",
               "title": "DbjSearchInput"
             }
