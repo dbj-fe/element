@@ -1,0 +1,56 @@
+@import "common/var";
+@import "mixins/mixins";
+
+$namespace: 'dbj';
+
+@include b(empty) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding-bottom: 20px;
+
+  @include e(body) {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 400px;
+    min-width: 160px;
+
+    > .el-button {
+      margin-top: 16px;
+    }
+  }
+
+  @include e(img) {
+    display: block;
+    width: 160px;
+    height: 160px;
+  }
+
+  @include e(title) {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 22px;
+    color: $--color-text-primary;
+  }
+
+  @include e(tip) {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    color: $--color-text-secondary;
+  }
+
+  @include m(no-img) {
+    .dbj-empty__title {
+      margin-top: 0;
+    }
+  }
+}
+
+$namespace: 'el';

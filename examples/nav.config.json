@@ -50,6 +50,10 @@
             {
               "path": "/dbj-search-input",
               "title": "DbjSearchInput"
+            },
+            {
+              "path": "/dbj-empty",
+              "title": "DbjEmpty"
             }
           ]
         },

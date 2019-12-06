@@ -80,6 +80,7 @@ import DbjUploadImage from '../packages/dbj-upload-image/index.js';
 import DbjReader from '../packages/dbj-reader/index.js';
 import DbjDirUpload from '../packages/dbj-dir-upload/index.js';
 import DbjSearchInput from '../packages/dbj-search-input/index.js';
+import DbjEmpty from '../packages/dbj-empty/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -160,6 +161,7 @@ const components = [
   DbjReader,
   DbjDirUpload,
   DbjSearchInput,
+  DbjEmpty,
   CollapseTransition
 ];
 
@@ -278,5 +280,6 @@ export default {
   DbjUploadImage,
   DbjReader,
   DbjDirUpload,
-  DbjSearchInput
+  DbjSearchInput,
+  DbjEmpty
 };
