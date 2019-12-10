@@ -2,15 +2,15 @@
   <div
     class="dbj-dir-upload"
     :class="{
-      ready: isReady,
-      uploading: isUploading,
-      uploaded: isComplete,
-      'no-file': !hasFile
+      'is-ready': isReady,
+      'is-uploading': isUploading,
+      'is-uploaded': isComplete,
+      'no-match-file': !hasFile
     }"
   >
     <el-upload
       ref="uploader"
-      class="el-upload-wrapper"
+      class="dbj-dir-upload__trigger"
       :action="uploadServerUrl"
       :data="getUploadData"
       :before-upload="beforeUpload"
@@ -36,35 +36,37 @@
     </div>
     <div
       class="dbj-dir-upload__panel"
-      :class="{expand: expand}">
+      :class="{'is-expand': expand}">
       <div class="dbj-dir-upload__content">
         <i
-          class="el-icon-arrow-down"
+          class="dbj-dir-upload__expand-icon el-icon-arrow-down"
           @click="expand = !expand"
         />
-        <img src="https://ali-image.dabanjia.com/static/image/element-ui/folder.png">
-        <div class="content-wrapper">
-          <div class="top">
-            <div class="dbj-dir-upload__label">
-              <span class="file-name">{{dirName || '无目录'}}</span>
-              <i class="dbj-icon-success" />
-              <i class="dbj-icon-warn" title="没有文件" />
+        <img class="dbj-dir-upload__folder-img" src="https://ali-image.dabanjia.com/static/image/element-ui/folder.png">
+        <div class="dbj-dir-upload-folder">
+          <div class="dbj-dir-upload-folder__top">
+            <div class="dbj-dir-upload-folder__info">
+              <div class="dbj-dir-upload-folder__label">
+                <span class="dbj-dir-upload-folder__name" :title="dirName">{{dirName || '无目录'}}</span>
+                <i class="dbj-dir-upload-folder__success-icon dbj-icon-success" />
+                <i class="dbj-dir-upload-folder__warning-icon dbj-icon-warning" title="没有文件" />
+              </div>
+              <span class="dbj-dir-upload-folder__size">
+                <span class="dbj-dir-upload-folder__size-current">{{formatFileSize(sizeStat.loaded)}}</span>
+                <span class="dbj-dir-upload-folder__size-total">/{{formatFileSize(sizeStat.total)}}</span>
+              </span>
             </div>
-            <span class="file-size">
-              <span class="current">{{formatFileSize(sizeStat.loaded)}}</span>
-              <span class="total">/{{formatFileSize(sizeStat.total)}}</span>
-            </span>
-            <i @click="handleClear" class="dbj-icon-circle-close"/>
-            <i @click="handleReplace" class="dbj-icon-replace-outline"/>
+            <i @click="handleClear" class="dbj-dir-upload-folder__clear-icon dbj-icon-circle-close"/>
+            <i @click="handleReplace" class="dbj-dir-upload-folder__replace-icon dbj-icon-replace-outline"/>
           </div>
-          <div class="bottom">
-            <span class="progress">
+          <div class="dbj-dir-upload-folder__bottom">
+            <span class="dbj-dir-upload-folder__progress">
               <span
-                class="bar"
+                class="dbj-dir-upload-folder__progress-bar"
                 :style="{width: (sizeStat.total ? sizeStat.loaded*100/sizeStat.total : 0) + '%'}"
               />
             </span>
-            <i @click="handleAbort" class="dbj-icon-circle-close"/>
+            <i @click="handleAbort" class="dbj-dir-upload-folder__abort-icon dbj-icon-circle-close"/>
           </div>
         </div>
       </div>
@@ -316,6 +318,7 @@ export default {
             resolve(this.uploadServerUrl);
           })
           .catch(e => {
+            this.$emit('error', '获取上传token失败');
             reject();
           });
       });

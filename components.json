@@ -78,5 +78,6 @@
   "dbj-upload-image": "./packages/dbj-upload-imgae/index.js",
   "dbj-reader": "./packages/dbj-reader/index.js",
   "dbj-dir-upload": "./packages/dbj-dir-upload/index.js",
-  "dbj-search-input": "./packages/dbj-search-input/index.js"
+  "dbj-search-input": "./packages/dbj-search-input/index.js",
+  "dbj-empty": "./packages/dbj-empty/index.js"
 }

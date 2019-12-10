@@ -3,9 +3,9 @@
 
 $namespace: 'dbj';
 @include b(reader) {
-  width: 456px;
+  padding-top: 12px;
 
-  @include e(button-wrapper) {
+  @include e(trigger) {
     display: block;
     line-height: 16px;
     height: 16px;
@@ -16,13 +16,14 @@ $namespace: 'dbj';
   }
 
   @include e(button) {
-    color: $--color-primary;
+    color: $--color-text-primary;
     font-size: 12px;
+    height: 16px;
     line-height: 16px;
-    cursor: pointer;
-    & i {
-      font-size: 14px;
-      margin-right: 2px;
+    i {
+      color: $--color-primary;
+      font-size: $--font-size-icon-base;
+      margin-right: 4px;
     }
   }
 
@@ -30,53 +31,64 @@ $namespace: 'dbj';
     font-size: 12px;
     line-height: 16px;
     margin-top: 4px;
-    color: #999;
+    color: $--color-info;
   }
 
-  @include e(display) {
+  @include e(panel) {
     display: none;
     flex-flow: row nowrap;
     align-items: center;
-    justify-content: space-between;
     font-size: 12px;
     line-height: 16px;
     padding-bottom: 20px;
+  }
 
-    @include e(info) {
-      display: flex;
-      width: 400px;
-      flex-flow: row nowrap;
-      align-items: center;
+  @include e(info) {
+    display: flex;
+    width: 400px;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
 
-      > i {
-        color: $--color-primary;
-        margin-left: 12px;
-        font-size: 14px;
-        vertical-align: middle;
-      }
-    }
+  @include e(success-icon) {
+    font-size: $--font-size-icon-base;
+    color: $--color-primary;
+    margin-left: 12px;
+    vertical-align: middle;
+  }
 
-    > i {
-      font-size: 14px;
-      color: #999;
-      cursor: pointer;
+  @include e(clear-icon) {
+    font-size: $--font-size-icon-base;
+    color: $--color-text-light;
+    margin-left: 12px;
+    cursor: pointer;
+    &:hover {
+      color: $--color-text-primary;
     }
   }
 
-  @include m(uploaded) {
-    @include e(button-wrapper) {
+  @include e(replace-icon) {
+    font-size: $--font-size-icon-base;
+    color: $--color-text-light;
+    margin-left: 12px;
+    cursor: pointer;
+    &:hover {
+      color: $--color-text-primary;
+    }
+  }
+
+  &.is-uploaded {
+    .dbj-reader__trigger,
+    .dbj-reader__tip {
       display: none;
     }
-    @include e(tip) {
-      display: none;
-    }
-    @include e(display) {
+    .dbj-reader__panel {
       display: flex;
     }
   }
 
   @include m(not-support) {
-    color: #999;
+    color: $--color-info;
     font-size: 12px;
   }
 }

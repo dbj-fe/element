@@ -3,11 +3,11 @@
     v-if="isSupport"
     class="dbj-reader"
     :class="{
-      'dbj-reader--uploaded': value
+      'is-uploaded': value
     }"
   >
     <label
-      class="dbj-reader__button-wrapper"
+      class="dbj-reader__trigger"
       :for="`fileReaderInput_${uid}`">
       <input
         :id="`fileReaderInput_${uid}`"
@@ -32,13 +32,13 @@
     >
       {{ tip }}
     </div>
-    <div class="dbj-reader__display">
+    <div class="dbj-reader__panel">
       <div class="dbj-reader__info">
         <span>文件已上传</span>
-        <i class="dbj-icon-success" />
+        <i class="dbj-reader__success-icon dbj-icon-success" />
       </div>
-      <i @click="handleClear" class="dbj-icon-circle-close"/>
-      <i @click="handleReplace" class="dbj-icon-replace-outline"/>
+      <i @click="handleClear" class="dbj-reader__clear-icon dbj-icon-circle-close"/>
+      <i @click="handleReplace" class="dbj-reader__replace-icon dbj-icon-replace-outline"/>
     </div>
   </div>
   <div

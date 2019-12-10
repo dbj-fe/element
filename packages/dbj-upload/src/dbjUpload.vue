@@ -4,12 +4,12 @@
     :class="{
       'dbj-upload--multiple' : multiple,
       'dbj-upload--single' : !multiple,
-      'has-files' : fileList2.length
+      'dbj-upload--has-files' : fileList2.length
     }"
   >
     <el-upload
       ref="uploader"
-      class="el-upload-wrapper"
+      class="dbj-upload__trigger"
       :action="uploadServerUrl"
       :data="getUploadData"
       :before-upload="beforeUpload"
@@ -32,31 +32,42 @@
     >
       {{ tip }}
     </div>
-    <ul class="dbj-upload-list">
+    <ul class="dbj-upload__list">
       <li
         v-for="file in fileList2"
         :key="file.uid"
-        class="dbj-upload-list__item"
-        :class="{complete: file.sizeLoaded === file.size}"
+        class="dbj-upload-file"
+        :class="{'dbj-upload-file--complete': file.sizeLoaded === file.size}"
       >
-        <p class="dbj-upload-list__item-content">
-          <span class="file-info">
-            <label class="content-wrapper">
-              <span :title="file.name" class="content">
-                <span class="file-name">{{ file.prefix }}</span>
-                <span v-if="file.suffix" class="file-suffix">{{ file.suffix }}</span>
+        <div class="dbj-upload-file__top">
+          <span class="dbj-upload-file__info">
+            <label class="dbj-upload-file__content">
+              <span
+                :title="file.name"
+                class="dbj-upload-file__name-wrapper"
+              >
+                <span class="dbj-upload-file__name">{{ file.prefix }}</span>
+                <span
+                  v-if="file.suffix"
+                  class="dbj-upload-file__suffix"
+                >
+                  {{ file.suffix }}
+                </span>
               </span>
-              <i class="dbj-icon-success" />
+              <i class="dbj-upload-file__success-icon dbj-icon-success" />
             </label>
-            <span v-if="file.size > 0" class="file-size">
-              <span class="current">{{ formatFileSize(file.sizeLoaded) }}</span>
-              <span class="total">/{{ formatFileSize(file.size) }}</span>
+            <span
+              v-if="file.size > 0"
+              class="dbj-upload-file__size"
+            >
+              <span class="dbj-upload-file__current">{{ formatFileSize(file.sizeLoaded) }}</span>
+              <span class="dbj-upload-file__total">/{{ formatFileSize(file.size) }}</span>
             </span>
           </span>
-          <i @click="handleRemove(file)" class="dbj-icon-circle-close"/>
+          <i class="dbj-upload-file__clear-icon dbj-icon-circle-close" @click="handleRemove(file)" />
           <el-upload
             ref="replaceUploader"
-            class="upload-icon"
+            class="dbj-upload-file__replace-icon"
             :action="uploadServerUrl"
             :data="getUploadData"
             :before-upload="newFile => handleReplace(file, newFile)"
@@ -67,16 +78,16 @@
           >
             <i class="dbj-icon-replace-outline"/>
           </el-upload>
-        </p>
-        <p class="dbj-upload-list__item-progress">
-          <span class="progress">
+        </div>
+        <div class="dbj-upload-file__bottom">
+          <span class="dbj-upload-file__progress">
             <span
-              class="bar"
+              class="dbj-upload-file__progress-bar"
               :style="{width: file.sizeLoaded*100/file.size + '%'}"
             />
           </span>
-          <i class="dbj-icon-circle-close" @click="handleAbort(file)"/>
-        </p>
+          <i class="dbj-upload-file__abort-icon dbj-icon-circle-close" @click="handleAbort(file)"/>
+        </div>
       </li>
     </ul>
   </div>
@@ -270,6 +281,7 @@ export default {
           })
           .catch(e => {
             this.replaceUid = 0;
+            this.$emit('error', '获取上传token失败');
             reject();
           });
       });
