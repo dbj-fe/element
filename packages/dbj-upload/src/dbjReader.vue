@@ -18,12 +18,12 @@
         @change="handleFileChange"
       >
       <slot>
-        <span
+        <div
           class="dbj-reader__button"
         >
           <i class="dbj-icon-upload" />
           <span>上传文件</span>
-        </span>
+        </div>
       </slot>
     </label>
     <div
