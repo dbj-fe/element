@@ -71,6 +71,12 @@ Created by iconfont
     <glyph glyph-name="plus" unicode="&#58898;" d="M554.666667 426.666667h213.333333v-85.333334h-213.333333v-213.333333h-85.333334v213.333333H256v85.333334h213.333333V640h85.333334v-213.333333z"  horiz-adv-x="1024" />
 
     
+    <glyph glyph-name="menu" unicode="&#58939;" d="M256 768h768v-128H256V768zM0 768h128v-128H0V768z m0-320h128v-128H0V448z m0-320h128v-128H0V128z m256 320h768v-128H256V448z m0-320h768v-128H256V128z"  horiz-adv-x="1024" />
+
+    
+    <glyph glyph-name="arrow-down" unicode="&#58900;" d="M512 314.24L835.584 640 928 546.88 512 128 96 546.88 188.416 640z"  horiz-adv-x="1024" />
+
+    
 
 
   </font>

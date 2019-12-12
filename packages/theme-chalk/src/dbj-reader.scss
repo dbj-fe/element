@@ -16,14 +16,20 @@ $namespace: 'dbj';
   }
 
   @include e(button) {
-    color: $--color-text-primary;
+    color: $--color-primary;
     font-size: 12px;
     height: 16px;
     line-height: 16px;
     i {
-      color: $--color-primary;
       font-size: $--font-size-icon-base;
       margin-right: 4px;
+      vertical-align: -2px;
+    }
+    &:hover {
+      color: $--color-primary-hover;
+    }
+    &:click {
+      color: $--color-primary-active;
     }
   }
 

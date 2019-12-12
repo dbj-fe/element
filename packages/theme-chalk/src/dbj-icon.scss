@@ -1,11 +1,11 @@
 @import "common/var";
 
 @font-face {font-family: "dbjicon";
-  src: url('fonts/dbjicon.eot?t=1575106461866'); /* IE9 */
-  src: url('fonts/dbjicon.eot?t=1575106461866#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('fonts/dbjicon.woff?t=1575106461866') format('woff'),
-  url('fonts/dbjicon.ttf?t=1575106461866') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-  url('fonts/dbjicon.svg?t=1575106461866#dbjicon') format('svg'); /* iOS 4.1- */
+  src: url('fonts/dbjicon.eot?t=1576142691609'); /* IE9 */
+  src: url('fonts/dbjicon.eot?t=1576142691609#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('fonts/dbjicon.woff?t=1576142691609') format('woff'),
+  url('fonts/dbjicon.ttf?t=1576142691609') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('fonts/dbjicon.svg?t=1576142691609#dbjicon') format('svg'); /* iOS 4.1- */
 }
 
 [class^="dbj-icon-"], [class*=" dbj-icon-"] {
@@ -91,4 +91,12 @@
 
 .dbj-icon-plus:before {
   content: "\e612";
+}
+
+.dbj-icon-menu:before {
+  content: "\e63b";
+}
+
+.dbj-icon-arrow-down:before {
+  content: "\e614";
 }

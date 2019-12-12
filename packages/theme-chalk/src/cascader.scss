@@ -28,7 +28,7 @@
 
   .el-icon-arrow-down {
     transition: transform .3s;
-    // font-size: 16px;
+    color: #CCCCCC;
 
     @include when(reverse) {
       transform: rotateZ(180deg);

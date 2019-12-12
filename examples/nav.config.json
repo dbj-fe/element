@@ -54,6 +54,10 @@
             {
               "path": "/dbj-empty",
               "title": "DbjEmpty"
+            },
+            {
+              "path": "/dbj-card-list",
+              "title": "DbjCardList"
             }
           ]
         },

@@ -39,7 +39,7 @@
       :class="{'is-expand': expand}">
       <div class="dbj-dir-upload__content">
         <i
-          class="dbj-dir-upload__expand-icon el-icon-arrow-down"
+          class="dbj-dir-upload__expand-icon dbj-icon-arrow-down"
           @click="expand = !expand"
         />
         <img class="dbj-dir-upload__folder-img" src="https://ali-image.dabanjia.com/static/image/element-ui/folder.png">

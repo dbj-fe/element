@@ -51,6 +51,9 @@
     margin: 0 3px;
   }
 
+  &:focus {
+    outline: none;
+  }
   .el-dropdown-selfdefine { // 自定义
     &:focus:active, &:focus:not(.focusing) {
       outline-width: 0;
@@ -67,7 +70,7 @@
   margin: 5px 0;
   background-color: $--color-white;
   border: 1px solid $--border-color-lighter;
-  border-radius: $--border-radius-base;
+  border-radius: 0;
   box-shadow: $--dropdown-menu-box-shadow;
 
   @include e(item) {
