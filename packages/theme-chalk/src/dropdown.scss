@@ -8,6 +8,7 @@
   position: relative;
   color: $--color-text-regular;
   font-size: $--font-size-base;
+  outline: none;
 
   .el-button-group {
     display: block;
@@ -51,9 +52,6 @@
     margin: 0 3px;
   }
 
-  &:focus {
-    outline: none;
-  }
   .el-dropdown-selfdefine { // 自定义
     &:focus:active, &:focus:not(.focusing) {
       outline-width: 0;
@@ -72,6 +70,11 @@
   border: 1px solid $--border-color-lighter;
   border-radius: 0;
   box-shadow: $--dropdown-menu-box-shadow;
+  margin: 0 !important;
+
+  .popper__arrow {
+    display: none !important;
+  }
 
   @include e(item) {
     list-style: none;

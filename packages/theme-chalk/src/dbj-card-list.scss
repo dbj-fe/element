@@ -27,6 +27,9 @@ $namespace: 'dbj';
     border-radius: 0;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.04);
     overflow: visible;
+    &:hover {
+      box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
+    }
   }
   .el-card__body {
     padding: 0;
@@ -174,6 +177,7 @@ $namespace: 'dbj';
     position: absolute;
     bottom: 18px;
     right: 16px;
+    outline: none;
     .el-dropdown {
       font-size: $--font-size-icon-base;
       color: $--color-info;
