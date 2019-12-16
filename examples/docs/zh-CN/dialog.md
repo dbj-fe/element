@@ -17,8 +17,8 @@ Dialog 弹出一个对话框，适合需要定制性更大的场景。
   :before-close="handleClose">
   <span>这是一段信息</span>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button @click="dialogVisible = false">取 消</el-button>
   </span>
 </el-dialog>
 
@@ -80,8 +80,8 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
     </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
   </div>
 </el-dialog>
 
@@ -132,7 +132,7 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 ```html
 <template>
   <el-button type="text" @click="outerVisible = true">点击打开外层 Dialog</el-button>
-  
+
   <el-dialog title="外层 Dialog" :visible.sync="outerVisible">
     <el-dialog
       width="30%"
@@ -141,8 +141,8 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
       append-to-body>
     </el-dialog>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="outerVisible = false">取 消</el-button>
       <el-button type="primary" @click="innerVisible = true">打开内层 Dialog</el-button>
+      <el-button @click="outerVisible = false">取 消</el-button>
     </div>
   </el-dialog>
 </template>
@@ -176,8 +176,8 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
   center>
   <span>需要注意的是内容是默认不居中的</span>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="centerDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
   </span>
 </el-dialog>
 

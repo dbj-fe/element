@@ -2,7 +2,7 @@
   <div class="dbj-empty" :class="{'dbj-empty--no-img': noImg}">
     <div class="dbj-empty__body">
       <slot name="img">
-        <img v-if="!noImg" class="dbj-empty__img" src="./asset/default-empty@2x.png">
+        <img v-if="!noImg" class="dbj-empty__img" src="https://ali-image.dabanjia.com/static/image/element-ui/empty.png">
       </slot>
       <div class="dbj-empty__title">
         {{ title }}

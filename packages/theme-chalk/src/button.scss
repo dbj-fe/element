@@ -29,8 +29,7 @@
 
   @include button-size($--button-padding-vertical, $--button-padding-horizontal, $--button-font-size, $--button-border-radius);
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: $--background-color-light;
   }
 
@@ -52,8 +51,7 @@
   }
 
   @include when(plain) {
-    &:hover,
-    &:focus {
+    &:hover {
       background: $--color-white;
       border-color: $--color-primary;
       color: $--color-primary;
@@ -74,8 +72,7 @@
 
   @include when(disabled) {
     &,
-    &:hover,
-    &:focus {
+    &:hover {
       color: $--button-disabled-font-color;
       cursor: not-allowed;
       background-image: none;
@@ -89,8 +86,7 @@
 
     &.is-plain {
       &,
-      &:hover,
-      &:focus {
+      &:hover {
         background-color: $--color-white;
         border-color: $--button-disabled-border-color;
         color: $--button-disabled-font-color;
@@ -130,8 +126,7 @@
     background-color: $--button-primary-background-color;
     border-color: $--button-primary-border-color;
 
-    &:hover,
-    &:focus {
+    &:hover {
       background: $--color-primary-hover;
       border-color: $--color-primary-hover;
     }
@@ -150,7 +145,6 @@
     &.is-disabled {
       &,
       &:hover,
-      &:focus,
       &:active {
         color: $--color-primary-disabled-text;
         background-color: $--color-primary-disabled;
@@ -205,8 +199,7 @@
     min-width: 0;
     height: 20px;
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: $--color-primary-hover;
       border-color: transparent;
       background-color: transparent;
@@ -218,8 +211,7 @@
     }
 
     &.is-disabled,
-    &.is-disabled:hover,
-    &.is-disabled:focus {
+    &.is-disabled:hover {
       border-color: transparent;
     }
   }
@@ -269,7 +261,6 @@
     }
 
     &:hover,
-    &:focus,
     &:active {
       z-index: 1;
     }

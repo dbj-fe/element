@@ -62,6 +62,10 @@
       .el-radio__inner {
         height: $--radio-bordered-small-input-height;
         width: $--radio-bordered-small-input-width;
+        &::after {
+          width: 4px;
+          height: 4px;
+        }
       }
     }
   }
@@ -76,6 +80,10 @@
       .el-radio__inner {
         height: $--radio-bordered-mini-input-height;
         width: $--radio-bordered-mini-input-width;
+        &::after {
+          width: 4px;
+          height: 4px;
+        }
       }
     }
   }
@@ -161,8 +169,8 @@
     }
 
     &::after {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: $--radio-input-border-radius;
       background-color: $--color-white;
       content: "";
