@@ -12,14 +12,17 @@
   .el-input,
   .el-input__inner {
     cursor: pointer;
-  }
-
-  &:hover .el-input__inner {
-    border-color: #CCCCCC;
+    &:focus {
+      border-color: $--border-color-light;
+    }
   }
 
   .el-input.is-focus .el-input__inner {
-    border-color: $--input-focus-border;
+    border-color: $--border-color-light;
+  }
+
+  &:hover .el-input__inner {
+    border-color: $--border-color-base;
   }
 
   .el-input__icon {
@@ -163,7 +166,7 @@
       color: $--cascader-menu-selected-font-color;
     }
 
-    &:hover, &:focus:not(:active) {
+    &:hover {
       background-color: $--select-option-hover-background;
     }
 

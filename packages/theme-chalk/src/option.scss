@@ -24,7 +24,10 @@
       }
     }
 
-    &.hover, &:hover {
+    &.hover{
+      background-color: $--color-white;
+    }
+    &:hover {
       background-color: $--select-option-hover-background;
     }
 
