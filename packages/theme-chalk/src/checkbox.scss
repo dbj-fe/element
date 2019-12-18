@@ -16,7 +16,6 @@
 
   @include when(bordered) {
     padding: $--checkbox-bordered-padding;
-    border-radius: $--border-radius-base;
     border: $--border-base;
     box-sizing: border-box;
     line-height: normal;
@@ -41,7 +40,6 @@
       height: $--checkbox-bordered-medium-height;
 
       .el-checkbox__label {
-        line-height: 17px;
         font-size: $--button-medium-font-size;
       }
 
@@ -57,7 +55,6 @@
       height: $--checkbox-bordered-small-height;
 
       .el-checkbox__label {
-        line-height: 15px;
         font-size: $--button-small-font-size;
       }
 
@@ -81,7 +78,6 @@
       height: $--checkbox-bordered-mini-height;
 
       .el-checkbox__label {
-        line-height: 12px;
         font-size: $--button-mini-font-size;
       }
 

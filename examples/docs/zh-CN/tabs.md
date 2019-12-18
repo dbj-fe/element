@@ -307,7 +307,8 @@
 | 参数       | 说明     | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | value / v-model  | 绑定值，选中选项卡的 name  | string   |  —  |  第一个选项卡的 name |
-| type     | 风格类型   | string   | card/border-card  |     —    |
+| type     | 风格类型   | string   | secondary/card/border-card  |     —    |
+| flex  | 是否使用弹性布局，头部高度固定，内容自适应 | boolean   |  -  |  true |
 | closable  | 标签是否可关闭   | boolean   | — |  false  |
 | addable  | 标签是否可增加   | boolean   | — |  false  |
 | editable  | 标签是否同时可增加和关闭   | boolean   | — |  false  |

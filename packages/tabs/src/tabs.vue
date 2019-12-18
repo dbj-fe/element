@@ -20,7 +20,11 @@
         default: 'top'
       },
       beforeLeave: Function,
-      stretch: Boolean
+      stretch: Boolean,
+      flex: {
+        type: Boolean,
+        default: true
+      }
     },
 
     provide() {
@@ -120,7 +124,8 @@
         editable,
         addable,
         tabPosition,
-        stretch
+        stretch,
+        flex
       } = this;
 
       const newButton = editable || addable
@@ -163,6 +168,7 @@
       return (
         <div class={{
           'el-tabs': true,
+          'el-tabs--flex': flex,
           [`el-tabs--${tabPosition}`]: true,
           [`el-tabs--${type}`]: type
         }}>

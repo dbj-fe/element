@@ -191,9 +191,9 @@
     }
   }
   @include m(text) {
-    border-color: transparent;
     color: $--color-primary;
-    background: transparent;
+    border: none;
+    background-color: transparent;
     padding-left: 0;
     padding-right: 0;
     min-width: 0;
