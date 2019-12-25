@@ -8,7 +8,7 @@
 ```html
 <dbj-search-input
   v-model="keyword"
-  @search="handleSearch"
+  @search="searchPage"
 />
 <script>
   export default {
@@ -18,7 +18,7 @@
       };
     },
     methods: {
-      handleSearch(keyword) {
+      searchPage(keyword) {
         console.log(keyword);
         console.log(this.keyword);
       }
@@ -35,7 +35,7 @@
 <dbj-search-input
   v-model="keyword"
   clearable
-  @search="handleSearch"
+  @search="searchPage"
 />
 <script>
   export default {
@@ -45,7 +45,7 @@
       };
     },
     methods: {
-      handleSearch(keyword) {
+      searchPage(keyword) {
         console.log(keyword);
         console.log(this.keyword);
       }
@@ -65,7 +65,7 @@
   :type.sync="keywordType"
   :types="keywordTypes"
   clearable
-  @search="handleSearch"
+  @search="searchPage"
 />
 <script>
   export default {
@@ -94,7 +94,7 @@
       };
     },
     methods: {
-      handleSearch(keyword, keywordType) {
+      searchPage(keyword, keywordType) {
         console.log(keyword, keywordType);
         console.log(this.keyword, this.keywordType);
       }
@@ -113,7 +113,7 @@
   :type.sync="query.keywordType"
   :types="keywordTypes"
   clearable
-  @search="handleSearch"
+  @search="searchPage"
 />
 <script>
   export default {
@@ -148,7 +148,7 @@
       };
     },
     methods: {
-      handleSearch(keyword, keywordType) {
+      searchPage(keyword, keywordType) {
         console.log(keyword, keywordType);
         console.log(this.query.keyword, this.query.keywordType);
       }
