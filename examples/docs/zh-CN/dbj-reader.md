@@ -32,6 +32,71 @@
 ```
 :::
 
+### 在表单中使用
+
+:::demo 配置`required`为`true`即可设置文件为必须上传，文件上传成功后清除错误提示
+```html
+<el-form ref="form" :model="form" :rules="formRules" label-width="80px" :style="{width: '542px'}">
+  <el-form-item label="名称" prop="name">
+    <el-input v-model="form.name"></el-input>
+  </el-form-item>
+  <el-form-item label="文件上传" prop="fileContent">
+    <dbj-reader
+      file-type="json"
+      :max-size="2*1024"
+      tip="仅支持.json格式文件，小于2KB"
+      v-model="form.fileContent"
+      @error="handleError"
+    />
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" @click="handleSubmit">提交</el-button>
+    <el-button>取消</el-button>
+  </el-form-item>
+</el-form>
+<script>
+  export default {
+    data() {
+      return {
+        form: {
+          name: '',
+          fileContent: ''
+        },
+        formRules: {
+          name: [
+            { required: true, message: '请输入名称', trigger: 'blur' }
+          ],
+          fileContent: [
+            { required: true, message: '请上传文件' }
+          ]
+        }
+      };
+    },
+    mounted() {
+      // 模拟获取数据
+      setTimeout(() => {
+        this.form.name = 'test';
+        this.form.fileContent = 'hello world';
+      }, 100);
+    },
+    methods: {
+      handleError(msg, file) {
+        console.log(msg, file);
+        this.$message.error(msg);
+      },
+      handleSubmit() {
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            console.log(this.form);
+          }
+        })
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### Attribute
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |

@@ -119,10 +119,14 @@ export default {
       default: false
     },
     value: {
-      type: Array,
+      type: [Array, String],
       default: function() {
-        return [];
+        return this.multiple ? [] : '';
       }
+    },
+    md5Value: {
+      type: String,
+      default: ''
     },
     fileType: {
       type: String,
@@ -198,20 +202,29 @@ export default {
     value: {
       immediate: true,
       handler(val) {
-        if (val === this.fileList) {
-          return;
-        }
-        let list = (val || []).filter(item => item.url || item.name);
-        this.fileList = list.map(file => {
-          let name = file.name;
-          if (file.url && !file.name) {
-            name = getFileName(file.url);
+        if (this.multiple) {
+          let list = (val || []).filter(item => item.url || item.name);
+          this.fileList = list.map(file => {
+            let name = file.name;
+            if (file.url && !file.name) {
+              name = getFileName(file.url);
+            }
+            return {
+              ...file,
+              name
+            };
+          });
+        } else {
+          if (val) {
+            this.fileList = [{
+              url: val,
+              name: getFileName(val),
+              md5: this.md5 ? this.md5Value : ''
+            }];
+          } else {
+            this.fileList = [];
           }
-          return {
-            ...file,
-            name
-          };
-        });
+        }
       }
     }
   },
@@ -301,16 +314,29 @@ export default {
       if (this.md5) {
         getFileMd5(file.raw, md5 => {
           currentFile.md5 = md5;
-          this.$emit('success', currentFile, this.fileList);
-          this.$emit('input', this.fileList);
-          this.dispatch('ElFormItem', 'el.form.blur', [this.fileList]);
-          this.handleComplete();
+          if (this.multiple) {
+            this.$emit('input', this.fileList);
+            this.$emit('success', currentFile, this.fileList);
+            this.dispatch('ElFormItem', 'el.form.blur', [this.fileList]);
+            this.handleComplete();
+          } else {
+            this.$emit('input', currentFile.url);
+            this.$emit('update:md5Value', md5);
+            this.$emit('success', currentFile, this.fileList);
+            this.dispatch('ElFormItem', 'el.form.blur', [currentFile.url]);
+          }
         });
       } else {
-        this.$emit('success', currentFile, this.fileList);
-        this.$emit('input', this.fileList);
-        this.dispatch('ElFormItem', 'el.form.blur', [this.fileList]);
-        this.handleComplete();
+        if (this.multiple) {
+          this.$emit('input', this.fileList);
+          this.$emit('success', currentFile, this.fileList);
+          this.dispatch('ElFormItem', 'el.form.blur', [this.fileList]);
+          this.handleComplete();
+        } else {
+          this.$emit('input', currentFile.url);
+          this.$emit('success', currentFile, this.fileList);
+          this.dispatch('ElFormItem', 'el.form.blur', [currentFile.url]);
+        }
       }
     },
     handleComplete() {
@@ -349,7 +375,16 @@ export default {
       } else {
         this.fileList = [];
       }
-      this.$emit('input', this.fileList);
+      if (this.multiple) {
+        this.$emit('input', this.fileList);
+        this.$emit('clear', this.fileList);
+      } else {
+        this.$emit('input', '');
+        this.$emit('clear');
+        if (this.md5) {
+          this.$emit('update:md5Value', '');
+        }
+      }
     },
     handleAbort(file) {
       let idx = this.fileUidIdxMap[file.uid];
@@ -365,7 +400,14 @@ export default {
         this.$refs.replaceUploader[idx].abort();
       });
       this.fileList = [];
-      this.$emit('input', this.fileList);
+      if (this.multiple) {
+        this.$emit('input', this.fileList);
+      } else {
+        this.$emit('input', '');
+        if (this.md5) {
+          this.$emit('update:md5Value', '');
+        }
+      }
     },
     triggerClick() {
       this.$refs.uploader.$refs['upload-inner'].handleClick();

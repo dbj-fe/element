@@ -57,7 +57,7 @@
               </span>
             </div>
             <i @click="handleClear" class="dbj-dir-upload-folder__clear-icon dbj-icon-circle-close"/>
-            <i @click="handleReplace" class="dbj-dir-upload-folder__replace-icon dbj-icon-replace-outline"/>
+            <i @click="handleDirReplace" class="dbj-dir-upload-folder__replace-icon dbj-icon-replace-outline"/>
           </div>
           <div class="dbj-dir-upload-folder__bottom">
             <span class="dbj-dir-upload-folder__progress">
@@ -72,29 +72,32 @@
       </div>
       <el-collapse-transition>
         <div v-show="expand" class="dbj-dir-upload__children">
-          <template v-for="file in fileList">
+          <template v-for="(meta, idx) in metaList">
             <dbj-upload
-              v-if="!file.read"
-              :key="file.index"
+              v-if="!meta.read"
+              :key="meta.index"
               type="resource"
-              :tip="file.tip"
-              :file-type="file.fileType"
-              :md5="file.md5"
+              :tip="meta.tip"
+              :file-type="meta.fileType"
+              :max-size="meta.maxSize"
+              :md5="meta.md5"
               :request-token="requestToken"
               :dir-name="dirName"
-              :value="file.value"
-              @input="val => handleFileChange(file, val)"
+              :value="fileList[idx].url"
+              :md5-value="fileList[idx].md5Value"
+              @success="val => handleFileChange(meta, val)"
+              @clear="val => handleFileChange(meta, val)"
               @error="handleError"
             >
             </dbj-upload>
             <dbj-reader
               v-else
-              :key="file.index"
-              :tip="file.tip"
-              :file-type="file.fileType"
-              :max-size="file.maxSize"
-              :value="file.value"
-              @input="val => handleFileRead(file, val)"
+              :key="meta.index"
+              :tip="meta.tip"
+              :file-type="meta.fileType"
+              :max-size="meta.maxSize"
+              :value="fileList[idx].content"
+              @input="val => handleFileRead(meta, val)"
               @error="handleError"
             >
             </dbj-reader>
@@ -113,6 +116,11 @@ import DbjUpload from './dbjUpload';
 import DbjReader from './dbjReader';
 import { getFileKey, getDirName, formatFileSize, getFileMd5 } from './util';
 import { Promise } from 'q';
+const FILE_STATUS = {
+  INIT: 0,
+  READY: 1,
+  COMPLETE: 2
+};
 
 export default {
   name: 'DbjDirUpload',
@@ -134,6 +142,12 @@ export default {
       type: String,
       default: ''
     },
+    filter: {
+      type: [Array, Function],
+      default: function() {
+        return true;
+      }
+    },
     requestToken: {
       type: Function,
       default: function() {
@@ -148,9 +162,10 @@ export default {
   data() {
     return {
       fileList: [],
+      metaList: [], // 文件上传信息（size，name等），和file一一对应
       expand: false,
       dirName: '',
-      isReplace: false,
+      isDirReplace: false,
       uploadServerUrl: '',
       accessServerUrl: '',
       isUploading: false,
@@ -159,11 +174,11 @@ export default {
   },
   computed: {
     isReady() {
-      return !!this.fileList.length;
+      return !!this.metaList.length;
     },
     fileUidIdxMap() {
       let map = {};
-      this.fileList.forEach((item, idx) => {
+      this.metaList.forEach((item, idx) => {
         map[item.uid] = idx;
       });
       return map;
@@ -171,8 +186,8 @@ export default {
     sizeStat() {
       let total = 0;
       let loaded = 0;
-      this.fileList.forEach(file => {
-        let {size = 0, sizeLoaded = 0} = file;
+      this.metaList.forEach(meta => {
+        let {size = 0, sizeLoaded = 0} = meta;
         total += size;
         loaded += sizeLoaded;
       });
@@ -185,44 +200,56 @@ export default {
       };
     },
     hasFile() {
-      return this.fileList.some(file => {
-        if (file.read) {
-          if (file.value) {
-            return true;
-          }
-        } else {
-          if (file.value[0] && file.value[0].url) {
-            return true;
-          }
-        }
-      });
+      return this.metaList.some(meta => meta.status === FILE_STATUS.READY || meta.status === FILE_STATUS.COMPLETE);
     }
   },
   watch: {
     value: {
       immediate: true,
       handler(val) {
-        let initFiles = false;
-        for (let i = 0; i < val.length; i++) {
-          let item = val[i];
-          if (item.read) {
-            if (item.content) {
-              initFiles = true;
-            }
-          } else {
-            let dirName = getDirName(item.url);
-            if (item.url) {
-              initFiles = true;
-            }
-            if (dirName) {
-              this.dirName = dirName;
-              break;
-            }
-          }
+        if (val === this.fileList) {
+          return;
         }
-        if (initFiles && !this.fileList.length) {
-          this.isComplete = true;
-          this.resetDirFiles(val);
+        if (typeof this.filter === 'function') {
+          this.fileList = (val || []).map(({url, md5Value}) => ({url, md5Value}));
+        } else if (Array.isArray(this.filter)) {
+          let hasFile = false;
+          this.fileList = this.filter.map((item, idx) => {
+            let {read} = item;
+            let file = val[idx] || {};
+            if (read) {
+              if (file.content) {
+                hasFile = true;
+              }
+              return {
+                content: file.content || ''
+              };
+            }
+            this.dirName = getDirName(file.url);
+            if (file.url) {
+              hasFile = true;
+            }
+            return {
+              url: file.url || '',
+              md5Value: file.md5Value || ''
+            };
+          });
+          if (hasFile) {
+            this.metaList = this.filter.map((item, idx) => {
+              return {
+                index: idx,
+                fileType: item.fileType,
+                tip: item.tip,
+                md5: item.md5,
+                read: item.read,
+                size: 0,
+                sizeLoaded: 0,
+                fileKey: '',
+                status: FILE_STATUS.COMPLETE
+              };
+            });
+            this.isComplete = true;
+          }
         }
       }
     }
@@ -235,83 +262,106 @@ export default {
       this.isUploading = true;
       this.isComplete = false;
       this.$emit('pre-upload', files);
-      if (this.isReplace) {
-        this.isReplace = false;
+      if (this.isDirReplace) {
+        this.isDirReplace = false;
         this.expand = false;
       }
-      this.resetDirFiles(this.value.map(item => {
-        if (item.read) {
-          return {...item, content: ''};
-        }
-        return {...item, url: '', md5Value: ''};
-      }));
       let rawFiles = Array.prototype.slice.call(files);
       return new Promise((resolve, reject) => {
         let postFiles = [];
-        let hasMatchFile = false;
-        for (let i = 0; i < rawFiles.length; i++) {
-          let rawFile = rawFiles[i];
-          let path = rawFile.webkitRelativePath;
-          let name = rawFile.name || '';
-          let emptyFiles = this.fileList.filter(f => !f.size);
-          if (!emptyFiles.length) {
-            break;
-          }
-          if (path.split('/').length === 2) {
-            this.dirName = path.split('/')[0].replace(/\$/g, '').slice(0, 40);
-            hasMatchFile = emptyFiles.some(ef => {
-              let reg = new RegExp('\\.' + ef.fileType + '$', 'i');
-              if (reg.test(name)) {
-                let currentFile = this.fileList[ef.index];
-                if (currentFile.read) {
-                  currentFile.size = rawFile.size;
-                  let reader = new FileReader();
-                  let instance = this;
-                  reader.readAsText(rawFile);
-                  reader.onload = function(progress) {
-                    currentFile.sizeLoaded = currentFile.size;
-                    currentFile.value = this.result;
-                    instance.$emit('input', instance.getValue());
-                    instance.handleComplete();
-                  };
-                } else {
-                  rawFile.index = ef.index;
-                  currentFile.name = name;
-                  currentFile.size = rawFile.size;
-                  currentFile.fileKey = getFileKey(name, this.dirName);
-                  postFiles.push(rawFile);
-                }
-                return true;
-              }
-            }) || hasMatchFile;
-          }
+        this.dirName = (rawFiles[0].webkitRelativePath || '').split('/')[0].replace(/\$/g, '').slice(0, 40);
+        if (typeof this.filter === 'function') {
+          postFiles = rawFiles.filter(this.filter);
+        } else {
+          postFiles = rawFiles.filter(this.generateFilter(this.filter));
         }
-        if (hasMatchFile) {
+        if (postFiles.length) {
           resolve(postFiles);
         } else {
           this.isUploading = false;
           this.isComplete = true;
-          this.$emit('input', this.getValue());
-          this.$emit('no-file');
+          this.$emit('input', this.fileList);
+          this.$emit('error', '未找到文件');
           reject();
         }
       });
     },
+    generateFilter(config) {
+      if (Array.isArray(config)) {
+        this.metaList = config.map((item, idx) => {
+          return {
+            index: idx,
+            fileType: item.fileType,
+            tip: item.tip,
+            md5: item.md5,
+            read: item.read,
+            size: 0,
+            sizeLoaded: 0,
+            fileKey: '',
+            status: FILE_STATUS.INIT
+          };
+        });
+        return (rawFile, idx) => {
+          let path = rawFile.webkitRelativePath;
+          let name = rawFile.name || '';
+          let size = rawFile.size || 0;
+          let emptySlots = this.metaList.filter(item => item.status === FILE_STATUS.INIT);
+          if (path.split('/').length === 2) {
+            if (emptySlots.length) { // 是否还有空位置
+              for (let i = 0; i < emptySlots.length; i++) {
+                let es = emptySlots[i];
+                let reg = new RegExp('\\.' + es.fileType + '$', 'i');
+                if (reg.test(name)) {
+                  this.$set(this.metaList, es.index, {
+                    ...this.metaList[es.index],
+                    status: FILE_STATUS.READY,
+                    name: name,
+                    size: size,
+                    fileKey: getFileKey(name, this.dirName)
+                  });
+                  rawFile.index = es.index;
+                  return true;
+                }
+              }
+            }
+          }
+          return false;
+        };
+      }
+    },
     beforeUpload(file) {
       let index = file.index;
-      let currentFile = this.fileList[index];
+      let meta = this.metaList[index];
+      if (meta.read) {
+        let reader = new FileReader();
+        let instance = this;
+        reader.readAsText(file);
+        reader.onload = function(progress) {
+          instance.$set(instance.metaList, index, {
+            ...meta,
+            sizeLoaded: meta.size,
+            status: FILE_STATUS.COMPLETE
+          });
+          instance.$set(instance.fileList, index, {
+            content: this.result
+          });
+          instance.$emit('input', instance.fileList);
+          instance.handleComplete();
+        };
+        return false;
+      }
 
       return new Promise((resolve, reject) => {
         this.requestToken('RESOURCE')
           .then(res => {
             let { data } = res;
-            this.$set(this.fileList, index, {
-              ...currentFile,
+            this.$set(this.metaList, index, {
+              ...meta,
               uid: file.uid,
               OSSAccessKeyId: data.accessid,
               policy: data.policy,
               signature: data.signature,
-              key: data.dir + '/' + currentFile.fileKey
+              key: data.dir + '/' + meta.fileKey
             });
             this.uploadServerUrl = data.host;
             this.accessServerUrl = data.ossUrl;
@@ -323,92 +373,38 @@ export default {
           });
       });
     },
-    resetDirFiles(value) {
-      this.fileList = [];
-      value.forEach((item, index) => {
-        let file = item;
-        if (item.read) {
-          file = {
-            ...item,
-            index: index,
-            size: 0,
-            sizeLoaded: 0,
-            value: item.content || ''
-          };
-        } else {
-          file = {
-            ...item,
-            name: '',
-            size: 0,
-            sizeLoaded: 0,
-            index: index,
-            fileKey: '',
-            md5: item.md5 || false,
-            url: '',
-            value: [
-              {
-                url: item.url,
-                md5: item.md5Value
-              }
-            ]
-          };
-        }
-        this.fileList.push(file);
-      });
-    },
     uploadProgress(event, file, fileList) {
       let { loaded } = event;
-      this.fileList[this.fileUidIdxMap[file.uid]].sizeLoaded = loaded;
-    },
-    getValue() {
-      return this.value.map((item, index) => {
-        if (item.read) {
-          let { value = '' } = this.fileList[index] || {};
-          return {
-            ...item,
-            content: value
-          };
-        } else {
-          let { value = [] } = this.fileList[index] || {};
-          let {
-            url = '',
-            md5 = ''
-          } = value[0] || {};
-          return {
-            ...item,
-            url: url,
-            md5Value: md5
-          };
-        }
-      });
+      this.metaList[this.fileUidIdxMap[file.uid]].sizeLoaded = loaded;
     },
     uploadSuccess(res, file, fileList) {
       let index = this.fileUidIdxMap[file.uid];
-      let currentFile = this.fileList[index];
-      delete currentFile['OSSAccessKeyId'];
-      delete currentFile['policy'];
-      delete currentFile['signature'];
-      currentFile.sizeLoaded = currentFile.size;
-      if (currentFile.md5) {
+      let meta = this.metaList[index];
+      this.$set(this.metaList, index, {
+        ...meta,
+        sizeLoaded: meta.size,
+        status: FILE_STATUS.COMPLETE
+      });
+      if (meta.md5) {
         getFileMd5(file.raw, md5 => {
-          this.$set(currentFile, 'value', [{url: this.accessServerUrl + currentFile.fileKey, md5: md5}]);
-          this.$emit('input', this.getValue());
+          this.$set(this.fileList, index, {url: this.accessServerUrl + meta.fileKey, md5Value: md5});
+          this.$emit('input', this.fileList);
           this.dispatch('ElFormItem', 'el.form.blur', [this.fileList]);
           this.handleComplete();
         });
       } else {
-        this.$set(currentFile, 'value', [{url: this.accessServerUrl + currentFile.fileKey}]);
-        this.$emit('input', this.getValue());
+        this.$set(this.fileList, index, {url: this.accessServerUrl + meta.fileKey});
+        this.$emit('input', this.fileList);
         this.dispatch('ElFormItem', 'el.form.blur', [this.fileList]);
         this.handleComplete();
       }
     },
     handleComplete() {
-      let isComplete = this.fileList.every(file => file.sizeLoaded === file.size);
+      let isComplete = this.metaList.every(meta => meta.status === FILE_STATUS.COMPLETE);
       if (isComplete) {
         this.isUploading = false;
         this.isComplete = true;
-        this.$emit('complete', this.getValue());
+        this.$emit('complete', this.fileList);
       }
     },
     getUploadData(uid) {
@@ -417,7 +413,7 @@ export default {
         policy = '',
         signature = '',
         key = ''
-      } = this.fileList[this.fileUidIdxMap[uid]];
+      } = this.metaList[this.fileUidIdxMap[uid]];
       return {
         OSSAccessKeyId,
         policy,
@@ -426,8 +422,8 @@ export default {
         success_action_status: '200' // 让服务端返回200,不然，默认会返回204
       };
     },
-    handleFileChange(file, value) {
-      let currentFile = this.fileList[file.index];
+    handleFileChange(mt, value) {
+      let meta = this.metaList[mt.index];
       let {
         name = '',
         size = 0,
@@ -437,38 +433,32 @@ export default {
         key = '',
         fileKey = '',
         uid = 0
-      } = value[0] || {};
-      currentFile.name = name;
-      currentFile.size = size;
-      currentFile.sizeLoaded = sizeLoaded;
-      currentFile.key = key;
-      currentFile.fileKey = fileKey;
-      currentFile.uid = uid;
-      currentFile.md5Value = md5;
-      currentFile.url = url;
-      currentFile.value = [{url: url, md5: md5}];
-      this.$set(this.fileList, file.index, currentFile);
-      this.$emit('input', this.getValue());
+      } = value || {};
+      meta.name = name;
+      meta.size = size;
+      meta.sizeLoaded = sizeLoaded;
+      meta.key = key;
+      meta.fileKey = fileKey;
+      meta.uid = uid;
+      meta.status = url ? FILE_STATUS.COMPLETE : FILE_STATUS.INIT;
+      this.$set(this.metaList, mt.index, meta);
+      this.$set(this.fileList, mt.index, {url: url, md5Value: md5});
+      this.$emit('input', this.fileList);
     },
-    handleFileRead(file, value) {
-      let currentFile = this.fileList[file.index];
-      currentFile.value = value;
-      currentFile.content = value;
-      this.$set(this.fileList, file.index, currentFile);
-      this.$emit('input', this.getValue());
+    handleFileRead(mt, value) {
+      this.$set(this.metaList, mt.index, {...this.metaList[mt.index], status: value ? FILE_STATUS.COMPLETE : FILE_STATUS.INIT});
+      this.$set(this.fileList, mt.index, {content: value});
+      this.$emit('input', this.fileList);
     },
     handleClear() {
-      this.fileList = [];
+      this.fileList = this.filter.map(({read}, idx) =>
+        read ? ({content: ''}) : ({url: '', md5Value: ''}));
+      this.metaList = [];
       this.expand = false;
-      this.$emit('input', this.value.map(item => {
-        if (item.read) {
-          return {...item, content: ''};
-        }
-        return {...item, url: '', md5Value: ''};
-      }));
+      this.$emit('input', this.fileList);
     },
-    handleReplace() {
-      this.isReplace = true;
+    handleDirReplace() {
+      this.isDirReplace = true;
       this.$refs.uploader.$refs['upload-inner'].handleClick();
     },
     handleAbort() {
@@ -484,4 +474,3 @@ export default {
   }
 };
 </script>
-

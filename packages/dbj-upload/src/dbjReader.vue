@@ -50,9 +50,11 @@
 </template>
 
 <script>
+import emitter from 'element-ui/src/mixins/emitter';
 let uid = 1;
 export default {
   name: 'DbjReader',
+  mixins: [emitter],
   props: {
     value: {
       type: String,
@@ -113,6 +115,7 @@ export default {
           reader.readAsText(file);
           reader.onload = function(progress) {
             instance.$emit('input', this.result);
+            instance.dispatch('ElFormItem', 'el.form.blur', [this.result]);
           };
         }
       }

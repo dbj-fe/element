@@ -10,9 +10,13 @@
   tip="每个模型需上传小于200MB的.pak和.mwasset格式文件，效果优化参数.json文件选填，小于2KB"
   :request-token="getUploadToken"
   v-model="fileList"
+  :filter="fileFilter"
   @error="handleError"
 >
 </dbj-dir-upload>
+<p>
+  <el-button @click="print">打印数据</el-button>
+</p>
 <script>
   export default {
     data() {
@@ -20,21 +24,29 @@
         fileList: [
           {
             url: '',
-            md5Value: '',
+            md5Value: ''
+          },
+          {
+            url: '',
+            md5Value: ''
+          },
+          {
+            content: ''
+          }
+        ],
+        fileFilter: [
+          {
             md5: true,
             fileType: 'pak',
             tip: '仅支持.pak格式文件，小于200MB'
           },
           {
-            url: '',
-            md5Value: '',
             md5: true,
             fileType: 'mwasset',
             tip: '仅支持.mwasset格式文件，小于200MB'
           },
           {
             read: true,
-            content: '',
             fileType: 'json',
             tip: '仅支持.json格式文件，小于1MB'
           }
@@ -48,6 +60,9 @@
       handleError(msg, file) {
         console.log(msg, file);
         this.$message.error(msg);
+      },
+      print() {
+        console.log('fileList:', this.fileList);
       }
     }
   }
@@ -63,6 +78,7 @@
   tip="每个模型需上传小于200MB的.pak和.mwasset格式文件，效果优化参数.json文件选填，小于2KB"
   :request-token="getUploadToken"
   v-model="fileList"
+  :filter="fileFilter"
   @error="handleError"
 >
 </dbj-dir-upload>
@@ -73,21 +89,29 @@
         fileList: [
           {
             url: '',
-            md5Value: '',
+            md5Value: ''
+          },
+          {
+            url: '',
+            md5Value: ''
+          },
+          {
+            content: ''
+          }
+        ],
+        fileFilter: [
+          {
             md5: true,
             fileType: 'pak',
             tip: '仅支持.pak格式文件，小于200MB'
           },
           {
-            url: '',
-            md5Value: '',
             md5: true,
             fileType: 'mwasset',
             tip: '仅支持.mwasset格式文件，小于200MB'
           },
           {
             read: true,
-            content: '',
             fileType: 'json',
             tip: '仅支持.json格式文件，小于1MB'
           }
@@ -97,32 +121,19 @@
     mounted() {
       // 模拟获取数据
       setTimeout(() => {
-        this.$set(
-          this.fileList,
-          0,
+        this.fileList = [
           {
-            ...this.fileList[0],
             url: 'https://ali-res-test.dabanjia.com/res/20190604/文件资源$1559620404935_5569$DBJ_3_1.pak',
             md5Value: 'c869ad409fffc7097e94c5dfda4c165b'
-          }
-        );
-        this.$set(
-          this.fileList,
-          1,
+          },
           {
-            ...this.fileList[1],
             url: 'https://ali-res-test.dabanjia.com/res/20190604/文件资源$1559620404931_3196$DBJ_3_1_bak.mwasset',
             md5Value: '4f00ce3fff29fe935b72274bb95b7ecf'
-          }
-        );
-        this.$set(
-          this.fileList,
-          2,
+          },
           {
-            ...this.fileList[2],
             content: 'test'
           }
-        );
+        ];
       }, 500);
     },
     methods: {
@@ -142,7 +153,8 @@
 ### Attribute
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value / v-model | 文件参数列表，数组每一项的属性见下表 | array | — | — |
+| value / v-model | 文件数据，数组每一项的属性见下表 | array | — | — |
+| filter | 过滤器，使用数组时要与value中的项一一对应，数组每一项的属性见下表 | array | — | — |
 | tip | 上传提示文字 | string | — | — |
 | request-token | 请求上传文件的token函数，这个参数在项目中统一设置，不需要自己设置 | function(type) | — | — |
 
@@ -150,7 +162,6 @@
 | 事件名称      | 说明          | 回调参数 |
 |----------- |-------------- | -- |
 | pre-upload | 文件上传前触发 | (files: File[]) |
-| no-file | 未匹配到文件时触发 | - |
 | complete | 所有文件上传成功时触发 | (fileList: array) |
 | error | 文件上传失败时触发 | (errMsg: string, file: File) |
 
@@ -164,9 +175,13 @@
 |------|-----|------|
 | url | 文件地址 | string |
 | md5Value | 文件的MD5 | string |
+| content | 文件内容（read为true时有效） | string |
+
+### filter单个对象的Props
+| name | 说明 | 类型 |
+|------|-----|------|
+| read | 是否是读取文件内容 | boolean |
 | md5 | 上传成功后是否计算MD5值 | boolean |
 | fileType | 支持的文件文件后缀，不支持多个 | string |
 | maxSize | 支持的文件最大大小，超出报错，为0时无限制 | number |
 | tip | 单个文件上传提示文字 | string |
-| read | 是否是读取文件内容 | boolean |
-| content | 文件内容（read为true时有效） | string |
