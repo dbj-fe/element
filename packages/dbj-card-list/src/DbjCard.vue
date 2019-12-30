@@ -81,7 +81,7 @@
             >{{ tag.text }}</el-tag>
           </div>
         </div>
-        <ul class="dbj-card__infos">
+        <ul v-if="infos.length" class="dbj-card__infos">
           <li
             v-for="(info, idx2) in infos"
             :key="idx2"

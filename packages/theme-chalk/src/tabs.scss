@@ -108,10 +108,10 @@
       outline: none;
     }
 
-    &:focus.is-active.is-focus:not(:active) {
-      box-shadow: 0 0 2px 2px $--color-primary inset;
-      border-radius: 3px;
-    }
+    // &:focus.is-active.is-focus:not(:active) {
+    //   box-shadow: 0 0 2px 2px $--color-primary inset;
+    //   border-radius: 3px;
+    // }
 
     & .el-icon-close {
       border-radius: 50%;
@@ -269,8 +269,6 @@
   @include m(secondary) {
     .el-tabs__item {
       font-size: 14px;
-      height: 52px;
-      line-height: 52px;
       & + .el-tabs__item::before {
         content: " ";
         display: inline-block;

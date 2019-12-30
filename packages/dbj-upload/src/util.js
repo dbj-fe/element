@@ -8,14 +8,18 @@ import SparkMD5 from './spark-md5.min';
  * @param {String} dirName 目录名称
  */
 export function getFileKey(fileName, dirName) {
+  var suffixReg = /\.\w+$/;
+  var fileSuffix = (fileName.match(suffixReg) || [''])[0];
+  var filePrefix = fileName.replace(suffixReg, '');
+  filePrefix = sliceCnStrUri(filePrefix, 200);
   var time = Date.now();
   var random = Math.floor(Math.random() * 10000);
   var rdStr = ('0000' + random).substr(-4);
   var key = time + '_' + rdStr;
   if (dirName) {
-    return encodeURIComponent(dirName + '$' + key + '$' + fileName);
+    return encodeURIComponent(dirName + '$' + key + '$' + filePrefix + fileSuffix);
   }
-  return encodeURIComponent(key + '$' + fileName);
+  return encodeURIComponent(key + '$' + filePrefix + fileSuffix);
 }
 
 /**
@@ -58,6 +62,32 @@ export function getDirName(fileUrl) {
     return arr[0];
   }
   return '';
+}
+
+/**
+ * 含汉字字符串截取（encodeURIComponent版，一个汉字占9个字符）
+ * 除了点、下滑线、减号的英文标点会被剔除
+ * @param {String} str 要截取的字符串
+ * @param {Number} length 截取长度
+ */
+export function sliceCnStrUri(str, length) {
+  var letterReg = /[\w\.\-]/;
+  // eslint-disable-next-line no-control-regex
+  var cnReg = /[^\x00-\xff]/;
+  var pos = 0;
+  return (str || '').split('').filter(function(item) {
+    if (pos >= length) {
+      return false;
+    }
+    if (cnReg.test(item)) {
+      pos += 9;
+    } else if (letterReg.test(item)) {
+      pos += 1;
+    } else {
+      return false;
+    }
+    return pos <= length;
+  }).join('');
 }
 
 /**

@@ -110,6 +110,7 @@
         return !this.$isServer && !isSupportObjectFit() && this.fit !== ObjectFit.FILL;
       },
       realSrc() {
+        console.log(this.ossCompress, this.size, this.fit, 3333);
         if (this.ossCompress) {
           let size = sizeMap[this.size];
           if (size) {

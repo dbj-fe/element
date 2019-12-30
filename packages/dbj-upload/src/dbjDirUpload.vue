@@ -114,7 +114,7 @@ import ElCollapseTransition from 'element-ui/src/transitions/collapse-transition
 import ElUpload from 'element-ui/packages/upload';
 import DbjUpload from './dbjUpload';
 import DbjReader from './dbjReader';
-import { getFileKey, getDirName, formatFileSize, getFileMd5 } from './util';
+import { getFileKey, getDirName, formatFileSize, sliceCnStrUri, getFileMd5 } from './util';
 import { Promise } from 'q';
 const FILE_STATUS = {
   INIT: 0,
@@ -269,7 +269,7 @@ export default {
       let rawFiles = Array.prototype.slice.call(files);
       return new Promise((resolve, reject) => {
         let postFiles = [];
-        this.dirName = (rawFiles[0].webkitRelativePath || '').split('/')[0].replace(/\$/g, '').slice(0, 40);
+        this.dirName = sliceCnStrUri((rawFiles[0].webkitRelativePath || '').split('/')[0], 100);
         if (typeof this.filter === 'function') {
           postFiles = rawFiles.filter(this.filter);
         } else {

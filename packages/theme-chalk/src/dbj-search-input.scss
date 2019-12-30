@@ -10,6 +10,10 @@ $namespace: 'dbj';
     width: 328px;
   }
 
+  .el-input-group__prepend {
+    background-color: $--color-white;
+  }
+
   .el-input-group__append {
     width: 36px;
     padding: 0;

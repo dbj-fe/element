@@ -1030,8 +1030,8 @@
 ### Slot
 | name | 说明 |
 |------|--------|
-| imgAppend | 图片后面的内容 |
-| info | 信息区域的内容 |
+| imgAppend | 图片后面的内容，参数为 { item, index } |
+| info | 信息区域的内容，参数为 { item, index } |
 
 ### props属性
 | name | 说明 | 类型 | 默认值 |

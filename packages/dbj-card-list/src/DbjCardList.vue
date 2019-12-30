@@ -22,7 +22,8 @@
       <slot
         slot="imgAppend"
         name="imgAppend"
-        :data="item"
+        :item="item"
+        :index="idx"
       />
       <slot
         slot="info"
