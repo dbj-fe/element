@@ -110,7 +110,6 @@
         return !this.$isServer && !isSupportObjectFit() && this.fit !== ObjectFit.FILL;
       },
       realSrc() {
-        console.log(this.ossCompress, this.size, this.fit, 3333);
         if (this.ossCompress) {
           let size = sizeMap[this.size];
           if (size) {
@@ -161,7 +160,7 @@
         const img = new Image();
         img.onload = e => this.handleLoad(e, img);
         img.onerror = this.handleError.bind(this);
-        img.src = this.src;
+        img.src = this.realSrc;
       },
       handleLoad(e, img) {
         this.imageWidth = img.width;
