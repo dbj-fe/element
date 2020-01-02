@@ -13,24 +13,22 @@
       :image-key="props.image"
       :name-key="props.name"
       :flag="props.flag"
+      :disable="props.disable"
       :infos="props.infos"
       :commands="props.commands"
       :tags="props.tags"
       :views="props.views"
       :one-line-title="oneLineTitle"
     >
-      <slot
-        slot="imgAppend"
-        name="imgAppend"
-        :item="item"
-        :index="idx"
-      />
-      <slot
-        slot="info"
-        name="info"
-        :item="item"
-        :index="idx"
-      />
+      <template v-for="slotName in scopedSlotKeys" #[slotName]="slotProps">
+        <slot
+          :name="slotName"
+          :item="item"
+          :index="idx"
+          :info="slotProps.info"
+          :infoIndex="slotProps.index"
+        />
+      </template>
     </dbj-card>
   </div>
 </template>
@@ -74,6 +72,11 @@ export default {
     oneLineTitle: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    scopedSlotKeys() {
+      return Object.keys(this.$scopedSlots);
     }
   }
 };

@@ -171,6 +171,43 @@ $namespace: 'dbj';
     &:last-child {
       max-width: 172px;
     }
+
+    &.is-array {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+  }
+
+  @include e(info-values-wrapper) {
+    flex: 1;
+    height: 20px;
+    overflow: hidden;
+  }
+
+  @include e(info-values) {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    li {
+      list-style: none;
+      margin-right: 4px;
+      margin-bottom: 4px;
+      padding: 0 4px;
+      background-color: #ebebeb;
+      color: #999;
+      font-size: 12px;
+    }
+  }
+
+  @include e(info-more-btn) {
+    i {
+      font-size: 16px;
+      vertical-align: -2px;
+    }
+    &:hover {
+      color: $--color-primary;
+    }
   }
 
   @include e(dropdown) {
@@ -186,6 +223,10 @@ $namespace: 'dbj';
         color: $--color-primary;
       }
     }
+  }
+
+  @include e(dropdown-menu) {
+    min-width: 132px;
   }
 
   @include e(checkbox) {

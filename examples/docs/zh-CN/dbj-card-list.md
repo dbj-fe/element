@@ -27,10 +27,14 @@
             { prop: "uploader", label: "上传人" },
             { prop: "brandName", label: "品牌" },
             { prop: "productModel", label: "型号" },
+            { prop: "texture", label: "材质" },
             { prop: "mouldLengthWidthHeight", label: "尺寸" }
           ],
           flag: {
-            img: require("../../assets/images/label-stop.png"),
+            // img: require("../../assets/images/label-stop.png"), // 图片方式
+            text: "停用", // tag方式，需要指定三个属性text、color、type
+            color: "gray",
+            type: "primary",
             prop: "enabled",
             showValue: false
           },
@@ -99,6 +103,7 @@
             "nilLegend":false,
             "productModel":"",
             "sale":true,
+            "texture": ["棉麻", "绒布", "粘胶人", "醋酸人造丝", "铜氨人造丝", "涤纶", "棉麻a", "绒布a", "粘胶人a", "醋酸人造丝a", "铜氨人造丝a", "涤纶a"],
             "thumbnail":"https://ali-image.dabanjia.com/image/20191108/DBJ_1573194440282_8839.jpg",
             "unit":"",
             "uploader":"崔迎"
@@ -122,6 +127,7 @@
             "nilLegend":false,
             "productModel":"",
             "sale":false,
+            "texture": ["棉麻", "绒布", "粘胶", "醋酸", "铜氨", "涤纶"],
             "thumbnail":"https://ali-image.dabanjia.com/image/20191108/DBJ_1573194546997_7553.jpg",
             "unit":"",
             "uploader":"崔迎"
@@ -145,6 +151,7 @@
             "nilLegend":false,
             "productModel":"",
             "sale":false,
+            "texture": ["棉麻", "绒布", "醋酸人造丝"],
             "thumbnail":"https://ali-image.dabanjia.com/image/20191108/DBJ_1573195129692_7120.jpg",
             "unit":"",
             "uploader":"崔迎"
@@ -168,6 +175,7 @@
             "nilLegend":false,
             "productModel":"",
             "sale":false,
+            "texture": ["棉麻", "绒布", "涤纶"],
             "thumbnail":"https://ali-image.dabanjia.com/image/404.jpg",
             "unit":"",
             "uploader":"崔迎"
@@ -191,9 +199,217 @@
             "nilLegend":false,
             "productModel":"",
             "sale":false,
+            "texture": ["棉麻", "绒布", "醋酸", "涤纶"],
             "thumbnail":"",
             "unit":"",
             "uploader":"崔迎"
+          }
+        ];
+      }, 500);
+    },
+    methods: {
+      handleCardCmd(cmd, item) {
+        console.log(cmd, item);
+      }
+    }
+  }
+</script>
+```
+:::
+
+
+### 高级用法：一些配置函数和info的slot的用法
+
+:::demo 一、`info`的`prop`属性也可以是一个函数，通过函数计算显示属性信息。也可以通过`slot`属性指定一个自定义的dom结构。（#号是v-slot指令的缩写，[详情查看](https://cn.vuejs.org/v2/guide/components-slots.html)）二、`tag`、`flag`、`view`、`command`的`showValue`属性可以是函数，它们的使用方式相同，第一参数是当前项的数据，第二参数是使用`prop`属性从当前项数据中取到的值，函数返回一个`Boolean`值决定是否显示该项。三、`disable`是一个函数，参数是`item`即当前项的数据。
+
+```html
+<dbj-card-list
+  v-model="checkedList"
+  :data="list"
+  :props="listProps"
+  checkable
+  @command="handleCardCmd"
+>
+  <template #my-info="{item, index, info, infoIndex}">
+    <span>{{ info.label }}：</span>
+    <el-tag>
+      {{ item.goodsCategoryName }}
+    </el-tag>
+  </template>
+</dbj-card-list>
+<script>
+  export default {
+    data() {
+      return {
+        checkedList: [],
+        list: [],
+        listProps: {
+          id: "id",
+          image: "thumbnail",
+          name: "name",
+          disable: function(item) {
+            return !item.enabled;
+          },
+          infos: [
+            {
+              prop: function(params) {
+                let { item, index, info, infoIndex } = params;
+                console.log(item, index, info, infoIndex);
+                return `${item.uploader}（${item.phone}）`
+              },
+              label: "上传人"
+            },
+            {
+              slot: 'my-info',
+              label: '插槽元素测试'
+            },
+            {
+              prop: "brandName",
+              label: "品牌"
+            },
+            {
+              prop: "productModel",
+              label: "型号"
+            },
+            {
+              prop: "mouldLengthWidthHeight",
+              label: "尺寸"
+            }
+          ],
+          flag: {
+            text: "FLAG",
+            color: "#ffa800",
+            type: "primary",
+            prop: "obj.flag",
+            showValue: function(item, val) {
+              console.log(item, val, 11111);
+              return val > 1;
+            }
+          },
+          tags: [
+            {
+              text: "偶数",
+              type: "primary",
+              color: "#ffa800",
+              prop: "obj.tag",
+              showValue: function(item, val) {
+                return !(val % 2);
+              }
+            }
+          ],
+          commands: [
+            { text: "编辑", value: "edit" },
+            {
+              text: "TEST",
+              value: "big1",
+              prop: "obj.cmd",
+              showValue: function(item, val) {
+                return val > 1;
+              }
+            },
+            {
+              text: "售卖",
+              value: "sale",
+              showValue: function(item, val) {
+                return item.sale;
+              }
+            }
+          ]
+        }
+      };
+    },
+    mounted() {
+      setTimeout(() => {
+        this.list = [
+          {
+            "brandName":"无品牌",
+            "code":"",
+            "companyId":1,
+            "companyName":"美屋三六五科技有限公司",
+            "editMenu":true,
+            "enabled":true,
+            "goodsCategoryName":"盆栽",
+            "hasFrontView":false,
+            "hasModel":true,
+            "hasSideView":false,
+            "hasVerticalView":false,
+            "id":693679,
+            "legendId":0,
+            "mouldLengthWidthHeight":"300.00*300.00*600.00",
+            "name":"配饰_植物_龟背竹",
+            "nilLegend":false,
+            "productModel":"",
+            "sale":true,
+            "thumbnail":"https://ali-image.dabanjia.com/image/20191108/DBJ_1573194440282_8839.jpg",
+            "unit":"",
+            "uploader":"崔迎",
+            "phone": "13456789012",
+            "obj": {
+              "flag": 1,
+              "view": 2,
+              "tag": 2,
+              "cmd": 3
+            }
+          },
+          {
+            "brandName":"无品牌",
+            "code":"12312321放松放松",
+            "companyId":1,
+            "companyName":"美屋三六五科技有限公司",
+            "editMenu":true,
+            "enabled":true,
+            "goodsCategoryName":"盆栽",
+            "hasFrontView":false,
+            "hasModel":false,
+            "hasSideView":false,
+            "hasVerticalView":false,
+            "id":693678,
+            "legendId":0,
+            "mouldLengthWidthHeight":"500.00*500.00*1700.00",
+            "name":"配饰_植物_鸭掌木配饰_植物_鸭掌木配饰_植物_鸭掌木配饰_植物_鸭掌木",
+            "nilLegend":false,
+            "productModel":"",
+            "sale":false,
+            "thumbnail":"https://ali-image.dabanjia.com/image/20191108/DBJ_1573194546997_7553.jpg",
+            "unit":"",
+            "uploader":"崔迎",
+            "phone": "13456789012",
+            "obj": {
+              "flag": 3,
+              "view": 1,
+              "tag": 2,
+              "cmd": 3
+            }
+          },
+          {
+            "brandName":"无品牌",
+            "code":"",
+            "companyId":1,
+            "companyName":"美屋三六五科技有限公司",
+            "editMenu":true,
+            "enabled":false,
+            "goodsCategoryName":"盆栽",
+            "hasFrontView":false,
+            "hasModel":true,
+            "hasSideView":false,
+            "hasVerticalView":false,
+            "id":693677,
+            "legendId":0,
+            "mouldLengthWidthHeight":"400.00*400.00*1700.00",
+            "name":"配饰_植物_发财树配饰_植物_发财树配饰_植物_发财树配饰_植物_发财树",
+            "nilLegend":false,
+            "productModel":"",
+            "sale":false,
+            "thumbnail":"https://ali-image.dabanjia.com/image/20191108/DBJ_1573195129692_7120.jpg",
+            "unit":"",
+            "uploader":"崔迎",
+            "phone": "13456789012",
+            "obj": {
+              "flag": 4,
+              "view": 8,
+              "tag": 1,
+              "cmd": 1
+            }
           }
         ];
       }, 500);
@@ -1040,32 +1256,37 @@
 | image | 指定缩略图的字段名称 | string | 'image' |
 | name | 指定标题字段名称 | string | 'name' |
 | flag | 左上角的斜角标签配置选项，可选，具体见下表 | object | — |
+| disable | 是否禁选，参数是当前项的数据 | Function(item) | — |
 | tags | 标题下面的标签配置选项，可选，具体见下表 | array | — |
 | infos | 数据信息配置选项，可选，具体见下表 | array | — |
 | views | 视图配置选项，可选，具体见下表 | array | — |
 | commands | 操作按钮配置选项，可选，具体见下表 | array | — |
 
 ### flag属性
-| name | 说明 | 类型 | 默认值 |
-|------|-----|------|------|
-| img | 斜角标签的图片地址 | string | — |
-| prop | 指定字段名称 | string | — |
-| showValue | 指定字段的属性值等于该值时显示标签 | string \| number \| boolean | — |
-
-### tags单项的属性
 | name | 说明 | 类型 | 可选值 | 默认值 |
 |------|-----|------|------|------|
-| text | 显示的文字 | string | — | — |
-| color | 标签主题颜色 | string | green/gray/具体色值 | — |
-| type | 标签类型，同Tag标签组件的type属性 | string | primary/secondary | — |
-| prop | 指定字段的名称 | string | — | — |
+| img | 方式一：斜角标签的图片地址 | string | — | — |
+| text | 方式二：斜角标签的显示文字，同Tag标签的内容 | string | — | — |
+| color | 方式二：斜角标签的主题颜色，同Tag标签的color属性 | string | green/gray/具体色值 | — |
+| type | 方式二：斜角标签的主题，同Tag标签的type属性 | string | primary/secondary | — |
+| prop | 指定字段名称 | string | — | — |
 | showValue | 指定字段的属性值等于该值时显示标签 | string \| number \| boolean | — | — |
 
 ### infos单项的属性
 | name | 说明 | 类型 | 默认值 |
 |------|-----|------|------|
-| prop | 指定要显示的字段名称，该字段的值显示在卡片信息中 | string | — |
+| prop | 指定要显示的字段名称，该字段的值显示在卡片信息中。当需要一行显示多个属性时，可以用函数实现 | string \| Function({item, index, info, infoIndex}) | — |
 | label | 冒号前面的文字，可选 | string | — |
+| slot | 指定slot的名字，slot元素通过dbj-card-list传入即可 | string | — |
+
+### tags单项的属性
+| name | 说明 | 类型 | 可选值 | 默认值 |
+|------|-----|------|------|------|
+| text | 显示的文字，同Tag标签的内容 | string | — | — |
+| color | 标签主题颜色，同Tag标签的color属性 | string | green/gray/具体色值 | — |
+| type | 标签类型，同Tag标签组件的type属性 | string | primary/secondary | — |
+| prop | 指定字段的名称 | string | — | — |
+| showValue | 指定字段的属性值等于该值时显示标签 | string \| number \| boolean \| Function(item, value) | — | — |
 
 ### views单项的属性
 | name | 说明 | 类型 | 默认值 |
@@ -1074,7 +1295,7 @@
 | image | 对应图片的字段名称 | string | — |
 | emptyImg | 图片为空时显示的空图片，可选，没有用默认 | string | — |
 | prop | 指定字段的名称 | string | — |
-| showValue | 指定字段的属性值等于该值时显示标签 | string \| number \| boolean | — |
+| showValue | 指定字段的属性值等于该值时显示标签 | string \| number \| boolean \| Function(item, value) | — |
 
 ### commands单项的属性
 | name | 说明 | 类型 | 默认值 |
@@ -1082,4 +1303,4 @@
 | text | 菜单按钮显示的名称 | string | — |
 | value | 命令的名称，触发`command`事件时的命令名称 | string | — |
 | prop | 指定字段的名称 | string | — |
-| showValue | 指定字段的属性值等于该值时显示标签 | string \| number \| boolean | — |
+| showValue | 指定字段的属性值等于该值时显示标签 | string \| number \| boolean \| Function(item, value) | — |

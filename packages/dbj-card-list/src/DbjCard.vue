@@ -2,25 +2,38 @@
   <el-card
     class="dbj-card"
     :class="{
-      'is-checked': isChecked
+      'is-checked': isChecked,
+      'is-disabled': isDisabled
     }"
   >
     <div
       class="dbj-card__inner"
       @click="handleCardClick"
     >
-      <img
-        v-if="flag"
-        v-show="flagShow"
-        class="dbj-card__flag"
-        :src="flag.img"
-      >
+      <template v-if="flag">
+        <el-tag
+          v-if="flag.text"
+          v-show="flagShow"
+          :type="flag.type"
+          :color="flag.color"
+          corner
+          class="dbj-card__flag"
+          >
+          {{ flag.text }}
+        </el-tag>
+        <img
+          v-else
+          v-show="flagShow"
+          class="dbj-card__flag"
+          :src="flag.img"
+        >
+      </template>
       <div
         class="dbj-card__pic"
         @click="handleImageClick"
       >
         <span
-          v-if="$parent.checkable"
+          v-if="$parent.checkable && !isDisabled"
           class="dbj-card__checkbox"
           :class="{
             'is-radio': $parent.isRadio
@@ -42,7 +55,7 @@
         </el-image>
         <slot name="imgAppend" />
       </div>
-      <div class="dbj-card__checked-border" />
+      <div class="dbj-card__checked-border"></div>
       <div class="dbj-card__info-wrapper">
         <div
           class="dbj-card__title-wrapper"
@@ -83,12 +96,33 @@
         </div>
         <ul v-if="infos.length" class="dbj-card__infos">
           <li
-            v-for="(info, idx2) in infos"
+            v-for="(info, idx2) in infos2"
             :key="idx2"
             class="dbj-card__info"
-            :title="getValueByPath(item, info.prop)"
+            :class="{
+              [`dbj-card__info--${info.slot}`]: info.slot,
+              'is-array': isArray(info.value)
+            }"
+            :title="isArray(info.value) ? '' : info.value"
           >
-            <span v-if="info.label">{{ info.label }}：</span>{{ getValueByPath(item, info.prop) || '暂无' }}
+            <slot v-if="info.slot" :name="info.slot" :info="info" :index="idx2" />
+            <template v-else-if="isArray(info.value)">
+              <div v-if="info.label">{{ info.label }}：</div>
+              <div class="dbj-card__info-values-wrapper">
+                <ul ref="infoList" :data-idx="idx2" class="dbj-card__info-values">
+                  <li v-for="v in info.value" :key="v">{{v}}</li>
+                </ul>
+              </div>
+              <el-tooltip v-if="info.showMoreBtn" placement="bottom">
+                <div class="dbj-card__info-more-btn">共{{info.value.length}}个<i class="dbj-icon-arrow-right-d"></i></div>
+                <ul slot="content" class="dbj-card__info-values">
+                  <li v-for="v in info.value" :key="v">{{v}}</li>
+                </ul>
+              </el-tooltip>
+            </template>
+            <template v-else>
+              <span v-if="info.label">{{ info.label }}：</span>{{ info.value || '暂无' }}
+            </template>
           </li>
         </ul>
         <slot name="info" />
@@ -105,16 +139,14 @@
           @command="editItem"
         >
           <i class="dbj-icon-menu" />
-          <el-dropdown-menu slot="dropdown">
-            <template v-for="(command, idx2) in commands">
-              <el-dropdown-item
-                v-if="!command.prop || (command.prop && item[command.prop] === command.showValue)"
-                :key="idx2"
-                :command="command.value"
-              >
-                {{ command.text }}
-              </el-dropdown-item>
-            </template>
+          <el-dropdown-menu slot="dropdown" class="dbj-card__dropdown-menu">
+            <el-dropdown-item
+              v-for="(command, idx2) in displayedCmds"
+              :key="idx2"
+              :command="command.value"
+            >
+              {{ command.text }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -136,6 +168,7 @@ import ElTag from 'element-ui/packages/tag';
 import ElDropdown from 'element-ui/packages/dropdown';
 import ElDropdownMenu from 'element-ui/packages/dropdown-menu';
 import ElDropdownItem from 'element-ui/packages/dropdown-item';
+import ElTooltip from 'element-ui/packages/tooltip';
 import { getValueByPath } from 'element-ui/src/utils/util';
 
 export default {
@@ -146,7 +179,8 @@ export default {
     ElTag,
     ElDropdown,
     ElDropdownMenu,
-    ElDropdownItem
+    ElDropdownItem,
+    ElTooltip
   },
   props: {
     item: {
@@ -176,6 +210,9 @@ export default {
       default: function() {
         return null;
       }
+    },
+    disable: {
+      type: Function
     },
     infos: {
       type: Array,
@@ -209,13 +246,11 @@ export default {
   data() {
     return {
       currentImgKey: '',
-      currentEmptyImg: ''
+      currentEmptyImg: '',
+      showMoreBtnIdxMap: {}
     };
   },
   computed: {
-    getValueByPath() {
-      return getValueByPath;
-    },
     model: {
       get() {
         return this.$parent.value;
@@ -227,25 +262,44 @@ export default {
     isChecked() {
       return this.model.indexOf(this.item[this.idKey]) > -1;
     },
+    isDisabled() {
+      return this.disable && this.disable({ ...this.item });
+    },
     flagShow() {
-      if (this.flag) {
-        let val = getValueByPath(this.item, this.flag.prop);
-        if (val === this.flag.showValue) {
-          return true;
-        }
-      }
-      return false;
+      return this.itemShow(this.flag);
     },
     displayedViews() {
-      return this.views.filter(view => this.viewShow(view));
+      return this.views.filter(view => this.itemShow(view));
     },
     displayedTags() {
-      return this.tags.filter(tag => this.tagShow(tag));
+      return this.tags.filter(tag => this.itemShow(tag));
+    },
+    displayedCmds() {
+      return this.commands.filter(cmd => !(cmd.prop || (typeof cmd.showValue === 'function')) || this.itemShow(cmd));
+    },
+    infos2() {
+      return this.infos.map((info, idx2) =>
+        ({
+          ...info,
+          value: this.getInfoValue(this.item, info.prop, info, this.idx, idx2),
+          showMoreBtn: this.showMoreBtnIdxMap[idx2 + ''] || false
+        })
+      );
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      if (this.$refs.infoList && this.$refs.infoList.length) {
+        this.showMoreBtnIdxMap = this.$refs.infoList.reduce((res, dom, idx) => ({...res, [dom.dataset.idx]: dom.scrollHeight > 30}), {});
+      }
+    });
   },
   methods: {
     handleCardClick() {
       if (this.$parent.checkable) {
+        if (this.isDisabled) {
+          return;
+        }
         if (this.$parent.isRadio) {
           this.model = [this.item[this.idKey]];
         } else {
@@ -262,20 +316,27 @@ export default {
     handleImageClick() {
       this.$parent.$emit('image-click', this.item);
     },
-    tagShow(tag) {
-      if (tag) {
-        let val = getValueByPath(this.item, tag.prop);
-        if (val === tag.showValue) {
-          return true;
-        }
+    getInfoValue(item, prop, info, idx, idx2) {
+      if (typeof prop === 'function') {
+        return prop({
+          item: { ...item },
+          index: idx,
+          info: { ...info },
+          infoIndex: idx2
+        });
+      } else {
+        return getValueByPath(item, prop);
       }
-      return false;
     },
-    viewShow(view) {
-      if (view) {
-        let val = getValueByPath(this.item, view.prop);
-        if (val === view.showValue) {
-          return true;
+    itemShow(item) {
+      if (item) {
+        let val = getValueByPath(this.item, item.prop);
+        if (typeof item.showValue === 'function') {
+          return (item.showValue)({ ...this.item }, val);
+        } else {
+          if (val === item.showValue) {
+            return true;
+          }
         }
       }
       return false;
@@ -292,6 +353,9 @@ export default {
     handleViewOut() {
       this.currentImgKey = '';
       this.currentEmptyImg = '';
+    },
+    isArray(param) {
+      return Array.isArray(param);
     }
   }
 };
