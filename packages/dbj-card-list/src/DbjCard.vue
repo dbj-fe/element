@@ -10,22 +10,22 @@
       class="dbj-card__inner"
       @click="handleCardClick"
     >
-      <template v-if="flag">
+      <template v-if="flag2">
         <el-tag
-          v-if="flag.text"
-          v-show="flagShow"
-          :type="flag.type"
-          :color="flag.color"
+          v-if="flag2.text"
+          v-show="flag2.show"
+          :type="flag2.type"
+          :color="flag2.color"
           corner
           class="dbj-card__flag"
           >
-          {{ flag.text }}
+          {{ flag2.text }}
         </el-tag>
         <img
           v-else
-          v-show="flagShow"
+          v-show="flag2.show"
           class="dbj-card__flag"
-          :src="flag.img"
+          :src="flag2.img"
         >
       </template>
       <div
@@ -110,13 +110,17 @@
               <div v-if="info.label">{{ info.label }}：</div>
               <div class="dbj-card__info-values-wrapper">
                 <ul ref="infoList" :data-idx="idx2" class="dbj-card__info-values">
-                  <li v-for="v in info.value" :key="v">{{v}}</li>
+                  <li v-for="v in info.value" :key="v">
+                    <el-tag :type="info.tagType" :color="info.tagColor">{{v}}</el-tag>
+                  </li>
                 </ul>
               </div>
               <el-tooltip v-if="info.showMoreBtn" placement="bottom">
                 <div class="dbj-card__info-more-btn">共{{info.value.length}}个<i class="dbj-icon-arrow-right-d"></i></div>
                 <ul slot="content" class="dbj-card__info-values">
-                  <li v-for="v in info.value" :key="v">{{v}}</li>
+                  <li v-for="v in info.value" :key="v">
+                    <el-tag :type="info.tagType" :color="info.tagColor">{{v}}</el-tag>
+                  </li>
                 </ul>
               </el-tooltip>
             </template>
@@ -265,26 +269,70 @@ export default {
     isDisabled() {
       return this.disable && this.disable({ ...this.item });
     },
-    flagShow() {
-      return this.itemShow(this.flag);
+    flag2() {
+      if (!this.flag) {
+        return null;
+      }
+      let show = this.itemShow(this.flag);
+      if (this.isObject(show)) {
+        return {...this.flag, ...show, show: true};
+      }
+      return {...this.flag, show: show};
     },
     displayedViews() {
-      return this.views.filter(view => this.itemShow(view));
+      return this.views.reduce((res, item) => {
+        let show = this.itemShow(item);
+        if (this.isObject(show)) {
+          res.push({ ...item, ...show });
+        } else if (show) {
+          res.push(item);
+        }
+        return res;
+      }, []);
     },
     displayedTags() {
-      return this.tags.filter(tag => this.itemShow(tag));
+      return this.tags.reduce((res, item) => {
+        let show = this.itemShow(item);
+        if (this.isObject(show)) {
+          res.push({ ...item, ...show });
+        } else if (show) {
+          res.push(item);
+        }
+        return res;
+      }, []);
     },
     displayedCmds() {
-      return this.commands.filter(cmd => !(cmd.prop || (typeof cmd.showValue === 'function')) || this.itemShow(cmd));
+      return this.commands.reduce((res, item) => {
+        let show = false;
+        if (!item.prop && (typeof item.showValue !== 'function')) {
+          show = true;
+        } else {
+          show = this.itemShow(item);
+        }
+        if (this.isObject(show)) {
+          res.push({ ...item, ...show });
+        } else if (show) {
+          res.push(item);
+        }
+        return res;
+      }, []);
     },
     infos2() {
-      return this.infos.map((info, idx2) =>
-        ({
+      return this.infos.map((info, idx2) => {
+        let value = this.getInfoValue(this.item, info.prop, info, this.idx, idx2);
+        let res = {
+          tagType: 'secondary',
+          tagColor: 'gray',
           ...info,
-          value: this.getInfoValue(this.item, info.prop, info, this.idx, idx2),
           showMoreBtn: this.showMoreBtnIdxMap[idx2 + ''] || false
-        })
-      );
+        };
+        if (this.isObject(value)) {
+          res = { ...res, ...value };
+        } else {
+          res.value = value;
+        }
+        return res;
+      });
     }
   },
   mounted() {
@@ -356,6 +404,9 @@ export default {
     },
     isArray(param) {
       return Array.isArray(param);
+    },
+    isObject(param) {
+      return Object.prototype.toString.call(param) === '[object Object]';
     }
   }
 };

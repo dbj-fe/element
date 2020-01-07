@@ -220,7 +220,7 @@
 
 ### 高级用法：一些配置函数和info的slot的用法
 
-:::demo 一、`info`的`prop`属性也可以是一个函数，通过函数计算显示属性信息。也可以通过`slot`属性指定一个自定义的dom结构。（#号是v-slot指令的缩写，[详情查看](https://cn.vuejs.org/v2/guide/components-slots.html)）二、`tag`、`flag`、`view`、`command`的`showValue`属性可以是函数，它们的使用方式相同，第一参数是当前项的数据，第二参数是使用`prop`属性从当前项数据中取到的值，函数返回一个`Boolean`值决定是否显示该项。三、`disable`是一个函数，参数是`item`即当前项的数据。
+:::demo 一、`info`的`prop`属性也可以是一个函数，通过函数计算显示属性信息。也可以通过`slot`属性指定一个自定义的dom结构。（#号是v-slot指令的缩写，[详情查看](https://cn.vuejs.org/v2/guide/components-slots.html)）二、`tag`、`flag`、`view`、`command`的`showValue`属性可以是函数，它们的使用方式相同，第一参数是当前项的数据，第二参数是使用`prop`属性从当前项数据中取到的值，函数返回一个`Boolean`值决定是否显示该项。三、当`showValue`或`prop`返回一个对象时(数组除外)，会以该对象覆盖配置。四、`disable`是一个函数，参数是`item`即当前项的数据。
 
 ```html
 <dbj-card-list
@@ -232,9 +232,9 @@
 >
   <template #my-info="{item, index, info, infoIndex}">
     <span>{{ info.label }}：</span>
-    <el-tag>
-      {{ item.goodsCategoryName }}
-    </el-tag>
+    <a>
+      {{ item.brandName }}
+    </a>
   </template>
 </dbj-card-list>
 <script>
@@ -260,29 +260,44 @@
               label: "上传人"
             },
             {
+              prop: function(params) {
+                let { item, index, info, infoIndex } = params;
+                if (item.width.indexOf('~') > -1) {
+                  return {
+                    value: `${item.width}mm`,
+                    label: "宽度范围"
+                  };
+                }
+                return `${item.width}mm`;
+              },
+              label: "宽度"
+            },
+            {
+              tagType: "default",
+              tagColor: "#FF333A",
+              prop: function(params) {
+                let { item, index, info, infoIndex } = params;
+                return (item.heightList || []).map(h => `${h}mm`);
+              },
+              label: "高度"
+            },
+            {
               slot: 'my-info',
               label: '插槽元素测试'
-            },
-            {
-              prop: "brandName",
-              label: "品牌"
-            },
-            {
-              prop: "productModel",
-              label: "型号"
-            },
-            {
-              prop: "mouldLengthWidthHeight",
-              label: "尺寸"
             }
           ],
           flag: {
-            text: "FLAG",
-            color: "#ffa800",
+            text: "默认",
+            color: "green",
             type: "primary",
             prop: "obj.flag",
             showValue: function(item, val) {
-              console.log(item, val, 11111);
+              if (val === 3) {
+                return {
+                  text: "自定义",
+                  color: "#999",
+                };
+              }
               return val > 1;
             }
           },
@@ -294,6 +309,19 @@
               prop: "obj.tag",
               showValue: function(item, val) {
                 return !(val % 2);
+              }
+            },
+            {
+              text: "",
+              color: "#ffa800",
+              prop: "goodsCategoryName",
+              showValue: function(item, val) {
+                if (val) {
+                  return {
+                    text: val
+                  };
+                }
+                return false;
               }
             }
           ],
@@ -308,10 +336,16 @@
               }
             },
             {
-              text: "售卖",
+              text: "上架",
               value: "sale",
               showValue: function(item, val) {
-                return item.sale;
+                if (!item.sale) {
+                  return {
+                    text: "下架",
+                    value: "not-sale"
+                  }
+                }
+                return true;
               }
             }
           ]
@@ -328,7 +362,7 @@
             "companyName":"美屋三六五科技有限公司",
             "editMenu":true,
             "enabled":true,
-            "goodsCategoryName":"盆栽",
+            "goodsCategoryName":"绿植",
             "hasFrontView":false,
             "hasModel":true,
             "hasSideView":false,
@@ -344,6 +378,8 @@
             "unit":"",
             "uploader":"崔迎",
             "phone": "13456789012",
+            "heightList": [100, 320, 400],
+            "width": "100",
             "obj": {
               "flag": 1,
               "view": 2,
@@ -374,10 +410,12 @@
             "unit":"",
             "uploader":"崔迎",
             "phone": "13456789012",
+            "heightList": [100, 200, 400, 800, 1000, 1200, 1400, 1600],
+            "width": "100~200",
             "obj": {
               "flag": 3,
               "view": 1,
-              "tag": 2,
+              "tag": 4,
               "cmd": 3
             }
           },
@@ -388,7 +426,7 @@
             "companyName":"美屋三六五科技有限公司",
             "editMenu":true,
             "enabled":false,
-            "goodsCategoryName":"盆栽",
+            "goodsCategoryName":"",
             "hasFrontView":false,
             "hasModel":true,
             "hasSideView":false,
@@ -404,6 +442,8 @@
             "unit":"",
             "uploader":"崔迎",
             "phone": "13456789012",
+            "heightList": [100, 320],
+            "width": "200",
             "obj": {
               "flag": 4,
               "view": 8,
@@ -1273,11 +1313,13 @@
 | showValue | 指定字段的属性值等于该值时显示标签 | string \| number \| boolean | — | — |
 
 ### infos单项的属性
-| name | 说明 | 类型 | 默认值 |
-|------|-----|------|------|
-| prop | 指定要显示的字段名称，该字段的值显示在卡片信息中。当需要一行显示多个属性时，可以用函数实现 | string \| Function({item, index, info, infoIndex}) | — |
-| label | 冒号前面的文字，可选 | string | — |
-| slot | 指定slot的名字，slot元素通过dbj-card-list传入即可 | string | — |
+| name | 说明 | 类型 | 可选值 | 默认值 |
+|------|-----|------|------|------|
+| prop | 指定要显示的字段名称，该字段的值显示在卡片信息中。当需要一行显示多个属性时，可以用函数实现 | string \| Function({item, index, info, infoIndex}) | — | — |
+| label | 冒号前面的文字，可选 | string | — | — |
+| tagColor | 标签主题颜色，同Tag标签的color属性（当属性值是数组时显示标签样式） | string | green/gray/具体色值 | gray |
+| tagType | 标签类型，同Tag标签组件的type属性（当属性值是数组时显示标签样式） | string | primary/secondary/default | secondary |
+| slot | 指定slot的名字，slot元素通过dbj-card-list传入即可 | string | — | — |
 
 ### tags单项的属性
 | name | 说明 | 类型 | 可选值 | 默认值 |
