@@ -335,12 +335,13 @@ export default {
       });
     }
   },
+  watch: {
+    item(val) {
+      this.handleMoreBtnShow();
+    }
+  },
   mounted() {
-    this.$nextTick(() => {
-      if (this.$refs.infoList && this.$refs.infoList.length) {
-        this.showMoreBtnIdxMap = this.$refs.infoList.reduce((res, dom, idx) => ({...res, [dom.dataset.idx]: dom.scrollHeight > 30}), {});
-      }
-    });
+    this.handleMoreBtnShow();
   },
   methods: {
     handleCardClick() {
@@ -407,6 +408,13 @@ export default {
     },
     isObject(param) {
       return Object.prototype.toString.call(param) === '[object Object]';
+    },
+    handleMoreBtnShow() {
+      this.$nextTick(() => {
+        if (this.$refs.infoList && this.$refs.infoList.length) {
+          this.showMoreBtnIdxMap = this.$refs.infoList.reduce((res, dom, idx) => ({...res, [dom.dataset.idx]: dom.scrollHeight > 30}), {});
+        }
+      });
     }
   }
 };

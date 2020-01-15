@@ -109,8 +109,10 @@ $namespace: 'dbj';
     display: -webkit-box;
     overflow: hidden;
     text-overflow: ellipsis;
+    /* autoprefixer: off */
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    /* autoprefixer: on */
     font-size: 14px;
     line-height: 22px;
     font-weight: bold;
@@ -193,10 +195,6 @@ $namespace: 'dbj';
       list-style: none;
       margin-right: 4px;
       margin-bottom: 4px;
-      // padding: 0 4px;
-      // background-color: #ebebeb;
-      // color: #999;
-      // font-size: 12px;
     }
   }
 
@@ -223,10 +221,6 @@ $namespace: 'dbj';
         color: $--color-primary;
       }
     }
-  }
-
-  @include e(dropdown-menu) {
-    min-width: 132px;
   }
 
   @include e(checkbox) {
