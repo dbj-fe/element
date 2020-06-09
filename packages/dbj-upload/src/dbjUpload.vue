@@ -72,7 +72,7 @@
                 <span
                   v-if="file.isError"
                   class="dbj-upload-file__error-message"
-                >{{file.errMsg}} 比例不对</span>
+                >{{file.errMsg}}</span>
 
               </div>
             </span>
