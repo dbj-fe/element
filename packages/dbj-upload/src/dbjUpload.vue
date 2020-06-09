@@ -39,54 +39,77 @@
         class="dbj-upload-file"
         :class="{'dbj-upload-file--complete': file.sizeLoaded === file.size}"
       >
-        <div class="dbj-upload-file__top">
-          <span class="dbj-upload-file__info">
-            <label class="dbj-upload-file__content">
-              <span
-                :title="file.name"
-                class="dbj-upload-file__name-wrapper"
-              >
-                <span class="dbj-upload-file__name">{{ file.prefix }}</span>
+        <slot
+          name="infos"
+          :file="file"
+        />
+        <div :class="{'dbj-upload-file__list-infos':scopedSlotKeys.includes('infos')}">
+          <div class="dbj-upload-file__top">
+            <span class="dbj-upload-file__info">
+              <div class="dbj-upload-file__main">
+                <label class="dbj-upload-file__content">
+                  <span
+                    :title="file.name"
+                    class="dbj-upload-file__name-wrapper"
+                  >
+                    <span class="dbj-upload-file__name">{{ file.prefix }}</span>
+                    <span
+                      v-if="file.suffix"
+                      class="dbj-upload-file__suffix"
+                    >
+                      {{ file.suffix }}
+                    </span>
+                  </span>
+                  <i class="dbj-upload-file__success-icon dbj-icon-success" />
+                </label>
                 <span
-                  v-if="file.suffix"
-                  class="dbj-upload-file__suffix"
+                  v-if="file.size > 0"
+                  class="dbj-upload-file__size"
                 >
-                  {{ file.suffix }}
+                  <span class="dbj-upload-file__current">{{ formatFileSize(file.sizeLoaded) }}</span>
+                  <span class="dbj-upload-file__total">/{{ formatFileSize(file.size) }}</span>
                 </span>
-              </span>
-              <i class="dbj-upload-file__success-icon dbj-icon-success" />
-            </label>
-            <span
-              v-if="file.size > 0"
-              class="dbj-upload-file__size"
-            >
-              <span class="dbj-upload-file__current">{{ formatFileSize(file.sizeLoaded) }}</span>
-              <span class="dbj-upload-file__total">/{{ formatFileSize(file.size) }}</span>
+                <span
+                  v-if="file.isError"
+                  class="dbj-upload-file__error-message"
+                >{{file.errMsg}} 比例不对</span>
+
+              </div>
             </span>
-          </span>
-          <i class="dbj-upload-file__clear-icon dbj-icon-circle-close" @click="handleRemove(file)" />
-          <el-upload
-            ref="replaceUploader"
-            class="dbj-upload-file__replace-icon"
-            :action="uploadServerUrl"
-            :data="getUploadData"
-            :before-upload="newFile => handleReplace(file, newFile)"
-            :on-progress="uploadProgress"
-            :on-success="uploadSuccess"
-            :show-file-list="false"
-            :accept="accept"
-          >
-            <i class="dbj-icon-replace-outline"/>
-          </el-upload>
-        </div>
-        <div class="dbj-upload-file__bottom">
-          <span class="dbj-upload-file__progress">
-            <span
-              class="dbj-upload-file__progress-bar"
-              :style="{width: file.sizeLoaded*100/file.size + '%'}"
+            <i
+              :class="{'dbj-upload-file__clear-icon':true, 'dbj-icon-circle-close':true,'dbj-upload-file__no-progress':file.isError}"
+              @click="handleRemove(file)"
             />
-          </span>
-          <i class="dbj-upload-file__abort-icon dbj-icon-circle-close" @click="handleAbort(file)"/>
+            <el-upload
+              v-if="!file.isError"
+              ref="replaceUploader"
+              class="dbj-upload-file__replace-icon"
+              :action="uploadServerUrl"
+              :data="getUploadData"
+              :before-upload="newFile => handleReplace(file, newFile)"
+              :on-progress="uploadProgress"
+              :on-success="uploadSuccess"
+              :show-file-list="false"
+              :accept="accept"
+            >
+              <i class="dbj-icon-replace-outline" />
+            </el-upload>
+          </div>
+          <div
+            v-if="!file.isError"
+            class="dbj-upload-file__bottom"
+          >
+            <span class="dbj-upload-file__progress">
+              <span
+                class="dbj-upload-file__progress-bar"
+                :style="{width: file.sizeLoaded*100/file.size + '%'}"
+              />
+            </span>
+            <i
+              class="dbj-upload-file__abort-icon dbj-icon-circle-close"
+              @click="handleAbort(file)"
+            />
+          </div>
         </div>
       </li>
     </ul>
@@ -152,6 +175,21 @@ export default {
       type: String,
       default: ''
     },
+    tipMsg: {
+      type: Boolean,
+      default: true
+    },
+    customRules: {
+      type: Function,
+      validator: function(value) {
+        return !!value && (typeof value === 'object' || typeof value === 'function');
+      },
+      default: function() {
+        return new Promise((resolve, reject) => {
+          resolve();
+        });
+      }
+    },
     requestToken: {
       type: Function,
       default: function() {
@@ -196,7 +234,11 @@ export default {
           suffix
         };
       });
+    },
+    scopedSlotKeys() {
+      return Object.keys(this.$scopedSlots);
     }
+
   },
   watch: {
     value: {
@@ -216,11 +258,13 @@ export default {
           });
         } else {
           if (val) {
-            this.fileList = [{
-              url: val,
-              name: getFileName(val),
-              md5: this.md5 ? this.md5Value : ''
-            }];
+            this.fileList = [
+              {
+                url: val,
+                name: getFileName(val),
+                md5: this.md5 ? this.md5Value : ''
+              }
+            ];
           } else {
             this.fileList = [];
           }
@@ -229,12 +273,33 @@ export default {
     }
   },
   methods: {
+    showErrMsg(errMsg, currentFile) {
+      if (this.tipMsg) {
+        this.$emit('error', errMsg, currentFile);
+      } else {
+        currentFile.errMsg = errMsg;
+        currentFile.isError = true;
+        if (this.multiple) {
+          let idx = this.fileUidIdxMap[this.replaceUid];
+          if (idx >= 0) {
+            this.fileList.splice(idx, 1, currentFile);
+          } else {
+            this.fileList.push(currentFile);
+          }
+        } else {
+          this.fileList = [currentFile];
+        }
+      }
+      this.replaceUid = 0;
+    },
     beforeUpload(file) {
       let currentFile = {
         name: file.name,
         size: file.size,
         sizeLoaded: 0,
         uid: file.uid,
+        errMsg: file.errMsg || '',
+        isError: file.isError || false,
         fileKey: getFileKey(file.name, this.dirName),
         url: '',
         md5: ''
@@ -248,16 +313,14 @@ export default {
             reg = new RegExp('(' + arr.join('|') + ')$', 'i');
           }
           if (!reg.test(currentFile.name)) {
-            this.$emit('error', '文件格式不对', currentFile);
-            this.replaceUid = 0;
+            this.showErrMsg('文件格式不对', currentFile);
             reject();
             return;
           }
         } else {
           if (this.type === 'image') {
             if (!/(\.jpg|\.png|\.bmp)$/i.test(currentFile.name)) {
-              this.$emit('error', '文件格式不对', currentFile);
-              this.replaceUid = 0;
+              this.showErrMsg('文件格式不对', currentFile);
               reject();
               return;
             }
@@ -265,43 +328,60 @@ export default {
         }
         if (this.maxSize) {
           if (currentFile.size > this.maxSize) {
-            this.$emit('error', '文件过大', currentFile);
-            this.replaceUid = 0;
+            this.showErrMsg('文件过大', currentFile);
             reject();
             return;
           }
         }
-        if (this.multiple) {
-          let idx = this.fileUidIdxMap[this.replaceUid];
-          if (idx >= 0) {
-            this.fileList.splice(idx, 1, currentFile);
-          } else {
-            this.fileList.push(currentFile);
-          }
+        // 自定义校验规则,未定义时默认通过
+        let promiseFn = this.customRules(file);
+        if (promiseFn && promiseFn.then) {
+          promiseFn
+            .then(() => {
+              return this.requestToken(this.type.toUpperCase())
+                .then(res => {
+                  let { data } = res;
+                  currentFile.OSSAccessKeyId = data.accessid;
+                  currentFile.policy = data.policy;
+                  currentFile.signature = data.signature;
+                  currentFile.key = data.dir + '/' + currentFile.fileKey;
+                  this.uploadServerUrl = data.host;
+                  this.accessServerUrl = data.ossUrl;
+                  return Promise.resolve(this.uploadServerUrl);
+                })
+                .catch(e => {
+                  return Promise.reject('获取上传token失败');
+                });
+            })
+            .then(res => {
+              if (this.multiple) {
+                let idx = this.fileUidIdxMap[this.replaceUid];
+                currentFile.isError = false;
+                if (idx >= 0) {
+                  this.fileList.splice(idx, 1, currentFile);
+                  this.fileList[idx];
+                } else {
+                  this.fileList.push(currentFile);
+                }
+              } else {
+                this.fileList = [currentFile];
+              }
+              resolve();
+            })
+            .catch(e => {
+              this.showErrMsg(e.errMsg, currentFile);
+            });
         } else {
-          this.fileList = [currentFile];
+          console.error('customRules Must return a promise');
         }
-        this.requestToken(this.type.toUpperCase())
-          .then(res => {
-            let { data } = res;
-            currentFile.OSSAccessKeyId = data.accessid;
-            currentFile.policy = data.policy;
-            currentFile.signature = data.signature;
-            currentFile.key = data.dir + '/' + currentFile.fileKey;
-            this.uploadServerUrl = data.host;
-            this.accessServerUrl = data.ossUrl;
-            resolve(this.uploadServerUrl);
-          })
-          .catch(e => {
-            this.replaceUid = 0;
-            this.$emit('error', '获取上传token失败');
-            reject();
-          });
       });
     },
     uploadProgress(event, file, fileList) {
       let { percent = 0, total, loaded } = event;
-      this.fileList[this.fileUidIdxMap[file.uid]].sizeLoaded = Math.min(loaded, file.size);
+      this.fileList[this.fileUidIdxMap[file.uid]].sizeLoaded = Math.min(
+        loaded,
+        file.size
+      );
       this.$emit('progress', percent, total, loaded);
     },
     uploadSuccess(res, file, fileList) {
@@ -340,7 +420,9 @@ export default {
       }
     },
     handleComplete() {
-      let isComplete = this.fileList.every(file => file.sizeLoaded === file.size);
+      let isComplete = this.fileList.every(
+        file => file.sizeLoaded === file.size
+      );
       if (isComplete) {
         this.$emit('complete', this.fileList);
       }
