@@ -63,6 +63,7 @@
 
 > A Vue.js 2.0 UI Toolkit for Web.
 
+English | [简体中文](./README.zh-CN.md)
 ## Links
 - Homepage and documentation
   - [International users](http://element.eleme.io/#/en-US)
