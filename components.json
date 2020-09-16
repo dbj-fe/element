@@ -80,5 +80,7 @@
   "dbj-dir-upload": "./packages/dbj-dir-upload/index.js",
   "dbj-search-input": "./packages/dbj-search-input/index.js",
   "dbj-empty": "./packages/dbj-empty/index.js",
-  "dbj-card-list": "./packages/dbj-card-list/index.js"
+  "dbj-card-list": "./packages/dbj-card-list/index.js",
+  "dbj-info-tree": "./packages/dbj-info-tree/index.js",
+  "checkbox-all":"./packages/checkout-all/index.js"
 }
