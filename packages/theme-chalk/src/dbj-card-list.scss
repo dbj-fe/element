@@ -109,10 +109,9 @@ $namespace: 'dbj';
     display: -webkit-box;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* autoprefixer: off */
+    /*! autoprefixer: ignore next */
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    /* autoprefixer: on */
     font-size: 14px;
     line-height: 22px;
     font-weight: bold;

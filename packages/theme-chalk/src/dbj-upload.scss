@@ -74,19 +74,21 @@ $namespace: 'dbj';
 
 @include b(upload-file) {
   line-height: 16px;
-
+  display: flex;
   + .dbj-upload-file {
     margin-top: 4px;
   }
-
+  @include e(list-infos){
+    padding:6px;
+  }
   @include e(top) {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     font-size: 12px;
     margin: 0;
-    height: 16px;
-    line-height: 16px;
+    min-height: 16px;
+    max-height: 48px;
     color: $--color-text-primary;
   }
 
@@ -97,6 +99,11 @@ $namespace: 'dbj';
     justify-content: space-between;
   }
 
+  @include e(main) {
+   flex:1;
+   height: 16px;
+   line-height: 16px;
+  }
   @include e(content) {
     display: inline-block;
     height: 16px;
@@ -161,6 +168,15 @@ $namespace: 'dbj';
       color: $--color-text-primary;
     }
   }
+  @include e(error-message){
+    color: #ff333a;
+    width:96px;
+    float:right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: right;
+  }
 
   @include e(replace-icon) {
     display: none;
@@ -207,7 +223,7 @@ $namespace: 'dbj';
   @include e(abort-icon) {
     font-size: $--font-size-icon-base;
     color: $--color-text-light;
-    margin-left: 8px;
+    margin-left: 12px;
     cursor: pointer;
     &:hover {
       color: $--color-text-primary;
@@ -228,6 +244,9 @@ $namespace: 'dbj';
     .dbj-upload-file__size {
       display: none;
     }
+  }
+  .dbj-upload-file__no-progress{
+    display: inline-block;
   }
 }
 
