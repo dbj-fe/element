@@ -16,15 +16,18 @@
       :on-progress="uploadProgress"
       :on-success="uploadSuccess"
       :show-file-list="false"
+      :disabled="disabled"
       :accept="accept"
       :multiple="multiple"
     >
+    <div :class="{'dbj-upload__cnt':true,'is-disabled':disabled}">
       <slot>
         <div class="dbj-upload__button">
           <i class="dbj-icon-upload" />
           <span>上传文件</span>
         </div>
       </slot>
+    </div>
     </el-upload>
     <div
       v-if="tip"
@@ -34,7 +37,7 @@
     </div>
     <ul class="dbj-upload__list">
       <li
-        v-for="file in fileList2"
+        v-for="(file,idx) in fileList2"
         :key="file.uid"
         class="dbj-upload-file"
         :class="{'dbj-upload-file--complete': file.sizeLoaded === file.size}"
@@ -86,7 +89,7 @@
               class="dbj-upload-file__replace-icon"
               :action="uploadServerUrl"
               :data="getUploadData"
-              :before-upload="newFile => handleReplace(file, newFile)"
+              :before-upload="newFile => handleReplace(file, newFile,idx)"
               :on-progress="uploadProgress"
               :on-success="uploadSuccess"
               :show-file-list="false"
@@ -138,6 +141,10 @@ export default {
       }
     },
     multiple: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     },
@@ -212,9 +219,12 @@ export default {
   computed: {
     fileUidIdxMap() {
       let map = {};
+      // 默认按文件的uid进行标记，若已存在列表按数组索引进行标记
       this.fileList.forEach((item, idx) => {
-        map[item.uid] = idx;
+        let key = item.uid || `uid_${idx}`;
+        map[key] = idx;
       });
+      console.log(map);
       return map;
     },
     fileList2() {
@@ -442,9 +452,10 @@ export default {
         success_action_status: '200' // 让服务端返回200,不然，默认会返回204
       };
     },
-    handleReplace(oldFile, newFile) {
+    handleReplace(oldFile, newFile, idx) {
+      console.log(oldFile);
       if (this.multiple) {
-        this.replaceUid = oldFile.uid;
+        this.replaceUid = oldFile.uid || `uid_${idx}`;
       }
       return this.beforeUpload(newFile);
     },

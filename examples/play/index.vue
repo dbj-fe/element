@@ -21,7 +21,8 @@
           :request-token="getUploadToken"
           :tip-msg="false"
           multiple
-          :customRules="customRules"
+          disabled
+          :limit="3"
           @error="handleError"
         >
           <template #infos="{file}">
@@ -63,12 +64,13 @@ export default {
     return {
       form: {
         fileList:[{
-          url: "https://ali-res-test.dabanjia.com/res/20191225/1577257825312_6432%24big.jpg",
-          md5: "84aa1f09b5a9274109b32c336a1f6ed0"
+          url: "https://ali-res-test.dabanjia.com/res/20191225/1577257825312_6432%24big.jpg"
+        },{
+          url: "https://ali-res-test.dabanjia.com/res/20191225/1577257825312_6432%24big.jpg"
         }],
         name:""
       },
-      imageScale:['2:1']
+      imageScale:['1:1','16:9']
     };
   },
   methods: {

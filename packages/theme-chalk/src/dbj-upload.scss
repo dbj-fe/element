@@ -11,6 +11,14 @@ $namespace: 'dbj';
     .el-upload {
       display: block;
       text-align: left;
+      .is-disabled { 
+        color: $--disabled-color-base;
+        cursor: not-allowed;
+        & >.dbj-upload__button{
+            color: $--disabled-color-base;
+            cursor: not-allowed;
+          }
+      }
     }
   }
 
