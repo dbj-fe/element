@@ -21,8 +21,8 @@
           :request-token="getUploadToken"
           :tip-msg="false"
           multiple
-          disabled
           :limit="3"
+          :customRules="customRules"
           @error="handleError"
         >
           <template #infos="{file}">

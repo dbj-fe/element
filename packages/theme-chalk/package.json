@@ -1,6 +1,6 @@
 {
   "name": "@dbj-fe/element-theme-chalk",
-  "version": "2.8.2-218",
+  "version": "2.8.2-219",
   "description": "Element component chalk theme.",
   "main": "lib/index.css",
   "style": "lib/index.css",

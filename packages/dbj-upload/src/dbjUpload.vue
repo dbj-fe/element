@@ -37,7 +37,7 @@
     </div>
     <ul class="dbj-upload__list">
       <li
-        v-for="(file,idx) in fileList2"
+        v-for="(file,index) in fileList2"
         :key="file.uid"
         class="dbj-upload-file"
         :class="{'dbj-upload-file--complete': file.sizeLoaded === file.size}"
@@ -81,7 +81,7 @@
             </span>
             <i
               :class="{'dbj-upload-file__clear-icon':true, 'dbj-icon-circle-close':true,'dbj-upload-file__no-progress':file.isError}"
-              @click="handleRemove(file)"
+              @click="handleRemove(file,index)"
             />
             <el-upload
               v-if="!file.isError"
@@ -89,7 +89,7 @@
               class="dbj-upload-file__replace-icon"
               :action="uploadServerUrl"
               :data="getUploadData"
-              :before-upload="newFile => handleReplace(file, newFile,idx)"
+              :before-upload="newFile => handleReplace(file, newFile,index)"
               :on-progress="uploadProgress"
               :on-success="uploadSuccess"
               :show-file-list="false"
@@ -110,7 +110,7 @@
             </span>
             <i
               class="dbj-upload-file__abort-icon dbj-icon-circle-close"
-              @click="handleAbort(file)"
+              @click="handleAbort(file,index)"
             />
           </div>
         </div>
@@ -220,11 +220,10 @@ export default {
     fileUidIdxMap() {
       let map = {};
       // 默认按文件的uid进行标记，若已存在列表按数组索引进行标记
-      this.fileList.forEach((item, idx) => {
-        let key = item.uid || `uid_${idx}`;
-        map[key] = idx;
+      this.fileList.forEach((item, index) => {
+        let key = item.uid || `uid_${index}`;
+        map[key] = index;
       });
-      console.log(map);
       return map;
     },
     fileList2() {
@@ -452,16 +451,15 @@ export default {
         success_action_status: '200' // 让服务端返回200,不然，默认会返回204
       };
     },
-    handleReplace(oldFile, newFile, idx) {
-      console.log(oldFile);
+    handleReplace(oldFile, newFile, index) {
       if (this.multiple) {
-        this.replaceUid = oldFile.uid || `uid_${idx}`;
+        this.replaceUid = oldFile.uid || `uid_${index}`;
       }
       return this.beforeUpload(newFile);
     },
-    handleRemove(file) {
+    handleRemove(file, index) {
       if (this.multiple) {
-        let idx = this.fileUidIdxMap[file.uid];
+        let idx = this.fileUidIdxMap[file.uid || `uid_${index}`];
         if (idx >= 0) {
           this.fileList.splice(idx, 1);
         }
@@ -479,8 +477,8 @@ export default {
         }
       }
     },
-    handleAbort(file) {
-      let idx = this.fileUidIdxMap[file.uid];
+    handleAbort(file, index) {
+      let idx = this.fileUidIdxMap[file.uid || `uid_${index}`];
       if (idx >= 0) {
         this.$refs.replaceUploader[idx].abort(file);
       }
