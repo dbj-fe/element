@@ -112,3 +112,22 @@ export default {
   }
 };
 </script>
+<style scoped>
+.ms-form{
+  width:400px;
+}.ms-form .el-form-item--medium {
+  color: red;
+}
+.ms-form .el-form-item--medium >.el-form-item__content{
+  color: gold;
+}
+.ms-form .el-form-item--medium >.el-form-item__content .dbj-upload__list .infos{
+  color: gold;
+}
+.ms-form  .infos + div{
+  color: gold;
+}
+.ms-form .el-form-item--medium .dbj-upload__list>>>.dbj-upload-file__list-item{
+  padding:8px;
+}
+</style>
