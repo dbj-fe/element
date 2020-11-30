@@ -233,21 +233,8 @@
           :customRules="customRules"
           @error="handleError"
         >
-          <template #infos="{file}">
-            <div class="infos" 
-             style="width: 48px;height: 48px;">
-              <img
-                v-if="!file.url"
-                style="width: 48px;height: 48px;vertical-align: middle;"
-                src="https://ali-image-test.dabanjia.com/image/20200604/1591261736269_7336%24loading-img2x.png?x-oss-process=image/resize,m_lfit,h_48,w_48"
-                alt=""
-              />
-              <img
-                v-else
-                 style="width: 48px;height: 48px;vertical-align: middle;"
-                :src="`${file.url}?x-oss-process=image/resize,m_lfit,h_48,w_48`"
-              />
-            </div>
+          <template #infos="{ file }">
+            <el-image size="mini" :src="file.url" />
           </template>
         </dbj-upload>
       </el-form-item>
@@ -336,6 +323,7 @@ export default {
 | max-size | 支持的文件最大大小，超出报错，为0时无限制 | number | — | 0 |
 | tip | 上传提示文字 | string | — | — |
 | md5 | 上传成功后是否计算MD5值 | boolean | — | false |
+| custom-rules | 文件上传时自定义校验规则，返回一个promise对象 | function | — | - |
 | request-token | 请求上传文件的token函数，这个参数在项目中统一设置，不需要自己设置 | function(type) | — | — |
 
 ### Events
@@ -344,7 +332,7 @@ export default {
 | success | 单个文件上传成功时触发 | (currentFile: object, fileList: array) |
 | complete | 所有文件上传成功时触发 | (fileList: array) |
 | progress | 文件上传时的进度 | (percent: number, total: number, loaded: number) |
-| custom-rules | 文件上传时自定义校验规则，返回一个promise对象 | (file: object) |
+| inner-input-change | 选择文件后内部的file input触发的change事件 | (rawFiles: array) |
 | error | 文件上传失败时触发，超出大小或文件类型不匹配时也会触发 | (errMsg: string, file: File) |
 
 ### Slot

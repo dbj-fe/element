@@ -13,6 +13,7 @@
       :action="uploadServerUrl"
       :data="getUploadData"
       :before-upload="beforeUpload"
+      :on-input-change="inputChange"
       :on-progress="uploadProgress"
       :on-success="uploadSuccess"
       :show-file-list="false"
@@ -384,6 +385,9 @@ export default {
           console.error('customRules Must return a promise');
         }
       });
+    },
+    inputChange(rawFiles) {
+      this.$emit('inner-input-change', rawFiles);
     },
     uploadProgress(event, file, fileList) {
       let { percent = 0, total, loaded } = event;

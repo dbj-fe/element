@@ -24,6 +24,7 @@ export default {
     directory: Boolean,
     accept: String,
     filesFilter: Function,
+    onInputChange: Function,
     onStart: Function,
     onProgress: Function,
     onSuccess: Function,
@@ -63,6 +64,8 @@ export default {
     },
     handleChange(ev) {
       const files = ev.target.files;
+
+      this.onInputChange(files);
 
       if (!files) return;
       const filter = this.filesFilter(files);
