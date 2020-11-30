@@ -69,6 +69,10 @@ export default {
       type: Function,
       default: noop
     },
+    onInputChange: {
+      type: Function,
+      default: noop
+    },
     onChange: {
       type: Function,
       default: noop
@@ -305,6 +309,7 @@ export default {
         limit: this.limit,
         'files-filter': this.filesFilter,
         'on-exceed': this.onExceed,
+        'on-input-change': this.onInputChange,
         'on-start': this.handleStart,
         'on-progress': this.handleProgress,
         'on-success': this.handleSuccess,
