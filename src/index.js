@@ -82,8 +82,6 @@ import DbjDirUpload from '../packages/dbj-dir-upload/index.js';
 import DbjSearchInput from '../packages/dbj-search-input/index.js';
 import DbjEmpty from '../packages/dbj-empty/index.js';
 import DbjCardList from '../packages/dbj-card-list/index.js';
-import DbjInfoTree from '../packages/dbj-info-tree/index.js';
-import CheckboxAll from '../packages/checkbox-all/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -166,8 +164,6 @@ const components = [
   DbjSearchInput,
   DbjEmpty,
   DbjCardList,
-  DbjInfoTree,
-  CheckboxAll,
   CollapseTransition
 ];
 
@@ -288,7 +284,5 @@ export default {
   DbjDirUpload,
   DbjSearchInput,
   DbjEmpty,
-  DbjCardList,
-  DbjInfoTree,
-  CheckboxAll
+  DbjCardList
 };

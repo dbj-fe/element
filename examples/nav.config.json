@@ -58,10 +58,6 @@
             {
               "path": "/dbj-card-list",
               "title": "DbjCardList"
-            },
-            {
-              "path": "/checkbox-all",
-              "title": "CheckboxAll"
             }
           ]
         },
