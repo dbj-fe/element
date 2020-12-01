@@ -6,11 +6,12 @@
   >
     <dbj-card
       v-for="(item, idx) in data"
-      :key="idx"
+      :key="typeof props.id === 'string' ? item[props.id] : idx"
       :item="item"
       :idx="idx"
       :id-key="props.id"
       :image-key="props.image"
+      :oss-compress="props.ossCompress"
       :name-key="props.name"
       :flag="props.flag"
       :disable="props.disable"

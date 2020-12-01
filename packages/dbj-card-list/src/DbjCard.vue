@@ -40,19 +40,22 @@
           }"
           type="checkbox"
         />
-        <el-image
-          v-if="item[currentImgKey || imageKey]"
-          :src="item[currentImgKey || imageKey]"
-          size="medium"
-        >
-        </el-image>
-        <el-image
-          v-else
-          :oss-compress="false"
-          :src="currentEmptyImg"
-          size="medium"
-        >
-        </el-image>
+        <slot name="image">
+          <el-image
+            v-if="item[currentImgKey || imageKey]"
+            :oss-compress="ossCompress"
+            :src="item[currentImgKey || imageKey]"
+            size="medium"
+          >
+          </el-image>
+          <el-image
+            v-else
+            :oss-compress="false"
+            :src="currentEmptyImg"
+            size="medium"
+          >
+          </el-image>
+        </slot>
         <slot name="imgAppend" />
       </div>
       <div class="dbj-card__checked-border"></div>
@@ -245,6 +248,10 @@ export default {
     oneLineTitle: {
       type: Boolean,
       default: false
+    },
+    ossCompress: {
+      type: Boolean | Function,
+      default: true
     }
   },
   data() {
@@ -267,7 +274,12 @@ export default {
       return this.model.indexOf(this.item[this.idKey]) > -1;
     },
     isDisabled() {
-      return this.disable && this.disable({ ...this.item });
+      return this.disable && this.disable({ ...this.item }, this.idx);
+    },
+    isImageCompress() {
+      if (typeof this.ossCompress === "function") {
+        return this.ossCompress({ ...this.item }, this.idx)
+      }
     },
     flag2() {
       if (!this.flag) {

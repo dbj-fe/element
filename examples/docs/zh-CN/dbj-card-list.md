@@ -1286,6 +1286,7 @@
 ### Slot
 | name | 说明 |
 |------|--------|
+| image | 卡片图片，参数为 { item, index } |
 | imgAppend | 图片后面的内容，参数为 { item, index } |
 | info | 信息区域的内容，参数为 { item, index } |
 
@@ -1294,9 +1295,10 @@
 |------|-----|------|------|
 | id | 指定id字段名称 | string | 'id' |
 | image | 指定缩略图的字段名称 | string | 'image' |
+| ossCompress | 缩略图是否使用oss的压缩参数 | boolean \| Function(item, index) | true |
 | name | 指定标题字段名称 | string | 'name' |
 | flag | 左上角的斜角标签配置选项，可选，具体见下表 | object | — |
-| disable | 是否禁选，参数是当前项的数据 | Function(item) | — |
+| disable | 是否禁选，参数是当前项的数据 | Function(item, index) | — |
 | tags | 标题下面的标签配置选项，可选，具体见下表 | array | — |
 | infos | 数据信息配置选项，可选，具体见下表 | array | — |
 | views | 视图配置选项，可选，具体见下表 | array | — |
