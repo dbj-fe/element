@@ -11,7 +11,7 @@ $namespace: 'dbj';
     .el-upload {
       display: block;
       text-align: left;
-      .is-disabled { 
+      .is-disabled {
         color: $--disabled-color-base;
         cursor: not-allowed;
         & >.dbj-upload__button{
@@ -155,6 +155,8 @@ $namespace: 'dbj';
     display: inline-block;
     height: 16px;
     line-height: 16px;
+    vertical-align: middle;
+    margin-left: 12px;
   }
 
   @include e(size-current) {

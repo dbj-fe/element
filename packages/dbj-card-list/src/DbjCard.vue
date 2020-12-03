@@ -277,8 +277,8 @@ export default {
       return this.disable && this.disable({ ...this.item }, this.idx);
     },
     isImageCompress() {
-      if (typeof this.ossCompress === "function") {
-        return this.ossCompress({ ...this.item }, this.idx)
+      if (typeof this.ossCompress === 'function') {
+        return this.ossCompress({ ...this.item }, this.idx);
       }
     },
     flag2() {

@@ -41,7 +41,7 @@
         v-for="(file,index) in fileList2"
         :key="file.uid"
         class="dbj-upload-file"
-        :class="{'dbj-upload-file--complete': file.sizeLoaded === file.size}"
+        :class="{'dbj-upload-file--complete': file.size > 0 && file.sizeLoaded === file.size}"
       >
         <slot
           name="infos"
@@ -70,8 +70,8 @@
                   v-if="file.size > 0"
                   class="dbj-upload-file__size"
                 >
-                  <span class="dbj-upload-file__current">{{ formatFileSize(file.sizeLoaded) }}</span>
-                  <span class="dbj-upload-file__total">/{{ formatFileSize(file.size) }}</span>
+                  <span class="dbj-upload-file__size-current">{{ formatFileSize(file.sizeLoaded) }}</span>
+                  <span class="dbj-upload-file__size-total">/{{ formatFileSize(file.size) }}</span>
                 </span>
                 <span
                   v-if="file.isError"
@@ -296,6 +296,7 @@ export default {
           } else {
             this.fileList.push(currentFile);
           }
+          this.$emit('input', this.fileList);
         } else {
           this.fileList = [currentFile];
         }
@@ -373,6 +374,9 @@ export default {
                 } else {
                   this.fileList.push(currentFile);
                 }
+                if (!this.tipMsg) {
+                  this.$emit('input', this.fileList);
+                }
               } else {
                 this.fileList = [currentFile];
               }
@@ -391,14 +395,22 @@ export default {
     },
     uploadProgress(event, file, fileList) {
       let { percent = 0, total, loaded } = event;
-      this.fileList[this.fileUidIdxMap[file.uid]].sizeLoaded = Math.min(
-        loaded,
-        file.size
-      );
+      let idx = this.fileUidIdxMap[file.uid];
+      if (this.fileList && this.fileList[idx]) {
+        this.fileList[idx].sizeLoaded = Math.min(
+          loaded,
+          file.size
+        );
+      }
       this.$emit('progress', percent, total, loaded);
     },
     uploadSuccess(res, file, fileList) {
       let currentFile = this.fileList[this.fileUidIdxMap[file.uid]];
+      if (!currentFile) {
+        console.error("找不到对应的文件，是否上传窗口已关闭而未abort正在上传的文件");
+        console.error("可通过upload实例的‘handleAbortAll’方法对上传请求中断");
+        return;
+      }
       currentFile.sizeLoaded = currentFile.size;
       currentFile.url = this.accessServerUrl + currentFile.fileKey;
       delete currentFile['OSSAccessKeyId'];
@@ -491,9 +503,13 @@ export default {
     },
     handleAbortAll() {
       this.$refs.uploader.abort();
-      this.fileList.forEach((file, idx) => {
-        this.$refs.replaceUploader[idx].abort();
-      });
+      if (this.$refs.replaceUploader) {
+        this.fileList.forEach((file, idx) => {
+          if (this.$refs.replaceUploader[idx]) {
+            this.$refs.replaceUploader[idx].abort();
+          }
+        });
+      }
       this.fileList = [];
       if (this.multiple) {
         this.$emit('input', this.fileList);
