@@ -41,7 +41,7 @@
         v-for="(file,index) in fileList2"
         :key="file.uid"
         class="dbj-upload-file"
-        :class="{'dbj-upload-file--complete': file.size > 0 && file.sizeLoaded === file.size}"
+        :class="{'dbj-upload-file--complete': 'size' in file ? (file.size > 0 && file.sizeLoaded === file.size) : true}"
       >
         <slot
           name="infos"
