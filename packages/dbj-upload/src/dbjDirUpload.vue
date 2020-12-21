@@ -39,6 +39,7 @@
       :class="{'is-expand': expand}">
       <div class="dbj-dir-upload__content">
         <i
+          v-if="showFileList"
           class="dbj-dir-upload__expand-icon dbj-icon-arrow-down"
           @click="expand = !expand"
         />
@@ -70,7 +71,7 @@
           </div>
         </div>
       </div>
-      <el-collapse-transition>
+      <el-collapse-transition >
         <div v-show="expand" class="dbj-dir-upload__children">
           <template v-for="(meta, idx) in metaList">
             <dbj-upload
@@ -148,6 +149,10 @@ export default {
         return true;
       }
     },
+    showFileList: {
+      type: Boolean,
+      default: true
+    },
     requestToken: {
       type: Function,
       default: function() {
@@ -210,46 +215,54 @@ export default {
         if (val === this.fileList) {
           return;
         }
+        let [tempData, flag, hasFile] = [[], true, false];
         if (typeof this.filter === 'function') {
-          this.fileList = (val || []).map(({url, md5Value}) => ({url, md5Value}));
+          this.fileList = val;
+          tempData = this.fileList;
+          flag = false;
         } else if (Array.isArray(this.filter)) {
-          let hasFile = false;
-          this.fileList = this.filter.map((item, idx) => {
-            let {read} = item;
-            let file = val[idx] || {};
-            if (read) {
-              if (file.content) {
-                hasFile = true;
-              }
-              return {
-                content: file.content || ''
-              };
-            }
-            this.dirName = getDirName(file.url);
-            if (file.url) {
+          tempData = this.filter;
+        }
+        this.fileList = tempData.map((item, idx) => {
+          let {read} = item ;
+          let file = val[idx] || {};
+          if (read || (!flag && file.content)) {
+            if (file.content) {
               hasFile = true;
             }
             return {
-              url: file.url || '',
-              md5Value: file.md5Value || ''
+              content: file.content || ''
+            };
+          }
+          this.dirName = getDirName(file.url);
+          if (file.url) {
+            hasFile = true;
+          }
+          return {
+            url: file.url || '',
+            md5Value: file.md5Value || ''
+          };
+        });
+        if (hasFile) {
+          this.metaList = tempData.map((item, idx) => {
+            let {tip, md5, fileType = 'json', read} = item;
+            if (!flag) {
+              item.content ? read = true : fileType = ('' + item.url).split('.').pop().toLowerCase();
+              tip = `仅支持.${fileType}格式文件`;
+            }
+            return {
+              index: idx,
+              fileType,
+              tip,
+              md5,
+              read,
+              size: 0,
+              sizeLoaded: 0,
+              fileKey: '',
+              status: FILE_STATUS.COMPLETE
             };
           });
-          if (hasFile) {
-            this.metaList = this.filter.map((item, idx) => {
-              return {
-                index: idx,
-                fileType: item.fileType,
-                tip: item.tip,
-                md5: item.md5,
-                read: item.read,
-                size: 0,
-                sizeLoaded: 0,
-                fileKey: '',
-                status: FILE_STATUS.COMPLETE
-              };
-            });
-            this.isComplete = true;
-          }
+          this.isComplete = true;
         }
       }
     }
@@ -268,10 +281,37 @@ export default {
       }
       let rawFiles = Array.prototype.slice.call(files);
       return new Promise((resolve, reject) => {
-        let postFiles = [];
+        let postFiles = rawFiles;
         this.dirName = sliceCnStrUri((rawFiles[0].webkitRelativePath || '').split('/')[0], 100);
         if (typeof this.filter === 'function') {
-          postFiles = rawFiles.filter(this.filter);
+          this.handleClear();
+          postFiles = this.filter(rawFiles) || rawFiles;
+          postFiles.map((rawFile, idx) => {
+            let path = rawFile.webkitRelativePath;
+            let name = rawFile.name || '';
+            let size = rawFile.size || 0;
+            let read = false;
+            rawFile.index = idx;
+            if (path.split('/').length === 2) {
+              let fileType = ('' + name).split('.').pop().toLowerCase() || 'json';
+              this.fileList.push({url: '', md5Value: rawFile.md5});
+              rawFile.content ? read = true : fileType;
+              let tip = `仅支持.${fileType}格式文件`;
+              this.$set(this.metaList, idx, {
+                index: idx,
+                tip,
+                md5: true,
+                read,
+                sizeLoaded: 0,
+                status: FILE_STATUS.READY,
+                fileType,
+                name: name,
+                size: size,
+                fileKey: getFileKey(name, this.dirName)
+              });
+            }
+
+          });
         } else {
           postFiles = rawFiles.filter(this.generateFilter(this.filter));
         }
@@ -451,8 +491,12 @@ export default {
       this.$emit('input', this.fileList);
     },
     handleClear() {
-      this.fileList = this.filter.map(({read}, idx) =>
-        read ? ({content: ''}) : ({url: '', md5Value: ''}));
+      if (typeof this.filter === 'function') {
+        this.fileList = [];
+      } else {
+        this.fileList = this.filter.map(({read}, idx) =>
+          read ? ({content: ''}) : ({url: '', md5Value: ''}));
+      }
       this.metaList = [];
       this.expand = false;
       this.$emit('input', this.fileList);

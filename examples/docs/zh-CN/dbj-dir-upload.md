@@ -153,9 +153,10 @@
 ### Attribute
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value / v-model | 文件数据，数组每一项的属性见下表 | array | — | — |
-| filter | 过滤器，使用数组时要与value中的项一一对应，数组每一项的属性见下表 | array | — | — |
+| value / v-model | 文件数据，数组每一项的属性见下表,属性含`content`字段时代表文件不做展示，如`json`文件 | array | -| — |
+| filter | 过滤器，使用数组时要与value中的项一一对应，数组每一项的属性见下表,为函数时，按照自定义规则对上传文件列表进行过滤,需返回File[] | array / function(files: File[]) | — | — |
 | tip | 上传提示文字 | string | — | — |
+| show-file-list | 是否显示已上传文件列表 |boolean | — | true |
 | request-token | 请求上传文件的token函数，这个参数在项目中统一设置，不需要自己设置 | function(type) | — | — |
 
 ### Events

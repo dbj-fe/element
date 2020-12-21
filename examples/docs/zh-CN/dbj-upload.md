@@ -317,6 +317,7 @@ export default {
 | value / v-model | `multiple`为`true`时，该参数类型为数组，数组每一项的属性见下表。当为`false`时，该参数类型为string | array / string | — | — |
 | md5-value | md5值，`multiple`为`false`时才有用，支持 .sync 修饰符 | string | — | — |
 | multiple | 是否支持多选文件 | boolean | — | false |
+| disabled | 是否禁用 | boolean | — | false |
 | tip-msg | 是否支持弹框提示错误信息，为`false`时错误信息展示在最右侧 | boolean | — | true |
 | file-type | 支持的文件文件后缀，多个用逗号分割 | string | — | — |
 | accept | 接受上传的[文件类型](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string | — | — |

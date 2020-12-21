@@ -407,8 +407,8 @@ export default {
     uploadSuccess(res, file, fileList) {
       let currentFile = this.fileList[this.fileUidIdxMap[file.uid]];
       if (!currentFile) {
-        console.error("找不到对应的文件，是否上传窗口已关闭而未abort正在上传的文件");
-        console.error("可通过upload实例的‘handleAbortAll’方法对上传请求中断");
+        console.error('找不到对应的文件，是否上传窗口已关闭而未abort正在上传的文件');
+        console.error('可通过upload实例的‘handleAbortAll’方法对上传请求中断');
         return;
       }
       currentFile.sizeLoaded = currentFile.size;
