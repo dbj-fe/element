@@ -21,8 +21,7 @@
           ref="uploader"
           :request-token="getUploadToken"
           v-model="model.fileList"
-          :filter="model.fileFilter"
-          :showFileList="false"
+          :filter="fileFilter"
           tip="每个模型需上传小于200MB的.pak和.mwasset格式文件，效果优化参数.json文件选填，小于2KB"
           @pre-upload="check"
           @input="handleChange(false)"
@@ -141,7 +140,7 @@ export default {
   },
   methods: {
     check(file, a) {
-      return []
+      return file
     },
     fileFilter(file, a) {
       console.log(file, a, '--------');
