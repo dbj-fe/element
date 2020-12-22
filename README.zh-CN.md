@@ -1,4 +1,3 @@
-
 简体中文 | [English](./README.md)
 
 # 简介
@@ -63,6 +62,7 @@ npm run dist
 ```
 ### 3、发布流程
 ```bash
+# 发版前请注意打包文件
 # 请切换为npm默认源，cnpm淘宝镜像会提示无权限
 # 登录npm
 npm login
