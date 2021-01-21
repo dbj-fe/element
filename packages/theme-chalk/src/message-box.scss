@@ -77,6 +77,10 @@
     font-size: $--messagebox-content-font-size;
   }
 
+  @include e(container) {
+    position: relative;
+  }
+
   @include e(input) {
     padding-top: 15px;
 

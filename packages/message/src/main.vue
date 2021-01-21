@@ -8,6 +8,7 @@
         showClose ? 'is-closable' : '',
         customClass
       ]"
+      :style="positionStyle"
       v-show="visible"
       @mouseenter="clearTimer"
       @mouseleave="startTimer"
@@ -43,6 +44,7 @@
         onClose: null,
         showClose: false,
         closed: false,
+        verticalOffset: 20,
         timer: null,
         dangerouslyUseHTMLString: false,
         center: true
@@ -54,6 +56,11 @@
         return this.type && !this.iconClass
           ? `el-message__icon dbj-icon-${ typeMap[this.type] }`
           : '';
+      },
+      positionStyle() {
+        return {
+          'top': `${ this.verticalOffset }px`
+        };
       }
     },
 

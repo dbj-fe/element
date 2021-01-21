@@ -301,7 +301,7 @@
               :to="`/${ lang }/component`"
             >{{ langConfig.components }}</router-link>
           </li>
-          <li class="nav-item" v-if="$isEle">
+          <li class="nav-item nav-item-theme" v-if="$isEle">
             <router-link active-class="active" :to="`/${ lang }/theme`">{{ langConfig.theme }}</router-link>
           </li>
           <li class="nav-item">
@@ -382,7 +382,7 @@ import AlgoliaSearch from './search.vue';
 import compoLang from '../i18n/component.json';
 import Element from 'main/index.js';
 import themeLoader from './theme/loader';
-import { getVars } from './theme/loader/api.js';
+import { getTestEle } from './theme/loader/api.js';
 import bus from '../bus';
 import { ACTION_USER_CONFIG_UPDATE } from './theme/constant.js';
 
@@ -416,8 +416,27 @@ export default {
     lang() {
       return this.$route.path.split('/')[1] || 'zh-CN';
     },
-    displayedLang() {
-      return this.langs[this.lang] || '中文';
+    mounted() {
+      getTestEle()
+        .then(() => {
+          this.$isEle = true;
+          ga('send', 'event', 'DocView', 'Ele', 'Inner');
+        })
+        .catch((err) => {
+          ga('send', 'event', 'DocView', 'Ele', 'Outer');
+          console.error(err);
+        });
+
+      const testInnerImg = new Image();
+      testInnerImg.onload = () => {
+        this.$isEle = true;
+        ga('send', 'event', 'DocView', 'Ali', 'Inner');
+      };
+      testInnerImg.onerror = (err) => {
+        ga('send', 'event', 'DocView', 'Ali', 'Outer');
+        console.error(err);
+      };
+      testInnerImg.src = `https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/rmsportal/VmvVUItLdPNqKlNGuRHi.png?t=${Date.now()}`;
     },
     langConfig() {
       return compoLang.filter(config => config.lang === this.lang)[0]['header'];
@@ -425,16 +444,6 @@ export default {
     isComponentPage() {
       return /^component/.test(this.$route.name);
     }
-  },
-  mounted() {
-    getVars()
-      .then(() => {
-        this.$isEle = true;
-        ga('send', 'event', 'DocView', 'Inner');
-      })
-      .catch(err => {
-        console.error(err);
-      });
   },
   methods: {
     switchVersion(version) {

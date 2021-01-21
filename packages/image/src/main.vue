@@ -21,15 +21,20 @@
     <img
       v-else
       class="el-image__inner"
+      v-bind="$attrs"
+      v-on="$listeners"
+      @click="clickHandler"
       :src="realSrc"
-      :alt="alt"
-      :referrerpolicy="referrerPolicy"
       :style="imageStyle"
-      :class="{ 'el-image__inner--center': alignCenter }">
+      :class="{ 'el-image__inner--center': alignCenter, 'el-image__preview': preview }">
+    <template v-if="preview">
+      <image-viewer :z-index="zIndex" :initial-index="imageIndex" v-if="showViewer" :on-close="closeViewer" :url-list="previewSrcList"/>
+    </template>
   </div>
 </template>
 
 <script>
+  import ImageViewer from './image-viewer';
   import Locale from 'element-ui/src/mixins/locale';
   import { on, off, getScrollContainer, isInContainer } from 'element-ui/src/utils/dom';
   import { isString, isHtmlElement } from 'element-ui/src/utils/types';
@@ -63,11 +68,17 @@
       height: 48
     }
   };
+  let prevOverflow = '';
 
   export default {
     name: 'ElImage',
 
     mixins: [Locale],
+    inheritAttrs: false,
+
+    components: {
+      ImageViewer
+    },
 
     props: {
       src: String,
@@ -82,8 +93,14 @@
       },
       lazy: Boolean,
       scrollContainer: {},
-      alt: String,
-      referrerPolicy: String
+      previewSrcList: {
+        type: Array,
+        default: () => []
+      },
+      zIndex: {
+        type: Number,
+        default: 2000
+      }
     },
 
     data() {
@@ -92,7 +109,8 @@
         error: false,
         show: !this.lazy,
         imageWidth: 0,
-        imageHeight: 0
+        imageHeight: 0,
+        showViewer: false
       };
     },
 
@@ -119,6 +137,18 @@
           }
         }
         return this.src;
+      },
+      preview() {
+        const { previewSrcList } = this;
+        return Array.isArray(previewSrcList) && previewSrcList.length > 0;
+      },
+      imageIndex() {
+        let previewIndex = 0;
+        const srcIndex = this.previewSrcList.indexOf(this.src);
+        if (srcIndex >= 0) {
+          previewIndex = srcIndex;
+        }
+        return previewIndex;
       }
     },
 
@@ -160,13 +190,21 @@
         const img = new Image();
         img.onload = e => this.handleLoad(e, img);
         img.onerror = this.handleError.bind(this);
+
+        // bind html attrs
+        // so it can behave consistently
+        Object.keys(this.$attrs)
+          .forEach((key) => {
+            const value = this.$attrs[key];
+            img.setAttribute(key, value);
+          });
         img.src = this.realSrc;
       },
       handleLoad(e, img) {
         this.imageWidth = img.width;
         this.imageHeight = img.height;
         this.loading = false;
-        this.$emit('load', e);
+        this.error = false;
       },
       handleError(e) {
         this.loading = false;
@@ -238,6 +276,20 @@
           default:
             return {};
         }
+      },
+      clickHandler() {
+        // don't show viewer when preview is false
+        if (!this.preview) {
+          return;
+        }
+        // prevent body scroll
+        prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        this.showViewer = true;
+      },
+      closeViewer() {
+        document.body.style.overflow = prevOverflow;
+        this.showViewer = false;
       }
     }
   };

@@ -11,6 +11,7 @@
       closable: Boolean,
       corner: Boolean,
       disableTransitions: Boolean,
+      size: String,
       color: String
     },
     methods: {
@@ -19,7 +20,6 @@
         this.$emit('close', event);
       },
       handleClick(event) {
-        event.stopPropagation();
         this.$emit('click', event);
       }
     },
